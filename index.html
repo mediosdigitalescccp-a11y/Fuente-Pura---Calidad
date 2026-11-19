@@ -118,7 +118,10 @@ h1, h2, h3 { margin: 0; }
 /* Media flow */
 .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
 .ch { background: var(--panel); border-radius: var(--radius); padding: 18px; box-shadow: 0 6px 18px rgba(3, 18, 52, .16); border-top: 5px solid var(--c); display: flex; flex-direction: column; gap: 12px; min-width: 0; }
-.ch-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ch-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.ch-head .ttl { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.logo { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; background: var(--lb, var(--c)); box-shadow: 0 3px 10px rgba(3, 18, 52, .2); }
+.logo svg { width: 22px; height: 22px; display: block; }
 .ch-head h3 { color: var(--c); font-size: 17px; }
 .ch-head span { font-size: 12px; color: var(--muted); }
 .plan { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 12px; background: var(--panel-2); border-radius: 10px; padding: 10px 12px; }
@@ -175,7 +178,13 @@ h1, h2, h3 { margin: 0; }
 .gens { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; text-align: center; }
 .gens h4 { margin: 6px 0 2px; font-size: 13px; color: var(--c); }
 .gens p { margin: 0; font-size: 11.5px; color: var(--muted); line-height: 1.5; }
-.tt-aud { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.tt-aud { display: grid; grid-template-columns: minmax(0, 1fr) 190px minmax(0, 1fr); gap: 14px; margin-top: 14px; align-items: stretch; }
+.tt-side { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; align-content: start; }
+.tt-side > h4 { grid-column: 1 / -1; margin: 0; font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
+.tt-side > h4 i { width: 10px; height: 10px; border-radius: 3px; background: var(--c-tt); }
+.tt-mid { display: flex; flex-direction: column; gap: 10px; align-items: stretch; justify-content: center; }
+.tt-prod { flex: 1; min-height: 140px; border-radius: 14px; background: center / cover no-repeat; position: relative; overflow: hidden; box-shadow: 0 6px 16px rgba(3, 18, 52, .2); }
+.tt-prod span { position: absolute; left: 8px; bottom: 8px; right: 8px; text-align: center; font-size: 11px; font-weight: 800; color: #fff; background: rgba(3, 18, 52, .62); border-radius: 999px; padding: 3px 8px; }
 .tt-box { background: var(--panel-2); border-radius: 12px; padding: 12px; }
 .tt-box h4 { margin: 0 0 8px; font-size: 12.5px; }
 .hb { display: grid; grid-template-columns: 74px 1fr 38px; gap: 8px; align-items: center; font-size: 11.5px; margin: 4px 0; }
@@ -247,7 +256,7 @@ footer b { color: #fff; }
   .s3, .s4 { grid-column: span 6; } .s5, .s7, .s8 { grid-column: span 12; }
   .grid > .s4:last-child:nth-child(odd) { grid-column: span 12; }
   .finds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tt-aud { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tt-aud { grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr); } .tt-side { grid-template-columns: 1fr; }
 }
 @media (max-width: 760px) {
   .wrap { padding: 0 12px 24px; }
@@ -263,7 +272,7 @@ footer b { color: #fff; }
   .s3, .s4, .s6 { grid-column: span 12; }
   .donut-wrap { grid-template-columns: 120px 1fr; }
   .sec p { display: none; }
-  .tt-aud { grid-template-columns: 1fr; }
+  .tt-aud { grid-template-columns: 1fr; } .tt-mid { flex-direction: row; order: -1; } .tt-prod { min-height: 150px; } .tt-side { grid-template-columns: 1fr; }
   .stats div { flex-direction: column; gap: 0; }
   .stats div + div { margin-top: 4px; }
   .cre-name { font-size: 12px; }
@@ -348,7 +357,7 @@ footer b { color: #fff; }
   <div class="grid">
     <section class="card s5" id="genero-card"><h3>Género</h3><p class="sub">Distribución por canal.</p><div class="gens-c"><div class="gens" id="gens"></div></div></section>
     <section class="card s7"><h3>Edad por canal</h3><div class="ctl" style="margin-top:10px">Canal <span class="seg" id="seg-edad"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div><div class="keys" id="edad-keys"></div><div class="chart" id="c-edad"></div></section>
-    <section class="card s12"><h3>TikTok · edad y región de quienes vieron cada video</h3><p class="sub">Porcentaje del alcance. TikTok Ads reporta por quincena (W1-W2 y W3-W4 de noviembre); la región corresponde a W3-W4.</p><div class="tt-aud" id="tt-aud"></div></section>
+    <section class="card s12"><h3>TikTok · edad y región de quienes vieron cada video</h3><p class="sub">Porcentaje del alcance de cada video. TikTok Ads reporta por bloque: W1–W2 y W3–W4 de noviembre.</p><div class="tt-aud" id="tt-aud"></div></section>
   </div>
 
   <div class="sec" id="region"><i>7</i><h2>Región</h2><p>Peso de cada departamento dentro de cada canal</p></div>
@@ -453,6 +462,14 @@ footer b { color: #fff; }
   ];
   document.getElementById('tiles').replaceChildren(...tiles.map(([a, b, c, col]) => { const t = el('div', 'tile', `<small>${a}</small><b class="num">${b}</b><span>${c}</span>`); t.style.setProperty('--c', col); return t; }));
 
+  // ---------- Logos de medios ----------
+  const LOGO = {
+    Meta: '<span class="logo" style="--lb:#0866ff" role="img" aria-label="Meta"><svg viewBox="0 0 24 24"><path d="M3.2 15.3c0 1.9.9 3.1 2.4 3.1 1.2 0 2-.5 3.5-2.9l1.6-2.6 1.1-1.8c1.6-2.6 3-3.9 4.9-3.9 2.9 0 4.9 3.2 4.9 7.3 0 2.5-1 3.9-2.9 3.9-1.8 0-2.6-1.1-4.4-4l-1.4-2.4M3.2 15.3c0-2.5.8-5 2.2-6.5.9-1 1.8-1.4 2.8-1.4 1.6 0 2.9 1 4.7 3.9" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg></span>',
+    YouTube: '<span class="logo" style="--lb:#ff0000" role="img" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2" y="5.5" width="20" height="13" rx="4" fill="#fff"/><path d="M10 9.2v5.6l4.9-2.8z" fill="#ff0000"/></svg></span>',
+    TikTok: '<span class="logo" style="--lb:#000" role="img" aria-label="TikTok"><svg viewBox="0 0 24 24"><path d="M14.2 3h2.6c.2 1.9 1.4 3.4 3.4 3.7v2.7c-1.3 0-2.5-.4-3.4-1v6.2a5.3 5.3 0 1 1-5.3-5.3c.3 0 .6 0 .9.1v2.8a2.6 2.6 0 1 0 1.8 2.5z" fill="#25f4ee" transform="translate(-.7 -.5)"/><path d="M14.2 3h2.6c.2 1.9 1.4 3.4 3.4 3.7v2.7c-1.3 0-2.5-.4-3.4-1v6.2a5.3 5.3 0 1 1-5.3-5.3c.3 0 .6 0 .9.1v2.8a2.6 2.6 0 1 0 1.8 2.5z" fill="#fe2c55" transform="translate(.7 .5)"/><path d="M14.2 3h2.6c.2 1.9 1.4 3.4 3.4 3.7v2.7c-1.3 0-2.5-.4-3.4-1v6.2a5.3 5.3 0 1 1-5.3-5.3c.3 0 .6 0 .9.1v2.8a2.6 2.6 0 1 0 1.8 2.5z" fill="#fff"/></svg></span>',
+    Display: '<span class="logo" style="--lb:#fff;border:1px solid var(--line)" role="img" aria-label="Google Display"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12.5" rx="2" fill="none" stroke="#4285f4" stroke-width="2"/><path d="M9 20h6M12 16.5V20" stroke="#4285f4" stroke-width="2" stroke-linecap="round"/><circle cx="8.5" cy="10.2" r="2" fill="#ea4335"/><path d="M12.5 13.5l2.2-3 2.8 3z" fill="#34a853"/><circle cx="16.8" cy="7.6" r="1.2" fill="#fbbc05"/></svg></span>'
+  };
+
   // ---------- Estructura ----------
   const MESES = [
     { nombre: 'Noviembre · Build', pct: 0.6, monto: 9000, c: 'var(--sky)', ini: '2026-11-01', fin: '2026-11-30', olas: [
@@ -496,7 +513,7 @@ footer b { color: #fff; }
   const planTxt = { Meta: ['CPM $0.30–0.35', '15.0–17.5 M impresiones'], YouTube: ['CPM $0.60 · CPV $0.002', '7.5 M imp. · 2.25 M views'], TikTok: ['CPV $0.0015', '1.5 M views'], Display: ['CPM $0.50', '4.5 M impresiones'] };
   document.getElementById('flow').replaceChildren(...CH.map((c) => {
     const n = el('section', 'ch'); n.style.setProperty('--c', COL[c]);
-    n.innerHTML = `<div class="ch-head"><h3>${c === 'Meta' ? 'Meta FB/IG' : c}</h3><span>KPI: ${PLAN[c].kpi}</span></div>
+    n.innerHTML = `<div class="ch-head"><div class="ttl">${LOGO[c]}<h3>${c === 'Meta' ? 'Meta FB/IG' : c}</h3></div><span>KPI: ${PLAN[c].kpi}</span></div>
       <div class="plan"><div><small>Budget</small><b class="num">${F.usd0(PLAN[c].budget)}</b></div><div><small>Planning</small><b>${planTxt[c][0]}</b></div><div style="grid-column:span 2"><small>Proyección</small><b>${planTxt[c][1]}</b></div></div>${flowCards[c]()}`;
     return n;
   }));
@@ -603,9 +620,10 @@ footer b { color: #fff; }
   segs('seg-edad', (v) => { edadCanal = v; drawEdad(); });
   const hbars = (obj, col) => Object.entries(obj).map(([k, v]) => `<div class="hb" style="--c:${col}"><span>${k}</span><div><i style="width:${v}%"></i></div><b>${v}%</b></div>`).join('');
   const ttLab = (t) => `<small style="color:var(--muted);font-weight:700;font-size:10.5px;letter-spacing:.06em">${t}</small>`;
-  document.getElementById('tt-aud').innerHTML = ['Agua Mineral', 'Agua Gasificada'].map((v) => `<div class="tt-box"><h4>${v} · edad W1-W2</h4>${hbars(D.tiktok_aud.edad[v]['W1-W2'], COL.TikTok)}</div><div class="tt-box"><h4>${v} · edad W3-W4</h4>${hbars(D.tiktok_aud.edad[v]['W3-W4'], COL.TikTok)}</div>`).join('')
-    + ['Agua Mineral', 'Agua Gasificada'].map((v) => `<div class="tt-box"><h4>${v} · región W3-W4</h4>${hbars(D.tiktok_aud.region[v]['W3-W4'], COL.TikTok)}</div>`).join('')
-    + ['Agua Mineral', 'Agua Gasificada'].map((v) => `<div class="tt-box"><h4>${v} · región W1-W2</h4>${hbars(D.tiktok_aud.region[v]['W1-W2'], COL.TikTok)}</div>`).join('');
+  const ttSide = (v) => `<div class="tt-side"><h4><i></i>${v}</h4>${[['edad', 'Edad'], ['region', 'Región']].map(([k, lab]) => ['W1-W2', 'W3-W4'].map((w) => `<div class="tt-box"><h4>${lab} · ${w}</h4>${hbars(D.tiktok_aud[k][v][w], COL.TikTok)}</div>`).join('')).join('')}</div>`;
+  document.getElementById('tt-aud').innerHTML = ttSide('Agua Mineral')
+    + `<div class="tt-mid"><div class="tt-prod" style="background-image:url('img/PPV_SPOT_CALIDAD_MINERAL_48s.jpg')" role="img" aria-label="Botella Fuente Pura Agua Mineral"><span>← Agua Mineral</span></div><div class="tt-prod" style="background-image:url('img/PPV_SPOT_CALIDAD_GASIFICADA_50s.jpg')" role="img" aria-label="Lata Fuente Pura Agua Gasificada"><span>Agua Gasificada →</span></div></div>`
+    + ttSide('Agua Gasificada');
 
   // ---------- Región ----------
   const RC = ['Meta', 'YouTube', 'Display'], regShare = {};
