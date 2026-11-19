@@ -606,14 +606,14 @@ footer b { color: #fff; }
   document.getElementById('seg-gdn').innerHTML = SERIES.map((x, i) => `<button type="button" data-v="${x.id}" aria-pressed="${i === 0}">${x.nombre}</button>`).join('');
   const nForm = new Set(SERIES.flatMap((x) => x.formatos.map((f) => f.split('_')[0]))).size, nPiezas = SERIES.reduce((s, x) => s + x.formatos.length, 0);
   const top4 = D.display.slice(0, 4);
-  document.getElementById('gdn-sub').textContent = `${nPiezas} banners en ${nForm} medidas, agrupados en ${SERIES.length} tipos y mostrados a escala real entre ellos. Google Ads no indica qué banner corresponde a cada resultado, por eso los resultados de Display se muestran en conjunto.`;
+  document.getElementById('gdn-sub').textContent = `Banners de la campaña agrupados por tipo y mostrados a escala real entre ellos. Google Ads no indica qué banner corresponde a cada resultado, por eso los resultados de Display se muestran en conjunto.`;
   const drawGdn = () => { const FORMATOS = serie.formatos, box = document.getElementById('gdn-line'), sizes = FORMATOS.map((f) => f.split('_')[0].split('x').map(Number));
     box.classList.toggle('col', !!serie.columna);
     const avail = Math.max(280, box.clientWidth - (serie.columna ? 8 : 14 * (FORMATOS.length - 1) + 8)), total = serie.columna ? Math.max(...sizes.map(([w]) => w)) : sizes.reduce((s, [w]) => s + w, 0), maxH = Math.max(...sizes.map(([, h]) => h)), k = Math.min(1, serie.columna ? 1 : 420 / maxH, Math.max(avail / total, !serie.columna && innerWidth < 761 ? 0.42 : 0));
     box.replaceChildren(...FORMATOS.map((f, i) => { const [w, h] = sizes[i], fig = el('figure', 'gdn-ad');
       fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}</figcaption>`; return fig; })); };
   const selG = document.getElementById('sel-gdn');
-  selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre} (${x.formatos.length})</option>`).join('');
+  selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre}</option>`).join('');
   const setSerie = (v) => { serie = SERIES.find((x) => x.id === v); selG.value = v; document.querySelectorAll('#seg-gdn button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v))); drawGdn(); };
   segs('seg-gdn', setSerie); selG.addEventListener('change', () => setSerie(selG.value));
   const gst = [['Impresiones', F.int(T.Display.imp)], ['Clics', F.int(T.Display.clics)], ['CTR', F.pct2(T.Display.clics / T.Display.imp)], ['CPM', F.usd(cpm('Display'))], ['Inversión', F.usd(T.Display.costo)], ['Usuarios únicos', F.int(T.Display.alcance)]];
