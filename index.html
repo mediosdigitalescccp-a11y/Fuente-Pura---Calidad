@@ -183,10 +183,10 @@ h1, h2, h3 { margin: 0; }
 .tt-side > h4 { grid-column: 1 / -1; margin: 0; font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
 .tt-side > h4 i { width: 10px; height: 10px; border-radius: 3px; background: var(--c-tt); }
 .tt-mid { display: flex; flex-direction: column; gap: 10px; align-items: stretch; justify-content: center; }
-.tt-prod { flex: 1; border-radius: 14px; position: relative; overflow: hidden; box-shadow: 0 6px 16px rgba(3, 18, 52, .2); background: linear-gradient(180deg, #2a9df0, #0d63d6); display: flex; align-items: center; justify-content: center; }
-.tt-prod img { display: block; width: 100%; height: 100%; object-fit: cover; }
-.tt-lab { position: absolute; left: 8px; right: 8px; bottom: 8px; display: flex; justify-content: space-between; gap: 4px; }
-.tt-lab span { font-size: 10.5px; font-weight: 800; color: #fff; background: rgba(3, 18, 52, .62); border-radius: 999px; padding: 3px 8px; }
+.tt-prod { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; min-height: 0; }
+.tt-prod img { display: block; width: 100%; max-height: 380px; object-fit: contain; filter: drop-shadow(0 10px 14px rgba(3, 18, 52, .25)); }
+.tt-lab { display: flex; justify-content: space-between; gap: 4px; width: 100%; }
+.tt-lab span { font-size: 10.5px; font-weight: 800; color: #fff; background: var(--c-tt); border-radius: 999px; padding: 3px 9px; }
 
 .tt-box { background: var(--panel-2); border-radius: 12px; padding: 12px; }
 .tt-box h4 { margin: 0 0 8px; font-size: 12.5px; }
@@ -249,7 +249,7 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 details.notes { margin-top: 18px; color: rgba(255,255,255,.88); font-size: 12.5px; }
 details.notes summary { cursor: pointer; font-weight: 700; }
 details.notes ul { line-height: 1.6; padding-left: 18px; }
-footer { margin-top: 26px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; color: rgba(255,255,255,.8); font-size: 12px; }
+footer { margin-top: 26px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; color: rgba(255,255,255,.8); font-size: 12px; }
 .foot-prod { display: flex; gap: 10px; }
 .foot-prod span { width: 66px; height: 114px; border-radius: 14px; background: center / cover no-repeat; box-shadow: 0 6px 16px rgba(3, 18, 52, .3); border: 2px solid rgba(255,255,255,.25); }
 .conf { justify-self: end; border: 1.5px solid rgba(255,255,255,.85); border-radius: 4px; padding: 8px 12px; color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; letter-spacing: .02em; }
@@ -279,7 +279,7 @@ footer b { color: #fff; }
   .s3, .s4, .s6 { grid-column: span 12; }
   .donut-wrap { grid-template-columns: 120px 1fr; }
   .sec p { display: none; }
-  .tt-aud { grid-template-columns: 1fr; } .tt-mid { order: -1; } .tt-prod { height: 260px; flex: none; width: 180px; margin: 0 auto; } .tt-side { grid-template-columns: 1fr; }
+  .tt-aud { grid-template-columns: 1fr; } .tt-mid { order: -1; } .tt-prod img { max-height: 260px; } .tt-lab { max-width: 240px; } .tt-side { grid-template-columns: 1fr; }
   .stats div { flex-direction: column; gap: 0; }
   .stats div + div { margin-top: 4px; }
   .cre-name { font-size: 12px; }
@@ -397,7 +397,7 @@ footer b { color: #fff; }
       <li>Montos en USD.</li>
     </ul>
   </details>
-  <footer><span><b>Fuente Pura · Calidad</b> · Paid Media</span><div class="foot-prod"><span style="background-image:url('img/foot_botella.jpg')" role="img" aria-label="Botella Fuente Pura Agua Mineral"></span><span style="background-image:url('img/foot_lata.jpg')" role="img" aria-label="Lata Fuente Pura Agua Gasificada"></span></div><span class="conf">Confidencial · Propiedad de CCCP UM Nicaragua</span></footer>
+  <footer><span><b>Fuente Pura · Calidad</b> · Paid Media</span><span class="conf">Confidencial · Propiedad de CCCP UM Nicaragua</span></footer>
 </main>
 
 <script src="datos.js"></script>
@@ -629,7 +629,7 @@ footer b { color: #fff; }
   const ttLab = (t) => `<small style="color:var(--muted);font-weight:700;font-size:10.5px;letter-spacing:.06em">${t}</small>`;
   const ttSide = (v) => `<div class="tt-side"><h4><i></i>${v}</h4>${[['edad', 'Edad'], ['region', 'Región']].map(([k, lab]) => ['W1-W2', 'W3-W4'].map((w) => `<div class="tt-box"><h4>${lab} · ${w}</h4>${hbars(D.tiktok_aud[k][v][w], COL.TikTok)}</div>`).join('')).join('')}</div>`;
   document.getElementById('tt-aud').innerHTML = ttSide('Agua Gasificada')
-    + `<div class="tt-mid"><div class="tt-prod" role="img" aria-label="Lata de Agua Gasificada y botella de Agua Mineral Fuente Pura"><img src="img/productos.jpg" alt=""><div class="tt-lab"><span>← Gasificada</span><span>Mineral →</span></div></div></div>`
+    + `<div class="tt-mid"><div class="tt-prod" role="img" aria-label="Lata de Agua Gasificada y botella de Agua Mineral Fuente Pura"><img src="img/productos.png" alt=""><div class="tt-lab"><span>← Gasificada</span><span>Mineral →</span></div></div></div>`
     + ttSide('Agua Mineral');
 
   // ---------- Región ----------
