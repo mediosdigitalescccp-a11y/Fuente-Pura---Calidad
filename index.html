@@ -247,6 +247,24 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 @media (min-width: 761px) and (max-width: 1180px) { .gdn-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
 /* TikTok datos generales */
+.tt-card { position: relative; --c-min: #2fa8ec; --c-gas: #f2b51d; }
+.tt-card > h3, .tt-card > .sub { padding-right: 56px; }
+.tt-logo { position: absolute; top: 14px; right: 16px; }
+.tt-logo .logo { width: 44px; height: 44px; }
+.tt-logo .logo svg { width: 25px; height: 25px; }
+.tt-charts { display: grid; grid-template-columns: 1.25fr .9fr 1.1fr; gap: 12px; margin-top: 12px; }
+.tt-charts .tt-box { display: flex; flex-direction: column; }
+.tt-keys { display: flex; gap: 12px; font-size: 11.5px; color: var(--muted); margin-bottom: 4px; flex-wrap: wrap; }
+.tt-keys span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--c); margin-right: 5px; vertical-align: -1px; }
+.fun { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 6px; }
+.fun-row { display: grid; grid-template-columns: 112px 1fr; gap: 8px; align-items: center; font-size: 11.5px; }
+.fun-row > span { color: var(--muted); font-weight: 600; }
+.fun-bar { position: relative; height: 22px; border-radius: 7px; background: color-mix(in srgb, var(--c-tt) 10%, transparent); }
+.fun-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 7px; background: var(--c-tt); min-width: 4px; }
+.fun-bar b { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--fg); white-space: nowrap; }
+
+@media (max-width: 1180px) { .tt-charts { grid-template-columns: 1fr 1fr; } .tt-charts .tt-box:first-child { grid-column: 1 / -1; } }
+@media (max-width: 760px) { .tt-charts { grid-template-columns: 1fr; } .tt-charts .tt-box:first-child { grid-column: auto; } }
 .tt-stats div { border-top-color: var(--c-tt); }
 .tt-stats { margin-top: 4px; }
 .tt-blocks { overflow-x: auto; margin-top: 10px; }
@@ -381,7 +399,7 @@ footer b { color: #fff; }
   <div class="grid">
     <section class="card s5" id="genero-card"><h3>Género</h3><p class="sub">Distribución por canal.</p><div class="gens-c"><div class="gens" id="gens"></div></div></section>
     <section class="card s7"><h3>Edad por canal</h3><div class="ctl" style="margin-top:10px">Canal <span class="seg" id="seg-edad"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div><div class="keys" id="edad-keys"></div><div class="chart" id="c-edad"></div></section>
-    <section class="card s12"><h3>TikTok · datos generales, edad y región</h3><p class="sub">Datos generales de toda la campaña en TikTok y su detalle por bloque (W1–W2 y W3–W4 de noviembre). Edad y región: porcentaje del alcance de cada video. El dato de me gusta de Agua Gasificada en W3–W4 se omite porque la hoja repite el valor de Agua Mineral.</p><div class="gdn-stats tt-stats" id="tt-stats"></div><div class="tt-blocks" id="tt-blocks"></div><div class="tt-aud" id="tt-aud"></div></section>
+    <section class="card s12 tt-card"><div class="tt-logo" id="tt-logo"></div><h3>TikTok · datos generales, edad y región</h3><p class="sub">Datos generales de toda la campaña en TikTok y su detalle por bloque (W1–W2 y W3–W4 de noviembre). Edad y región: porcentaje del alcance de cada video. El dato de me gusta de Agua Gasificada en W3–W4 se omite porque la hoja repite el valor de Agua Mineral.</p><div class="gdn-stats tt-stats" id="tt-stats"></div><div class="tt-charts"><div class="tt-box"><h4>Views por bloque</h4><div class="chart" id="tt-c-views"></div></div><div class="tt-box"><h4>Reparto de views</h4><div class="chart" id="tt-c-mix"></div></div><div class="tt-box"><h4>Interacción por cada 1,000 views</h4><div id="tt-c-fun"></div></div></div><div class="tt-aud" id="tt-aud"></div></section>
   </div>
 
   <div class="sec" id="region"><i>7</i><h2>Región</h2><p>Peso de cada departamento dentro de cada canal</p></div>
@@ -646,10 +664,36 @@ footer b { color: #fff; }
   const ttLab = (t) => `<small style="color:var(--muted);font-weight:700;font-size:10.5px;letter-spacing:.06em">${t}</small>`;
   const tts = [['Views', F.int(T.TikTok.views)], ['Inversión', F.usd(T.TikTok.costo)], ['CPV', F.usd4(T.TikTok.costo / T.TikTok.views)], ['Me gusta', F.int(T.TikTok.likes)], ['Visitas al perfil', F.int(T.TikTok.perfil)], ['Nuevos seguidores', F.int(T.TikTok.seg)]];
   document.getElementById('tt-stats').innerHTML = tts.map(([a, b]) => `<div><small>${a}</small><b class="num">${b}</b></div>`).join('');
-  const dash0 = (v, f) => v === null || v === undefined ? '—' : f(v);
-  document.getElementById('tt-blocks').innerHTML = '<table><thead><tr><th>Bloque</th><th>Video</th><th>Views</th><th>Inversión</th><th>CPV</th><th>Me gusta</th><th>Visitas al perfil</th><th>Nuevos seguidores</th></tr></thead><tbody>'
-    + D.tiktok.map((r) => `<tr><td>${r.ola.replace('-', '–')}</td><td><a href="${r.url}" target="_blank" rel="noopener" style="color:inherit">${r.video}</a></td><td class="num">${F.int(r.views)}</td><td class="num">${F.usd(r.costo)}</td><td class="num">${F.usd4(r.costo / r.views)}</td><td class="num">${dash0(r.likes, F.int)}</td><td class="num">${F.int(r.perfil)}</td><td class="num">${F.int(r.seguidores)}</td></tr>`).join('')
-    + `<tr class="tot"><td>Total</td><td></td><td class="num">${F.int(T.TikTok.views)}</td><td class="num">${F.usd(T.TikTok.costo)}</td><td class="num">${F.usd4(T.TikTok.costo / T.TikTok.views)}</td><td class="num">${F.int(T.TikTok.likes)}</td><td class="num">${F.int(T.TikTok.perfil)}</td><td class="num">${F.int(T.TikTok.seg)}</td></tr></tbody></table>`;
+  document.getElementById('tt-logo').innerHTML = LOGO.TikTok;
+  const VC = { 'Agua Mineral': 'var(--c-min)', 'Agua Gasificada': 'var(--c-gas)' }, VIDS = ['Agua Mineral', 'Agua Gasificada'], OLAS = ['W1-W2', 'W3-W4'];
+  const drawTT = () => {
+    // Views por bloque (barras agrupadas)
+    const box = document.getElementById('tt-c-views'), W = Math.max(box.clientWidth, 260), H = 220, m = { t: 18, r: 8, b: 26, l: 46 };
+    const val = (v, o) => (D.tiktok.find((r) => r.video === v && r.ola === o) || {}).views || 0, max = Math.max(...OLAS.flatMap((o) => VIDS.map((v) => val(v, o)))) * 1.15;
+    const y = (v) => H - m.b - v / max * (H - m.t - m.b), gw = (W - m.l - m.r) / OLAS.length, bw = Math.min(56, gw * .32);
+    let g = ''; for (let k = 0; k <= 4; k++) { const v = max / 1.15 * k / 4; g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"></line><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${F.M(v)}</text>`; }
+    OLAS.forEach((o, i) => { const x0 = m.l + i * gw + gw / 2 - bw - 3;
+      VIDS.forEach((v, j) => { const x = x0 + j * (bw + 6), vv = val(v, o); g += `<rect data-o="${o}" data-v="${v}" x="${x}" y="${y(vv)}" width="${bw}" height="${Math.max(1, y(0) - y(vv))}" rx="5" style="fill:${VC[v]}"></rect><text x="${x + bw / 2}" y="${y(vv) - 5}" text-anchor="middle" style="fill:var(--fg);font-weight:700;font-size:10.5px">${F.M(vv)}</text>`; });
+      g += `<text x="${m.l + i * gw + gw / 2}" y="${H - 8}" text-anchor="middle" style="font-weight:700">${o.replace('-', '–')}</text>`; });
+    box.innerHTML = `<div class="tt-keys">${VIDS.map((v) => `<span style="--c:${VC[v]}">${v}</span>`).join('')}</div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Views de TikTok por bloque y video">${g}</svg>`;
+    const tp = tipFor(box);
+    box.querySelectorAll('rect[data-v]').forEach((r) => { const d = D.tiktok.find((x) => x.video === r.dataset.v && x.ola === r.dataset.o);
+      r.addEventListener('pointermove', (ev) => tp.show(ev, [d.video + ' · ' + d.ola.replace('-', '–'), 'Views: ' + F.int(d.views), 'Inversión: ' + F.usd(d.costo), 'CPV: ' + F.usd4(d.costo / d.views), 'Me gusta: ' + (d.likes == null ? '—' : F.int(d.likes)), 'Seguidores: ' + F.int(d.seguidores)])); r.addEventListener('pointerleave', () => tp.hide()); });
+    // Reparto de views (dona)
+    const mixBox = document.getElementById('tt-c-mix'), parts = VIDS.map((v) => ({ k: v, v: sum(D.tiktok.filter((r) => r.video === v), 'views'), c: VC[v] })), tot = sum(parts, 'v');
+    const S = 170, R1 = 78, R0 = 52; let a0 = -Math.PI / 2, paths = '';
+    parts.forEach((p) => { const a1 = a0 + p.v / tot * Math.PI * 2, L = a1 - a0 > Math.PI ? 1 : 0, P = (a, rr) => (S / 2 + rr * Math.cos(a)) + ',' + (S / 2 + rr * Math.sin(a));
+      paths += `<path d="M${P(a0, R1)} A${R1},${R1} 0 ${L} 1 ${P(a1, R1)} L${P(a1, R0)} A${R0},${R0} 0 ${L} 0 ${P(a0, R0)} Z" style="fill:${p.c};stroke:var(--panel-2);stroke-width:2"><title>${p.k}: ${F.int(p.v)} (${F.pct1(p.v / tot)})</title></path>`; a0 = a1; });
+    mixBox.innerHTML = `<svg viewBox="0 0 ${S} ${S}" style="max-width:190px;margin:4px auto 0" role="img" aria-label="${parts.map((p) => p.k + ' ' + F.pct(p.v / tot)).join(', ')}">${paths}<text x="85" y="83" text-anchor="middle" style="fill:var(--fg);font-weight:800;font-size:17px">${F.M(tot)}</text><text x="85" y="100" text-anchor="middle">views</text></svg>`
+      + `<div class="legend" style="margin-top:10px">${parts.map((p) => `<div style="--c:${p.c}"><i></i><span>${p.k}<small>${F.int(p.v)} views · CPV ${F.usd4(sum(D.tiktok.filter((r) => r.video === p.k), 'costo') / p.v)}</small></span><b class="num">${F.pct(p.v / tot)}</b></div>`).join('')}</div>`;
+    // Interacción por cada 1,000 views, por video
+    const met = [['Me gusta', 'likes'], ['Visitas al perfil', 'perfil'], ['Nuevos seguidores', 'seguidores']];
+    const rate = (v, k) => { const rows = D.tiktok.filter((r) => r.video === v && (k !== 'likes' || r.likes != null)); return sum(rows, k) / sum(rows, 'views') * 1000; };
+    const mxr = Math.max(...met.flatMap(([, k]) => VIDS.map((v) => rate(v, k))));
+    document.getElementById('tt-c-fun').innerHTML = `<div class="tt-keys">${VIDS.map((v) => `<span style="--c:${VC[v]}">${v}</span>`).join('')}</div><div class="fun">`
+      + met.map(([lab, k]) => `<div class="fun-row"><span>${lab}</span><div style="display:grid;gap:4px">${VIDS.map((v) => { const r = rate(v, k); return `<div class="fun-bar" role="img" aria-label="${v}, ${lab}: ${F.d1(r)} por cada 1,000 views" title="${v}: ${F.d1(r)} por cada 1,000 views"><i style="width:${Math.max(2, r / mxr * 100)}%;background:${VC[v]}"></i><b class="num">${F.d1(r)}</b></div>`; }).join('')}</div></div>`).join('')
+      + `</div><p class="sub" style="margin:10px 0 0">Total: ${F.d1(T.TikTok.likes / sum(D.tiktok.filter((r) => r.likes != null), 'views') * 1000)} me gusta, ${F.d1(T.TikTok.perfil / T.TikTok.views * 1000)} visitas al perfil y ${F.d1(T.TikTok.seg / T.TikTok.views * 1000)} seguidores por cada 1,000 views. Cada nuevo seguidor costó ${F.usd3(T.TikTok.costo / T.TikTok.seg)}.</p>`;
+  };
   const ttSide = (v) => `<div class="tt-side"><h4><i></i>${v}</h4>${[['edad', 'Edad'], ['region', 'Región']].map(([k, lab]) => ['W1-W2', 'W3-W4'].map((w) => `<div class="tt-box"><h4>${lab} · ${w}</h4>${hbars(D.tiktok_aud[k][v][w], COL.TikTok)}</div>`).join('')).join('')}</div>`;
   document.getElementById('tt-aud').innerHTML = ttSide('Agua Gasificada')
     + `<div class="tt-mid"><div class="tt-prod" role="img" aria-label="Lata de Agua Gasificada y botella de Agua Mineral Fuente Pura"><img src="img/productos.png" alt=""><div class="tt-lab"><span>← Gasificada</span><span>Mineral →</span></div></div></div>`
@@ -730,7 +774,7 @@ footer b { color: #fff; }
   const spy = () => { let cur = links[0].dataset.t; links.forEach((a) => { const t = document.getElementById(a.dataset.t); if (t && t.getBoundingClientRect().top <= 120) cur = a.dataset.t; }); links.forEach((a) => a.classList.toggle('on', a.dataset.t === cur)); };
   addEventListener('scroll', () => requestAnimationFrame(spy), { passive: true });
 
-  const layout = () => { drawDiario(); drawEdad(); fila(document.getElementById('cre-meta'), innerWidth < 761 ? 140 : 180); fila(document.getElementById('cre-yt'), innerWidth < 761 ? 140 : 200); drawGdn(); spy(); };
+  const layout = () => { drawDiario(); drawEdad(); fila(document.getElementById('cre-meta'), innerWidth < 761 ? 140 : 180); fila(document.getElementById('cre-yt'), innerWidth < 761 ? 140 : 200); drawGdn(); drawTT(); spy(); };
   drawTabla(); layout();
   let w = innerWidth, t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (innerWidth !== w) { w = innerWidth; layout(); } }, 150); });
 })();
