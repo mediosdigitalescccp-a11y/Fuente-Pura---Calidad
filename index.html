@@ -246,6 +246,16 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 @media (max-width: 760px) { .gdn-line { justify-content: flex-start; } .gdn-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (min-width: 761px) and (max-width: 1180px) { .gdn-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
 
+/* TikTok datos generales */
+.tt-stats div { border-top-color: var(--c-tt); }
+.tt-stats { margin-top: 4px; }
+.tt-blocks { overflow-x: auto; margin-top: 10px; }
+.tt-blocks table { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 620px; }
+.tt-blocks th { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; text-align: right; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+.tt-blocks td { text-align: right; padding: 7px 8px; border-bottom: 1px solid var(--line); }
+.tt-blocks th:nth-child(-n+2), .tt-blocks td:nth-child(-n+2) { text-align: left; }
+.tt-blocks tr.tot td { font-weight: 800; border-bottom: 0; }
+
 /* Detalle */
 .tbl-wrap { overflow-x: auto; }
 .tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 780px; }
@@ -304,7 +314,7 @@ footer b { color: #fff; }
     <a href="#kpi" data-t="kpi">KPI Media Flow</a>
     <a href="#mix" data-t="mix">Mix e inversión</a>
     <a href="#entrega" data-t="entrega">Entrega diaria</a>
-    <a href="#audiencia" data-t="audiencia">Audiencia</a>
+    <a href="#audiencia" data-t="audiencia">Audiencia y TikTok</a>
     <a href="#region" data-t="region">Región</a>
     <a href="#creativos" data-t="creativos">Creativos</a>
     <a href="#detalle" data-t="detalle">Detalle diario</a>
@@ -371,7 +381,7 @@ footer b { color: #fff; }
   <div class="grid">
     <section class="card s5" id="genero-card"><h3>Género</h3><p class="sub">Distribución por canal.</p><div class="gens-c"><div class="gens" id="gens"></div></div></section>
     <section class="card s7"><h3>Edad por canal</h3><div class="ctl" style="margin-top:10px">Canal <span class="seg" id="seg-edad"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div><div class="keys" id="edad-keys"></div><div class="chart" id="c-edad"></div></section>
-    <section class="card s12"><h3>TikTok · edad y región de quienes vieron cada video</h3><p class="sub">Porcentaje del alcance de cada video. TikTok Ads reporta por bloque: W1–W2 y W3–W4 de noviembre.</p><div class="tt-aud" id="tt-aud"></div></section>
+    <section class="card s12"><h3>TikTok · datos generales, edad y región</h3><p class="sub">Datos generales de toda la campaña en TikTok y su detalle por bloque (W1–W2 y W3–W4 de noviembre). Edad y región: porcentaje del alcance de cada video. El dato de me gusta de Agua Gasificada en W3–W4 se omite porque la hoja repite el valor de Agua Mineral.</p><div class="gdn-stats tt-stats" id="tt-stats"></div><div class="tt-blocks" id="tt-blocks"></div><div class="tt-aud" id="tt-aud"></div></section>
   </div>
 
   <div class="sec" id="region"><i>7</i><h2>Región</h2><p>Peso de cada departamento dentro de cada canal</p></div>
@@ -634,6 +644,12 @@ footer b { color: #fff; }
   segs('seg-edad', (v) => { edadCanal = v; drawEdad(); });
   const hbars = (obj, col) => Object.entries(obj).map(([k, v]) => `<div class="hb" style="--c:${col}"><span>${k}</span><div><i style="width:${v}%"></i></div><b>${v}%</b></div>`).join('');
   const ttLab = (t) => `<small style="color:var(--muted);font-weight:700;font-size:10.5px;letter-spacing:.06em">${t}</small>`;
+  const tts = [['Views', F.int(T.TikTok.views)], ['Inversión', F.usd(T.TikTok.costo)], ['CPV', F.usd4(T.TikTok.costo / T.TikTok.views)], ['Me gusta', F.int(T.TikTok.likes)], ['Visitas al perfil', F.int(T.TikTok.perfil)], ['Nuevos seguidores', F.int(T.TikTok.seg)]];
+  document.getElementById('tt-stats').innerHTML = tts.map(([a, b]) => `<div><small>${a}</small><b class="num">${b}</b></div>`).join('');
+  const dash0 = (v, f) => v === null || v === undefined ? '—' : f(v);
+  document.getElementById('tt-blocks').innerHTML = '<table><thead><tr><th>Bloque</th><th>Video</th><th>Views</th><th>Inversión</th><th>CPV</th><th>Me gusta</th><th>Visitas al perfil</th><th>Nuevos seguidores</th></tr></thead><tbody>'
+    + D.tiktok.map((r) => `<tr><td>${r.ola.replace('-', '–')}</td><td><a href="${r.url}" target="_blank" rel="noopener" style="color:inherit">${r.video}</a></td><td class="num">${F.int(r.views)}</td><td class="num">${F.usd(r.costo)}</td><td class="num">${F.usd4(r.costo / r.views)}</td><td class="num">${dash0(r.likes, F.int)}</td><td class="num">${F.int(r.perfil)}</td><td class="num">${F.int(r.seguidores)}</td></tr>`).join('')
+    + `<tr class="tot"><td>Total</td><td></td><td class="num">${F.int(T.TikTok.views)}</td><td class="num">${F.usd(T.TikTok.costo)}</td><td class="num">${F.usd4(T.TikTok.costo / T.TikTok.views)}</td><td class="num">${F.int(T.TikTok.likes)}</td><td class="num">${F.int(T.TikTok.perfil)}</td><td class="num">${F.int(T.TikTok.seg)}</td></tr></tbody></table>`;
   const ttSide = (v) => `<div class="tt-side"><h4><i></i>${v}</h4>${[['edad', 'Edad'], ['region', 'Región']].map(([k, lab]) => ['W1-W2', 'W3-W4'].map((w) => `<div class="tt-box"><h4>${lab} · ${w}</h4>${hbars(D.tiktok_aud[k][v][w], COL.TikTok)}</div>`).join('')).join('')}</div>`;
   document.getElementById('tt-aud').innerHTML = ttSide('Agua Gasificada')
     + `<div class="tt-mid"><div class="tt-prod" role="img" aria-label="Lata de Agua Gasificada y botella de Agua Mineral Fuente Pura"><img src="img/productos.png" alt=""><div class="tt-lab"><span>← Gasificada</span><span>Mineral →</span></div></div></div>`
