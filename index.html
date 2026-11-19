@@ -192,6 +192,8 @@ a.cre { color: inherit; text-decoration: none; }
 a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underline; }
 
 /* Display */
+.sel { display: none; font: inherit; font-size: 13px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--fg); background: var(--panel-2); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; flex: 1; min-width: 0; }
+@media (max-width: 760px) { #seg-gdn { display: none; } .sel { display: block; } }
 .gdn-line { display: flex; align-items: flex-end; justify-content: center; gap: 14px; padding: 6px 2px 4px; overflow-x: auto; }
 .gdn-line.col { flex-direction: column; align-items: center; justify-content: flex-start; gap: 10px; }
 .gdn-ad { flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; }
@@ -332,7 +334,7 @@ footer b { color: #fff; }
   <div class="grid">
     <section class="card s12"><h3>Creativos de Meta</h3><p class="sub">PPV: spot en video · PPL: pieza estática. Tasa = interacciones ÷ impresiones.</p><div class="cards" id="cre-meta"></div></section>
     <section class="card s12"><h3>Videos de YouTube y TikTok</h3><p class="sub">YouTube: VTR = views ÷ impresiones; las barras muestran cuántos de los que vieron el video llegaron al 25%, 50%, 75% y 100%. TikTok: acumulado de W1-W2 y W3-W4; CPV = costo ÷ visualizaciones.</p><div class="cards" id="cre-yt"></div></section>
-    <section class="card s12"><h3>Display · formatos de la campaña</h3><p class="sub" id="gdn-sub">—</p><div class="ctl">Serie <span class="seg" id="seg-gdn"></span></div><div class="gdn-line" id="gdn-line"></div><div class="gdn-stats" id="gdn-stats"></div></section>
+    <section class="card s12"><h3>Display · formatos de la campaña</h3><p class="sub" id="gdn-sub">—</p><div class="ctl"><label for="sel-gdn">Tipo</label> <span class="seg" id="seg-gdn"></span><select id="sel-gdn" class="sel"></select></div><div class="gdn-line" id="gdn-line"></div><div class="gdn-stats" id="gdn-stats"></div></section>
   </div>
 
   <div class="sec" id="detalle"><i>8</i><h2>Detalle diario</h2></div>
@@ -604,13 +606,16 @@ footer b { color: #fff; }
   document.getElementById('seg-gdn').innerHTML = SERIES.map((x, i) => `<button type="button" data-v="${x.id}" aria-pressed="${i === 0}">${x.nombre}</button>`).join('');
   const nForm = new Set(SERIES.flatMap((x) => x.formatos.map((f) => f.split('_')[0]))).size, nPiezas = SERIES.reduce((s, x) => s + x.formatos.length, 0);
   const top4 = D.display.slice(0, 4);
-  document.getElementById('gdn-sub').textContent = `${SERIES.length} series y ${nPiezas} banners en ${nForm} formatos, a escala real entre ellos. Google Ads reporta ${D.display.length} piezas activas; las 4 con más impresiones suman el ${F.pct(sum(top4, 'impresiones') / sum(D.display, 'impresiones'))} del total. La exportación no indica el formato de cada pieza, por eso los resultados se muestran en conjunto.`;
+  document.getElementById('gdn-sub').textContent = `${nPiezas} banners en ${nForm} medidas, agrupados en ${SERIES.length} tipos y mostrados a escala real entre ellos. Google Ads no indica qué banner corresponde a cada resultado, por eso los resultados de Display se muestran en conjunto.`;
   const drawGdn = () => { const FORMATOS = serie.formatos, box = document.getElementById('gdn-line'), sizes = FORMATOS.map((f) => f.split('_')[0].split('x').map(Number));
     box.classList.toggle('col', !!serie.columna);
     const avail = Math.max(280, box.clientWidth - (serie.columna ? 8 : 14 * (FORMATOS.length - 1) + 8)), total = serie.columna ? Math.max(...sizes.map(([w]) => w)) : sizes.reduce((s, [w]) => s + w, 0), maxH = Math.max(...sizes.map(([, h]) => h)), k = Math.min(1, serie.columna ? 1 : 420 / maxH, Math.max(avail / total, !serie.columna && innerWidth < 761 ? 0.42 : 0));
     box.replaceChildren(...FORMATOS.map((f, i) => { const [w, h] = sizes[i], fig = el('figure', 'gdn-ad');
       fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}</figcaption>`; return fig; })); };
-  segs('seg-gdn', (v) => { serie = SERIES.find((x) => x.id === v); drawGdn(); });
+  const selG = document.getElementById('sel-gdn');
+  selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre} (${x.formatos.length})</option>`).join('');
+  const setSerie = (v) => { serie = SERIES.find((x) => x.id === v); selG.value = v; document.querySelectorAll('#seg-gdn button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v))); drawGdn(); };
+  segs('seg-gdn', setSerie); selG.addEventListener('change', () => setSerie(selG.value));
   const gst = [['Impresiones', F.int(T.Display.imp)], ['Clics', F.int(T.Display.clics)], ['CTR', F.pct2(T.Display.clics / T.Display.imp)], ['CPM', F.usd(cpm('Display'))], ['Inversión', F.usd(T.Display.costo)], ['Usuarios únicos', F.int(T.Display.alcance)]];
   document.getElementById('gdn-stats').innerHTML = gst.map(([a, b]) => `<div><small>${a}</small><b class="num">${b}</b></div>`).join('');
 
