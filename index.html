@@ -246,7 +246,11 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 details.notes { margin-top: 18px; color: rgba(255,255,255,.88); font-size: 12.5px; }
 details.notes summary { cursor: pointer; font-weight: 700; }
 details.notes ul { line-height: 1.6; padding-left: 18px; }
-footer { margin-top: 26px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,.8); font-size: 12px; }
+footer { margin-top: 26px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; color: rgba(255,255,255,.8); font-size: 12px; }
+.foot-prod { display: flex; gap: 10px; }
+.foot-prod span { width: 66px; height: 114px; border-radius: 14px; background: center / cover no-repeat; box-shadow: 0 6px 16px rgba(3, 18, 52, .3); border: 2px solid rgba(255,255,255,.25); }
+.conf { justify-self: end; border: 1.5px solid rgba(255,255,255,.85); border-radius: 4px; padding: 8px 12px; color: #fff; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; letter-spacing: .02em; }
+@media (max-width: 760px) { footer { grid-template-columns: 1fr; justify-items: center; text-align: center; } .conf { justify-self: center; } }
 footer b { color: #fff; }
 
 /* Responsivo */
@@ -390,7 +394,7 @@ footer b { color: #fff; }
       <li>Montos en USD.</li>
     </ul>
   </details>
-  <footer><span><b>Fuente Pura · Calidad</b> · Paid Media</span><span>Confidencial · Propiedad de CCCP UM Nicaragua</span></footer>
+  <footer><span><b>Fuente Pura · Calidad</b> · Paid Media</span><div class="foot-prod"><span style="background-image:url('img/foot_botella.jpg')" role="img" aria-label="Botella Fuente Pura Agua Mineral"></span><span style="background-image:url('img/foot_lata.jpg')" role="img" aria-label="Lata Fuente Pura Agua Gasificada"></span></div><span class="conf">Confidencial · Propiedad de CCCP UM Nicaragua</span></footer>
 </main>
 
 <script src="datos.js"></script>
