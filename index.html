@@ -94,6 +94,27 @@ h1, h2, h3 { margin: 0; }
 .pillar p { margin: 0; color: var(--muted); line-height: 1.5; font-size: 13.5px; }
 .pillar .arrow { position: absolute; right: -14px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; background: var(--sky); color: #fff; display: grid; place-items: center; font-weight: 800; z-index: 2; }
 
+/* Estructura */
+.intro { color: rgba(255,255,255,.9); margin: -6px 0 14px; font-size: 13.5px; line-height: 1.55; max-width: 110ch; }
+.intro b { color: #fff; }
+.months { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--gap); }
+.month { background: var(--panel-2); border-radius: 22px; padding: 24px; box-shadow: 0 6px 18px rgba(3, 18, 52, .16); display: flex; flex-direction: column; gap: 14px; }
+.month-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.month-head h3 { font-size: 18px; font-weight: 800; color: var(--navy); letter-spacing: .02em; }
+:root[data-theme="dark"] .month-head h3 { color: var(--sky); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .month-head h3 { color: var(--sky); } }
+.month-head b { font-size: 26px; font-weight: 800; color: var(--c); }
+.waves { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.wave { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; position: relative; }
+.wave small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .08em; color: var(--muted); }
+.wave strong { display: block; font-size: 14px; margin: 3px 0 4px; }
+.wave p { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.45; }
+.wave.on { border-color: var(--c); box-shadow: inset 0 0 0 1px var(--c); background: color-mix(in srgb, var(--c) 7%, transparent); }
+.wave.done { opacity: .8; }
+.wave .st { position: absolute; top: 10px; right: 10px; font-size: 10px; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--c); color: #fff; letter-spacing: .04em; }
+.wave.done .st { background: var(--muted); }
+@media (max-width: 760px) { .months, .waves { grid-template-columns: 1fr; } }
+
 /* Media flow */
 .flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
 .ch { background: var(--panel); border-radius: var(--radius); padding: 18px; box-shadow: 0 6px 18px rgba(3, 18, 52, .16); border-top: 5px solid var(--c); display: flex; flex-direction: column; gap: 12px; min-width: 0; }
@@ -256,6 +277,7 @@ footer b { color: #fff; }
     <span class="nav-brand">FUENTE PURA · CALIDAD</span>
     <a href="#resumen" data-t="resumen">Resumen</a>
     <a href="#concepto" data-t="concepto">Concepto</a>
+    <a href="#estructura" data-t="estructura">Estructura</a>
     <a href="#kpi" data-t="kpi">KPI Media Flow</a>
     <a href="#mix" data-t="mix">Mix e inversión</a>
     <a href="#entrega" data-t="entrega">Entrega diaria</a>
@@ -288,25 +310,29 @@ footer b { color: #fff; }
   <section class="tiles" aria-label="Indicadores principales" id="tiles"></section>
 
   <div class="sec" id="concepto"><i>1</i><h2>De comunicar un premio a construir valor de marca</h2></div>
-  <p style="color:rgba(255,255,255,.88); margin:-6px 0 14px; font-size:13.5px; line-height:1.5">El reconocimiento es el <i>proof point</i>; lo que buscamos con la planificación de medios es convertirlo en una asociación de marca.</p>
+  <p class="intro">El reconocimiento es el <i>proof point</i>; lo que buscamos con la planificación de medios es convertirlo en una asociación de marca.</p>
   <div class="pillars">
     <div class="pillar"><small>Activo de comunicación</small><b>PREMIO</b><p>Superior Taste Award 2026 como respaldo visible de la calidad de Fuente Pura.</p><span class="arrow" aria-hidden="true">›</span></div>
     <div class="pillar"><small>Reto</small><b>ASOCIACIÓN</b><p>No basta con que el consumidor vea el sello. Necesitamos que entienda qué representa para la marca.</p><span class="arrow" aria-hidden="true">›</span></div>
     <div class="pillar"><small>Ambición</small><b>PREFERENCIA</b><p>Instalar nacionalmente una relación simple y memorable: Fuente Pura = calidad reconocida.</p></div>
   </div>
 
-  <div class="sec" id="kpi"><i>2</i><h2>KPI · Media Flow</h2><p>Cumplimiento de la planificación para el período completo Nov–Dic</p></div>
+  <div class="sec" id="estructura"><i>2</i><h2>Estructura de la campaña</h2><p>Dos meses, cada uno en dos bloques de dos semanas</p></div>
+  <p class="intro">La campaña se divide en dos bloques por mes: <b>Noviembre</b> (Week 1–Week 2 y Week 3–Week 4) y <b>Diciembre</b> (Week 1–Week 2 y Week 3–Week 4). Por eso las olas se nombran <b>W1–W2</b> y <b>W3–W4</b>: son las semanas del mes en que corre cada bloque.</p>
+  <div class="months" id="months"></div>
+
+  <div class="sec" id="kpi"><i>3</i><h2>KPI · Media Flow</h2><p>Cumplimiento de la planificación para el período completo Nov–Dic</p></div>
   <div class="flow" id="flow"></div>
   <p class="flow-note">La línea vertical en cada barra marca lo esperado a la fecha según los días transcurridos hasta el 31 de diciembre. Los $750 de LinkedIn se reasignaron a TikTok, que queda con $3,000 para los dos meses.</p>
 
-  <div class="sec" id="mix"><i>3</i><h2>Mix e inversión</h2><p>Cómo se reparte lo invertido y cuánto cuesta cada resultado</p></div>
+  <div class="sec" id="mix"><i>4</i><h2>Mix e inversión</h2><p>Cómo se reparte lo invertido y cuánto cuesta cada resultado</p></div>
   <div class="grid">
     <section class="card s4"><h3>Mix de impresiones</h3><p class="sub">Impresiones entregadas por canal. TikTok se mide en views.</p><div class="donut-wrap"><div class="chart" id="d-imp"></div><div class="legend" id="l-imp"></div></div></section>
     <section class="card s4"><h3>Mix de inversión</h3><p class="sub">Inversión a la fecha contra el presupuesto de cada canal.</p><div class="donut-wrap"><div class="chart" id="d-inv"></div><div class="legend" id="l-inv"></div></div></section>
     <section class="card s4"><h3>Eficiencia real contra el plan</h3><p class="sub">Verde: igual o mejor que lo planificado.</p><table class="eff" id="eff"></table></section>
   </div>
 
-  <div class="sec" id="entrega"><i>4</i><h2>Entrega diaria</h2><p>Meta, YouTube y Display reportan por día; TikTok, por quincena</p></div>
+  <div class="sec" id="entrega"><i>5</i><h2>Entrega diaria</h2><p>Meta, YouTube y Display reportan por día; TikTok, por quincena</p></div>
   <div class="grid">
     <section class="card s12">
       <h3>Entrega diaria por canal</h3>
@@ -318,26 +344,26 @@ footer b { color: #fff; }
     <section class="card s12"><h3>Hallazgos clave</h3><p class="sub">Se calculan con los datos de la hoja; el día en curso no cuenta para el ritmo.</p><div class="finds" id="finds"></div></section>
   </div>
 
-  <div class="sec" id="audiencia"><i>5</i><h2>Audiencia</h2><p>Meta: sobre alcance · YouTube y Display: sobre impresiones · TikTok: % de alcance</p></div>
+  <div class="sec" id="audiencia"><i>6</i><h2>Audiencia</h2><p>Meta: sobre alcance · YouTube y Display: sobre impresiones · TikTok: % de alcance</p></div>
   <div class="grid">
     <section class="card s5" id="genero-card"><h3>Género</h3><p class="sub">Distribución por canal.</p><div class="gens-c"><div class="gens" id="gens"></div></div></section>
     <section class="card s7"><h3>Edad por canal</h3><div class="ctl" style="margin-top:10px">Canal <span class="seg" id="seg-edad"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div><div class="keys" id="edad-keys"></div><div class="chart" id="c-edad"></div></section>
     <section class="card s12"><h3>TikTok · edad y región de quienes vieron cada video</h3><p class="sub">Porcentaje del alcance. TikTok Ads reporta por quincena (W1-W2 y W3-W4 de noviembre); la región corresponde a W3-W4.</p><div class="tt-aud" id="tt-aud"></div></section>
   </div>
 
-  <div class="sec" id="region"><i>6</i><h2>Región</h2><p>Peso de cada departamento dentro de cada canal</p></div>
+  <div class="sec" id="region"><i>7</i><h2>Región</h2><p>Peso de cada departamento dentro de cada canal</p></div>
   <div class="grid">
     <section class="card s12"><h3>Región por canal</h3><p class="sub">Participación dentro de cada canal. Más intenso, mayor peso. Ordenado por el promedio de los tres canales.</p><div class="tbl-wrap"><table class="heat" id="heat"></table></div></section>
   </div>
 
-  <div class="sec" id="creativos"><i>7</i><h2>Creativos</h2><p>Ordenados por impresiones o views</p></div>
+  <div class="sec" id="creativos"><i>8</i><h2>Creativos</h2><p>Ordenados por impresiones o views</p></div>
   <div class="grid">
     <section class="card s12"><h3>Creativos de Meta</h3><p class="sub">PPV: spot en video · PPL: pieza estática. Tasa = interacciones ÷ impresiones.</p><div class="cards" id="cre-meta"></div></section>
     <section class="card s12"><h3>Videos de YouTube y TikTok</h3><p class="sub">YouTube: VTR = views ÷ impresiones; las barras muestran cuántos de los que vieron el video llegaron al 25%, 50%, 75% y 100%. TikTok: acumulado de W1-W2 y W3-W4; CPV = costo ÷ visualizaciones.</p><div class="cards" id="cre-yt"></div></section>
     <section class="card s12"><h3>Display · formatos de la campaña</h3><p class="sub" id="gdn-sub">—</p><div class="ctl"><label for="sel-gdn">Tipo</label> <span class="seg" id="seg-gdn"></span><select id="sel-gdn" class="sel"></select></div><div class="gdn-line" id="gdn-line"></div><div class="gdn-stats" id="gdn-stats"></div></section>
   </div>
 
-  <div class="sec" id="detalle"><i>8</i><h2>Detalle diario</h2></div>
+  <div class="sec" id="detalle"><i>9</i><h2>Detalle diario</h2></div>
   <section class="card">
     <div class="ctl">Canal <span class="seg" id="seg-det"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div>
     <div class="tbl-wrap"><table class="tbl" id="tbl"></table></div>
@@ -426,6 +452,28 @@ footer b { color: #fff; }
     ['Impresiones Display', F.int(T.Display.imp), 'CTR ' + F.pct2(T.Display.clics / T.Display.imp), COL.Display]
   ];
   document.getElementById('tiles').replaceChildren(...tiles.map(([a, b, c, col]) => { const t = el('div', 'tile', `<small>${a}</small><b class="num">${b}</b><span>${c}</span>`); t.style.setProperty('--c', col); return t; }));
+
+  // ---------- Estructura ----------
+  const MESES = [
+    { nombre: 'Noviembre · Build', pct: 0.6, monto: 9000, c: 'var(--sky)', ini: '2026-11-01', fin: '2026-11-30', olas: [
+      ['W1–W2', 'Launch Burst', 'Mayor presión en Meta, YouTube y TikTok.', '2026-11-01', '2026-11-15'],
+      ['W3–W4', 'Sustain', 'Mantener cobertura y controlar frecuencia.', '2026-11-16', '2026-11-30']] },
+    { nombre: 'Diciembre · Reinforce', pct: 0.4, monto: 6000, c: 'var(--blue)', ini: '2026-12-01', fin: '2026-12-31', olas: [
+      ['W1–W2', 'Reinforcement', 'Segundo impulso de visibilidad.', '2026-12-01', '2026-12-15'],
+      ['W3–W4', 'Reminder', 'Presencia eficiente + rotación creativa.', '2026-12-16', '2026-12-31']] }
+  ];
+  document.getElementById('months').replaceChildren(...MESES.map((m) => {
+    const d = el('section', 'month'); d.style.setProperty('--c', m.c);
+    const gasto = inv * (ultima >= m.ini && ultima <= m.fin || ultima > m.fin ? 1 : 0);
+    const ini = m.ini < INICIO ? INICIO : m.ini, diasMes = days(ini, m.fin) + 1, transc = ultCompleta < ini ? 0 : Math.min(diasMes, days(ini, ultCompleta) + 1), esp = transc / diasMes;
+    const enMes = ultima >= m.ini && ultima <= m.fin;
+    const meterMes = enMes ? `<div class="meter" style="--c:${m.c}"><div class="meter-top"><span>Invertido en el mes</span><b class="num">${F.pct(inv / m.monto)}</b></div>
+      <div class="bar" role="img" aria-label="Invertido ${F.pct(inv / m.monto)} del presupuesto del mes; esperado ${F.pct(esp)}"><i style="width:${Math.min(100, inv / m.monto * 100)}%"></i><em style="left:calc(${esp * 100}% - 1px)"></em></div>
+      <div class="meter-foot"><span class="num">${F.usd0(inv)} de ${F.usd0(m.monto)}</span><span>Esperado a la fecha: ${F.pct(esp)}</span></div></div>`
+      : `<div class="meter-foot" style="font-size:12px"><span>Presupuesto del mes: ${F.usd0(m.monto)}</span><span>${ultima < m.ini ? 'Inicia el ' + F.fecha(m.ini) : 'Cerrado'}</span></div>`;
+    d.innerHTML = `<div class="month-head"><h3>${m.nombre.toUpperCase()}</h3><b class="num">${F.pct(m.pct)} · ${F.usd0(m.monto)}</b></div>
+      <div class="waves">${m.olas.map(([w, t, txt, a, b]) => { const st = ultima > b ? 'done' : ultima >= a ? 'on' : ''; return `<div class="wave ${st}">${st ? `<span class="st">${st === 'on' ? 'EN CURSO' : 'CERRADO'}</span>` : ''}<small>${w}</small><strong>${t}</strong><p>${txt}</p></div>`; }).join('')}</div>${meterMes}`;
+    return d; }));
 
   // ---------- Media flow ----------
   const estado = (av) => av >= 1 ? ['ok', 'Cumplida'] : av >= esperado * 0.95 ? ['ok', 'A ritmo'] : av >= esperado * 0.75 ? ['warn', 'Atención'] : ['bad', 'Rezagada'];
