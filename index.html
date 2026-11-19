@@ -196,11 +196,18 @@ h1, h2, h3 { margin: 0; }
 .hb b { text-align: right; font-weight: 700; }
 
 /* Región */
-.heat { width: 100%; border-collapse: separate; border-spacing: 0 4px; font-size: 12.5px; }
-.heat th { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; text-align: center; padding: 4px; }
+.heat { width: 100%; border-collapse: collapse; font-size: 12.5px; table-layout: fixed; }
+.heat col.dep { width: 170px; }
+.heat th { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; text-align: center; padding: 0 0 6px; }
 .heat th:first-child, .heat td:first-child { text-align: left; }
-.heat td { padding: 7px 6px; text-align: center; font-weight: 600; }
-.heat td.v { border-radius: 6px; color: var(--fg); }
+.heat td { padding: 7px 8px; text-align: center; font-weight: 600; border: 0; }
+.heat td:first-child { padding-left: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.heat td.v { color: var(--fg); }
+.heat tbody tr:first-child td.v:nth-child(2) { border-top-left-radius: 8px; }
+.heat tbody tr:first-child td.v:last-child { border-top-right-radius: 8px; }
+.heat tbody tr:last-child td.v:nth-child(2) { border-bottom-left-radius: 8px; }
+.heat tbody tr:last-child td.v:last-child { border-bottom-right-radius: 8px; }
+@media (max-width: 760px) { .heat col.dep { width: 104px; } .heat td { padding: 7px 4px; } }
 
 /* Creativos */
 .cards { display: grid; gap: 12px; }
@@ -637,7 +644,7 @@ footer b { color: #fff; }
   RC.forEach((c) => { const rows = aud(c, 'Región').filter((r) => r.segmento !== 'Desconocido'), t = sum(rows, 'valor'); rows.forEach((r) => { (regShare[r.segmento] ||= {})[c] = r.valor / t; }); });
   const regs = Object.entries(regShare).map(([k, o]) => ({ k, ...o, avg: RC.reduce((s, c) => s + (o[c] || 0), 0) / RC.length })).sort((a, b) => b.avg - a.avg);
   const maxReg = Math.max(...regs.flatMap((r) => RC.map((c) => r[c] || 0)));
-  document.getElementById('heat').innerHTML = `<thead><tr><th>Departamento</th>${RC.map((c) => `<th style="color:${COL[c]}">${c}</th>`).join('')}</tr></thead><tbody>` + regs.map((r) => `<tr><td>${r.k}</td>${RC.map((c) => { const v = r[c] || 0, a = Math.max(.08, Math.sqrt(v / maxReg)); return `<td class="v num" style="background:color-mix(in srgb, ${COL[c]} ${Math.round(a * 85)}%, var(--panel-2));${a > .55 ? 'color:#fff' : ''}">${F.pct1(v)}</td>`; }).join('')}</tr>`).join('') + '</tbody>';
+  document.getElementById('heat').innerHTML = `<colgroup><col class="dep">${RC.map(() => '<col>').join('')}</colgroup><thead><tr><th>Departamento</th>${RC.map((c) => `<th style="color:${COL[c]}">${c}</th>`).join('')}</tr></thead><tbody>` + regs.map((r) => `<tr><td>${r.k}</td>${RC.map((c) => { const v = r[c] || 0, a = Math.max(.08, Math.sqrt(v / maxReg)); return `<td class="v num" style="background:color-mix(in srgb, ${COL[c]} ${Math.round(a * 85)}%, var(--panel-2));${a > .55 ? 'color:#fff' : ''}">${F.pct1(v)}</td>`; }).join('')}</tr>`).join('') + '</tbody>';
 
   // ---------- Tarjetas iguales sin huecos ----------
   const fila = (box, minW) => { const items = [...box.children], n = items.length; if (!n) return;
