@@ -295,7 +295,7 @@ footer b { color: #fff; }
 
   <div class="sec" id="kpi"><i>2</i><h2>KPI · Media Flow</h2><p>Cumplimiento de la planificación para el período completo Nov–Dic</p></div>
   <div class="flow" id="flow"></div>
-  <p class="flow-note">La marca negra en cada barra es lo esperado a la fecha según los días transcurridos hasta el 31 de diciembre. LinkedIn (presupuesto de prueba de $750) no se activó, por eso no aparece.</p>
+  <p class="flow-note">La línea vertical en cada barra marca lo esperado a la fecha según los días transcurridos hasta el 31 de diciembre. Los $750 de LinkedIn se reasignaron a TikTok, que queda con $3,000 para los dos meses.</p>
 
   <div class="sec" id="mix"><i>3</i><h2>Mix e inversión</h2><p>Cómo se reparte lo invertido y cuánto cuesta cada resultado</p></div>
   <div class="grid">
@@ -345,7 +345,7 @@ footer b { color: #fff; }
     <summary>Notas sobre las cifras</summary>
     <ul>
       <li>Fuente: hoja <b>Data FP - Calidad 2026</b> (exportaciones de Meta Ads, Google Ads YouTube, Google Ads Display y TikTok Ads).</li>
-      <li>Plan del Media Flow para el período completo (5 nov – 31 dic): Meta $5,250 (CPM $0.30–0.35, 15.0–17.5 M impresiones; KPI alcance y frecuencia); YouTube $4,500 (CPM $0.60, CPV $0.002, 7.5 M impresiones y 2.25 M views; KPI views y VTR); TikTok $2,250 (CPV $0.0015, 1.5 M views); Display $2,250 (CPM $0.50, 4.5 M impresiones). LinkedIn ($750, prueba) no se activó.</li>
+      <li>Plan del Media Flow para el período completo (5 nov – 31 dic): Meta $5,250 (CPM $0.30–0.35, 15.0–17.5 M impresiones; KPI alcance y frecuencia); YouTube $4,500 (CPM $0.60, CPV $0.002, 7.5 M impresiones y 2.25 M views; KPI views y VTR); TikTok $3,000 (CPV $0.0015, 2.0 M views; incluye los $750 de LinkedIn, que no se activó y se reasignaron a TikTok); Display $2,250 (CPM $0.50, 4.5 M impresiones). Presupuesto total: $15,000.</li>
       <li>Meta, YouTube y Display se compran por olas (W1-W2 y W3-W4). El alcance y la frecuencia son los acumulados que reporta cada plataforma por ola; las personas de una ola pueden repetirse en la otra, por eso el alcance total de un canal es una suma por ola y no el alcance único.</li>
       <li>El avance esperado se calcula con los días completos transcurridos contra los 57 días de la campaña. El día en curso aparece en cursiva y no cuenta para el ritmo.</li>
       <li>TikTok reporta por quincena: visualizaciones, costo, me gusta, visitas al perfil y nuevos seguidores. Su audiencia viene en porcentajes por video.</li>
@@ -367,7 +367,7 @@ footer b { color: #fff; }
   const PLAN = {
     Meta: { budget: 5250, cpm: [0.30, 0.35], imp: 15000000, impMax: 17500000, kpi: 'Alcance / frecuencia' },
     YouTube: { budget: 4500, cpm: 0.60, cpv: 0.002, imp: 7500000, views: 2250000, kpi: 'Views / VTR' },
-    TikTok: { budget: 2250, cpv: 0.0015, views: 1500000, kpi: 'Views / alcance' },
+    TikTok: { budget: 3000, cpv: 0.0015, views: 2000000, kpi: 'Views / alcance' },
     Display: { budget: 2250, cpm: 0.50, imp: 4500000, kpi: 'Impresiones / viewability' }
   };
   const INICIO = '2026-11-05', FIN = '2026-12-31';
@@ -443,7 +443,7 @@ footer b { color: #fff; }
     Display: () => `${meter('Inversión', T.Display.costo, PLAN.Display.budget, F.usd0, { gasto: 1 })}${meter('Impresiones', T.Display.imp, PLAN.Display.imp, F.M)}
       <div class="kv"><span>Clics</span><b class="num">${F.int(T.Display.clics)}</b><span>CTR</span><b class="num">${F.pct2(T.Display.clics / T.Display.imp)}</b><span>Usuarios · frecuencia</span><b class="num">${F.int(T.Display.alcance)} · ${F.d1(olas('Display')[0].frecuencia)}</b><span>Viewability</span><b>No reportada</b></div>`
   };
-  const planTxt = { Meta: ['CPM $0.30–0.35', '15.0–17.5 M impresiones'], YouTube: ['CPM $0.60 · CPV $0.002', '7.5 M imp. · 2.25 M views'], TikTok: ['CPV $0.0015', '1.5 M views'], Display: ['CPM $0.50', '4.5 M impresiones'] };
+  const planTxt = { Meta: ['CPM $0.30–0.35', '15.0–17.5 M impresiones'], YouTube: ['CPM $0.60 · CPV $0.002', '7.5 M imp. · 2.25 M views'], TikTok: ['CPV $0.0015', '2.0 M views (incluye $750 de LinkedIn)'], Display: ['CPM $0.50', '4.5 M impresiones'] };
   document.getElementById('flow').replaceChildren(...CH.map((c) => {
     const n = el('section', 'ch'); n.style.setProperty('--c', COL[c]);
     n.innerHTML = `<div class="ch-head"><h3>${c === 'Meta' ? 'Meta FB/IG' : c}</h3><span>KPI: ${PLAN[c].kpi}</span></div>
