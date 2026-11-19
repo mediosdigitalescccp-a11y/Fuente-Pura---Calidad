@@ -183,8 +183,11 @@ h1, h2, h3 { margin: 0; }
 .tt-side > h4 { grid-column: 1 / -1; margin: 0; font-size: 14px; font-weight: 800; display: flex; align-items: center; gap: 8px; }
 .tt-side > h4 i { width: 10px; height: 10px; border-radius: 3px; background: var(--c-tt); }
 .tt-mid { display: flex; flex-direction: column; gap: 10px; align-items: stretch; justify-content: center; }
-.tt-prod { flex: 1; min-height: 140px; border-radius: 14px; background: center / cover no-repeat; position: relative; overflow: hidden; box-shadow: 0 6px 16px rgba(3, 18, 52, .2); }
-.tt-prod span { position: absolute; left: 8px; bottom: 8px; right: 8px; text-align: center; font-size: 11px; font-weight: 800; color: #fff; background: rgba(3, 18, 52, .62); border-radius: 999px; padding: 3px 8px; }
+.tt-prod { flex: 1; border-radius: 14px; position: relative; overflow: hidden; box-shadow: 0 6px 16px rgba(3, 18, 52, .2); background: linear-gradient(180deg, #2a9df0, #0d63d6); display: flex; align-items: center; justify-content: center; }
+.tt-prod img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.tt-lab { position: absolute; left: 8px; right: 8px; bottom: 8px; display: flex; justify-content: space-between; gap: 4px; }
+.tt-lab span { font-size: 10.5px; font-weight: 800; color: #fff; background: rgba(3, 18, 52, .62); border-radius: 999px; padding: 3px 8px; }
+
 .tt-box { background: var(--panel-2); border-radius: 12px; padding: 12px; }
 .tt-box h4 { margin: 0 0 8px; font-size: 12.5px; }
 .hb { display: grid; grid-template-columns: 74px 1fr 38px; gap: 8px; align-items: center; font-size: 11.5px; margin: 4px 0; }
@@ -276,7 +279,7 @@ footer b { color: #fff; }
   .s3, .s4, .s6 { grid-column: span 12; }
   .donut-wrap { grid-template-columns: 120px 1fr; }
   .sec p { display: none; }
-  .tt-aud { grid-template-columns: 1fr; } .tt-mid { flex-direction: row; order: -1; } .tt-prod { min-height: 150px; } .tt-side { grid-template-columns: 1fr; }
+  .tt-aud { grid-template-columns: 1fr; } .tt-mid { order: -1; } .tt-prod { height: 260px; flex: none; width: 180px; margin: 0 auto; } .tt-side { grid-template-columns: 1fr; }
   .stats div { flex-direction: column; gap: 0; }
   .stats div + div { margin-top: 4px; }
   .cre-name { font-size: 12px; }
@@ -625,9 +628,9 @@ footer b { color: #fff; }
   const hbars = (obj, col) => Object.entries(obj).map(([k, v]) => `<div class="hb" style="--c:${col}"><span>${k}</span><div><i style="width:${v}%"></i></div><b>${v}%</b></div>`).join('');
   const ttLab = (t) => `<small style="color:var(--muted);font-weight:700;font-size:10.5px;letter-spacing:.06em">${t}</small>`;
   const ttSide = (v) => `<div class="tt-side"><h4><i></i>${v}</h4>${[['edad', 'Edad'], ['region', 'Región']].map(([k, lab]) => ['W1-W2', 'W3-W4'].map((w) => `<div class="tt-box"><h4>${lab} · ${w}</h4>${hbars(D.tiktok_aud[k][v][w], COL.TikTok)}</div>`).join('')).join('')}</div>`;
-  document.getElementById('tt-aud').innerHTML = ttSide('Agua Mineral')
-    + `<div class="tt-mid"><div class="tt-prod" style="background-image:url('img/PPV_SPOT_CALIDAD_MINERAL_48s.jpg')" role="img" aria-label="Botella Fuente Pura Agua Mineral"><span>← Agua Mineral</span></div><div class="tt-prod" style="background-image:url('img/PPV_SPOT_CALIDAD_GASIFICADA_50s.jpg')" role="img" aria-label="Lata Fuente Pura Agua Gasificada"><span>Agua Gasificada →</span></div></div>`
-    + ttSide('Agua Gasificada');
+  document.getElementById('tt-aud').innerHTML = ttSide('Agua Gasificada')
+    + `<div class="tt-mid"><div class="tt-prod" role="img" aria-label="Lata de Agua Gasificada y botella de Agua Mineral Fuente Pura"><img src="img/productos.jpg" alt=""><div class="tt-lab"><span>← Gasificada</span><span>Mineral →</span></div></div></div>`
+    + ttSide('Agua Mineral');
 
   // ---------- Región ----------
   const RC = ['Meta', 'YouTube', 'Display'], regShare = {};
