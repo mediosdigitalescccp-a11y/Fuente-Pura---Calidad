@@ -533,8 +533,8 @@ footer b { color: #fff; }
   const GC = { Mujer: 'var(--sky)', Hombre: 'var(--navy)', Desconocido: '#b9c4d6' };
   document.getElementById('gens').replaceChildren(...['Meta', 'YouTube', 'Display'].map((c) => {
     const rows = aud(c, 'Género'), tot = sum(rows, 'valor'), parts = ['Mujer', 'Hombre', 'Desconocido'].map((k) => ({ k, v: (rows.find((r) => r.segmento === k) || {}).valor || 0, c: GC[k] }));
-    const d = el('div', '', miniDonut(parts) + `<h4>${c}</h4><p>${parts.map((p) => `${p.k === 'Desconocido' ? 'Sin dato' : p.k} <b>${F.pct(p.v / tot)}</b>`).join('<br>')}</p>`); d.style.setProperty('--c', COL[c]); return d; }));
-  const gk = el('div', 'keys', '<span style="--c:var(--sky)">Mujer</span><span style="--c:var(--navy)">Hombre</span><span style="--c:#b9c4d6">Sin dato</span>'); gk.style.marginTop = '12px'; document.getElementById('gens').after(gk);
+    const d = el('div', '', miniDonut(parts) + `<h4>${c}</h4><p>${parts.map((p) => `${p.k === 'Desconocido' ? 'Desconocida' : p.k} <b>${F.pct(p.v / tot)}</b>`).join('<br>')}</p>`); d.style.setProperty('--c', COL[c]); return d; }));
+  const gk = el('div', 'keys', '<span style="--c:var(--sky)">Mujer</span><span style="--c:var(--navy)">Hombre</span><span style="--c:#b9c4d6">Desconocida</span>'); gk.style.marginTop = '12px'; document.getElementById('gens').after(gk);
 
   const EDADES = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
   let edadCanal = 'todos';
