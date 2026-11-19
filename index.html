@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fuente Pura Calidad · CCCP UM</title>
+<meta name="description" content="Resultados de la campaña Calidad de Fuente Pura (Superior Taste Award 2026) en Meta, YouTube, TikTok y Display, Nicaragua, noviembre–diciembre 2026.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+<style>
+:root {
+  --fg: #0d1b3a; --muted: #55627a; --line: #d6e2f3; --panel: #f3f8ff; --panel-2: #ffffff;
+  --bg-1: #0a2a66; --bg-2: #1460d2; --navy: #0a2a66; --blue: #1659c7; --sky: #2fa8ec;
+  --c-meta: #1f6fe5; --c-yt: #e5332a; --c-tt: #0fb3aa; --c-gdn: #f0a020;
+  --ok: #17935a; --warn: #c27a00; --bad: #d13b3b;
+  --radius: 14px; --gap: 14px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --fg: #e6edf9; --muted: #9fb0cb; --line: #2a3a58; --panel: #121c30; --panel-2: #172440;
+    --bg-1: #050d1f; --bg-2: #0b2a63; --ok: #3cc47a; --warn: #e3a92b; --bad: #ef6b6b; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --fg: #e6edf9; --muted: #9fb0cb; --line: #2a3a58; --panel: #121c30; --panel-2: #172440;
+  --bg-1: #050d1f; --bg-2: #0b2a63; --ok: #3cc47a; --warn: #e3a92b; --bad: #ef6b6b; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; font-family: "Montserrat", system-ui, -apple-system, "Segoe UI", sans-serif; font-size: 14px; color: var(--fg);
+  background: linear-gradient(160deg, var(--bg-1) 0%, var(--bg-2) 55%, #2b8fe0 100%) fixed; background-color: var(--bg-1); }
+.wrap { max-width: 1440px; margin: 0 auto; padding: 0 16px 32px; }
+h1, h2, h3 { margin: 0; }
+.num { font-variant-numeric: tabular-nums; }
+
+/* Navegación */
+.nav { position: sticky; top: 0; z-index: 20; background: color-mix(in srgb, var(--bg-1) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid rgba(255,255,255,.12); }
+.nav .wrap { display: flex; gap: 6px; align-items: center; padding-top: 8px; padding-bottom: 8px; overflow-x: auto; scrollbar-width: none; }
+.nav .wrap::-webkit-scrollbar { display: none; }
+.nav-brand { color: #fff; font-weight: 800; letter-spacing: .02em; margin-right: 10px; white-space: nowrap; font-size: 13px; }
+.nav a { color: rgba(255,255,255,.82); text-decoration: none; font-size: 12.5px; font-weight: 600; padding: 7px 11px; border-radius: 999px; white-space: nowrap; }
+.nav a:hover, .nav a:focus-visible { background: rgba(255,255,255,.14); color: #fff; outline: none; }
+.nav a.on { background: #fff; color: var(--navy); }
+
+/* Hero */
+.hero { margin-top: 16px; border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  background: radial-gradient(120% 140% at 85% 20%, #3db6f5 0%, #1a6fe0 38%, #0b3a8f 100%); color: #fff; box-shadow: 0 18px 40px rgba(3, 18, 52, .35); }
+.hero-txt { padding: 30px 32px 26px; display: flex; flex-direction: column; gap: 12px; }
+.hero-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.22); }
+.tag.gold { background: linear-gradient(135deg, #f7d774, #c8962e); color: #3a2600; border: 0; }
+.hero h1 { font-size: clamp(26px, 3.4vw, 42px); font-weight: 800; line-height: 1.05; letter-spacing: -.01em; }
+.hero h1 span { display: block; font-size: .5em; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; opacity: .85; margin-bottom: 8px; }
+.hero p.lead { margin: 0; font-size: 15px; line-height: 1.55; max-width: 62ch; color: rgba(255,255,255,.92); }
+.hero p.lead b { color: #fff; }
+.phase { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; background: rgba(4, 22, 64, .35); border: 1px solid rgba(255,255,255,.16); border-radius: 12px; padding: 10px 14px; max-width: 560px; }
+.phase small { display: block; font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+.phase b { font-size: 15px; }
+.phase-bar { height: 8px; border-radius: 999px; background: rgba(255,255,255,.18); overflow: hidden; }
+.phase-bar i { display: block; height: 100%; background: linear-gradient(90deg, #7fd8ff, #fff); border-radius: inherit; }
+.hero-img { position: relative; height: 100%; aspect-ratio: 1 / 1; min-height: 300px; background: url("img/PPL_CALIDAD_V1.jpg") center / cover no-repeat; }
+.hero-img::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11,58,143,.55) 0%, rgba(11,58,143,0) 35%); }
+
+/* Tarjetas KPI superiores */
+.tiles { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--gap); margin-top: var(--gap); }
+.tile { background: var(--panel-2); border-radius: var(--radius); padding: 14px 16px; border-top: 4px solid var(--c, var(--blue)); box-shadow: 0 6px 18px rgba(3, 18, 52, .18); min-width: 0; }
+.tile small { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--muted); }
+.tile b { display: block; font-size: 22px; font-weight: 800; margin-top: 4px; }
+.tile span { display: block; font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+/* Secciones */
+.sec { display: flex; align-items: center; gap: 12px; margin: 34px 0 14px; color: #fff; scroll-margin-top: 64px; }
+.sec i { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,.16); font-style: normal; font-weight: 800; font-size: 14px; }
+.sec h2 { font-size: 20px; font-weight: 800; }
+.sec p { margin: 0 0 0 auto; font-size: 12.5px; opacity: .8; text-align: right; }
+.sec::after { content: none; }
+.grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); }
+.card { background: var(--panel); border-radius: var(--radius); padding: 18px; box-shadow: 0 6px 18px rgba(3, 18, 52, .16); min-width: 0; }
+.card h3 { font-size: 15px; font-weight: 800; }
+.card .sub { font-size: 12px; color: var(--muted); margin: 4px 0 12px; line-height: 1.45; }
+.s3 { grid-column: span 3; } .s4 { grid-column: span 4; } .s5 { grid-column: span 5; } .s6 { grid-column: span 6; } .s7 { grid-column: span 7; } .s8 { grid-column: span 8; } .s12 { grid-column: span 12; }
+
+/* Concepto */
+.pillars { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gap); }
+.pillar { background: var(--panel-2); border-radius: 22px; padding: 26px 22px; text-align: center; box-shadow: 0 6px 18px rgba(3, 18, 52, .16); position: relative; }
+.pillar small { font-size: 11px; font-weight: 800; letter-spacing: .1em; color: var(--navy); text-transform: uppercase; }
+:root[data-theme="dark"] .pillar small { color: var(--sky); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .pillar small { color: var(--sky); } }
+.pillar b { display: block; font-size: 28px; font-weight: 800; color: var(--blue); margin: 10px 0 12px; letter-spacing: .01em; }
+.pillar p { margin: 0; color: var(--muted); line-height: 1.5; font-size: 13.5px; }
+.pillar .arrow { position: absolute; right: -14px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 50%; background: var(--sky); color: #fff; display: grid; place-items: center; font-weight: 800; z-index: 2; }
+
+/* Media flow */
+.flow { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gap); }
+.ch { background: var(--panel); border-radius: var(--radius); padding: 18px; box-shadow: 0 6px 18px rgba(3, 18, 52, .16); border-top: 5px solid var(--c); display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.ch-head { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.ch-head h3 { color: var(--c); font-size: 17px; }
+.ch-head span { font-size: 12px; color: var(--muted); }
+.plan { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 12px; background: var(--panel-2); border-radius: 10px; padding: 10px 12px; }
+.plan small { display: block; color: var(--muted); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
+.plan b { font-size: 13px; }
+.meter { display: grid; gap: 5px; }
+.meter-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 12px; gap: 8px; }
+.meter-top b { font-size: 15px; }
+.meter-top small { color: var(--muted); }
+.bar { position: relative; height: 10px; border-radius: 999px; background: color-mix(in srgb, var(--c) 14%, var(--panel-2)); overflow: visible; }
+.bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: inherit; background: var(--c); }
+.bar em { position: absolute; top: -4px; bottom: -4px; width: 2px; background: var(--fg); border-radius: 2px; }
+.meter-foot { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+.pill { display: inline-block; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.pill.ok { background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); }
+.pill.warn { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
+.pill.bad { background: color-mix(in srgb, var(--bad) 15%, transparent); color: var(--bad); }
+.kv { margin-top: auto; display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; font-size: 12.5px; border-top: 1px dashed var(--line); padding-top: 10px; }
+.kv span { color: var(--muted); }
+.kv b { text-align: right; }
+.flow-note { margin-top: 10px; color: rgba(255,255,255,.85); font-size: 12px; }
+
+/* Gráficos */
+.donut-wrap { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: center; }
+.legend { display: grid; gap: 8px; font-size: 12.5px; }
+.legend div { display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center; }
+.legend i { width: 10px; height: 10px; border-radius: 3px; background: var(--c); }
+.legend small { display: block; color: var(--muted); font-size: 11px; }
+.eff { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.eff th { text-align: left; font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; padding: 6px 4px; border-bottom: 1px solid var(--line); }
+.eff td { padding: 9px 4px; border-bottom: 1px solid var(--line); }
+.eff td:not(:first-child), .eff th:not(:first-child) { text-align: right; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 3px; background: var(--c); margin-right: 7px; }
+.ctl { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.seg { display: inline-flex; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
+.seg button { font: inherit; font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; border: 0; background: transparent; color: var(--muted); padding: 6px 12px; border-radius: 999px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--blue); color: #fff; }
+.seg button:focus-visible { outline: 2px solid var(--sky); outline-offset: 1px; }
+.keys { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+.keys span::before { content: ""; display: inline-block; width: 10px; height: 10px; border-radius: 3px; background: var(--c); margin-right: 6px; vertical-align: -1px; }
+.chart { position: relative; width: 100%; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.chart text { font-family: inherit; fill: var(--muted); font-size: 11px; }
+.tip { position: absolute; pointer-events: none; background: var(--panel-2); color: var(--fg); border: 1px solid var(--line); border-radius: 10px; padding: 8px 10px; font-size: 12px; box-shadow: 0 8px 24px rgba(3,18,52,.22); opacity: 0; transition: opacity .12s; z-index: 5; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 3px; }
+
+/* Hallazgos */
+.finds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.find { background: var(--panel-2); border-radius: 12px; padding: 14px; border-left: 4px solid var(--c); font-size: 13px; line-height: 1.5; }
+.find small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .08em; color: var(--c); margin-bottom: 4px; text-transform: uppercase; }
+
+/* Audiencia */
+#genero-card { display: flex; flex-direction: column; } #genero-card .gens-c { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.gens { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; text-align: center; }
+.gens h4 { margin: 6px 0 2px; font-size: 13px; color: var(--c); }
+.gens p { margin: 0; font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+.tt-aud { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-top: 14px; }
+.tt-box { background: var(--panel-2); border-radius: 12px; padding: 12px; }
+.tt-box h4 { margin: 0 0 8px; font-size: 12.5px; }
+.hb { display: grid; grid-template-columns: 74px 1fr 38px; gap: 8px; align-items: center; font-size: 11.5px; margin: 4px 0; }
+.hb div { height: 8px; border-radius: 999px; background: color-mix(in srgb, var(--c) 14%, transparent); overflow: hidden; }
+.hb div i { display: block; height: 100%; background: var(--c); border-radius: inherit; }
+.hb b { text-align: right; font-weight: 700; }
+
+/* Región */
+.heat { width: 100%; border-collapse: separate; border-spacing: 0 4px; font-size: 12.5px; }
+.heat th { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; text-align: center; padding: 4px; }
+.heat th:first-child, .heat td:first-child { text-align: left; }
+.heat td { padding: 7px 6px; text-align: center; font-weight: 600; }
+.heat td.v { border-radius: 6px; color: var(--fg); }
+
+/* Creativos */
+.cards { display: grid; gap: 12px; }
+.cre { background: var(--panel-2); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; border: 1px solid var(--line); min-width: 0; }
+.thumb { position: relative; aspect-ratio: 1 / 1; background: linear-gradient(145deg, #1a6fe0, #0b3a8f) center / cover no-repeat; }
+.thumb.wide { aspect-ratio: 16 / 9; }
+.thumb .ph { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,.85); font-size: 12px; font-weight: 600; text-align: center; padding: 10px; }
+.rank { position: absolute; top: 8px; left: 8px; background: rgba(3,18,52,.68); color: #fff; font-size: 11px; font-weight: 800; border-radius: 999px; padding: 2px 9px; z-index: 2; }
+.play { position: absolute; right: 8px; bottom: 8px; width: 32px; height: 32px; border-radius: 50%; background: rgba(3,18,52,.68); display: grid; place-items: center; z-index: 2; }
+.play::before { content: ""; border-left: 11px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
+.cre-body { padding: 12px 14px 14px; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+.fmt { align-self: flex-start; font-size: 10.5px; font-weight: 800; letter-spacing: .05em; color: #fff; background: var(--c); padding: 3px 9px; border-radius: 999px; text-transform: uppercase; }
+.cre-name { font-weight: 800; font-size: 13px; line-height: 1.3; word-break: break-word; }
+.stats { display: grid; gap: 3px; font-size: 12px; }
+.stats div { display: flex; justify-content: space-between; gap: 8px; }
+.stats span { color: var(--muted); font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
+.stats b { font-weight: 700; }
+.qbar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; align-items: end; height: 44px; margin-top: 2px; }
+.qbar i { display: block; background: var(--c); border-radius: 4px 4px 0 0; opacity: .85; }
+.qlab { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; font-size: 10px; color: var(--muted); text-align: center; }
+a.cre { color: inherit; text-decoration: none; }
+a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underline; }
+
+/* Display */
+.gdn-line { display: flex; align-items: flex-end; justify-content: center; gap: 14px; padding: 6px 2px 4px; overflow-x: auto; }
+.gdn-line.col { flex-direction: column; align-items: center; justify-content: flex-start; gap: 10px; }
+.gdn-ad { flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; }
+.gdn-ad img { display: block; border-radius: 6px; box-shadow: 0 6px 16px rgba(3, 18, 52, .22); background: var(--panel-2); }
+.gdn-ad figcaption { font-size: 11px; font-weight: 700; color: var(--muted); }
+.gdn-stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.gdn-stats div { background: var(--panel-2); border-radius: 10px; padding: 10px 12px; border-top: 3px solid var(--c-gdn); }
+.gdn-stats small { display: block; font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
+.gdn-stats b { font-size: 16px; }
+@media (max-width: 760px) { .gdn-line { justify-content: flex-start; } .gdn-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 761px) and (max-width: 1180px) { .gdn-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Detalle */
+.tbl-wrap { overflow-x: auto; }
+.tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; min-width: 780px; }
+.tbl th { text-align: right; font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; padding: 8px 6px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.tbl td { text-align: right; padding: 7px 6px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.tbl th:nth-child(-n+3), .tbl td:nth-child(-n+3) { text-align: left; }
+.tbl tr.partial td { color: var(--muted); font-style: italic; }
+details.notes { margin-top: 18px; color: rgba(255,255,255,.88); font-size: 12.5px; }
+details.notes summary { cursor: pointer; font-weight: 700; }
+details.notes ul { line-height: 1.6; padding-left: 18px; }
+footer { margin-top: 26px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: rgba(255,255,255,.8); font-size: 12px; }
+footer b { color: #fff; }
+
+/* Responsivo */
+@media (max-width: 1180px) {
+  .tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .s3, .s4 { grid-column: span 6; } .s5, .s7, .s8 { grid-column: span 12; }
+  .grid > .s4:last-child:nth-child(odd) { grid-column: span 12; }
+  .finds { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tt-aud { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .wrap { padding: 0 12px 24px; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-txt { padding: 22px 18px; }
+  .phase { grid-template-columns: 1fr auto; }
+  .phase .phase-bar { grid-column: 1 / -1; order: 3; }
+  .hero-img { height: auto; width: 100%; min-height: 0; order: -1; }
+  .hero-img::after { background: linear-gradient(0deg, rgba(11,58,143,.55) 0%, rgba(11,58,143,0) 40%); }
+  .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pillars, .flow, .finds { grid-template-columns: 1fr; }
+  .pillar .arrow { right: 50%; top: auto; bottom: -14px; transform: translateX(50%) rotate(90deg); }
+  .s3, .s4, .s6 { grid-column: span 12; }
+  .donut-wrap { grid-template-columns: 120px 1fr; }
+  .sec p { display: none; }
+  .tt-aud { grid-template-columns: 1fr; }
+  .stats div { flex-direction: column; gap: 0; }
+  .stats div + div { margin-top: 4px; }
+  .cre-name { font-size: 12px; }
+  .cre-body { padding: 10px; }
+}
+</style>
+</head>
+<body>
+<nav class="nav" aria-label="Secciones">
+  <div class="wrap">
+    <span class="nav-brand">FUENTE PURA · CALIDAD</span>
+    <a href="#resumen" data-t="resumen">Resumen</a>
+    <a href="#concepto" data-t="concepto">Concepto</a>
+    <a href="#kpi" data-t="kpi">KPI Media Flow</a>
+    <a href="#mix" data-t="mix">Mix e inversión</a>
+    <a href="#entrega" data-t="entrega">Entrega diaria</a>
+    <a href="#audiencia" data-t="audiencia">Audiencia</a>
+    <a href="#region" data-t="region">Región</a>
+    <a href="#creativos" data-t="creativos">Creativos</a>
+    <a href="#detalle" data-t="detalle">Detalle diario</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="hero" id="resumen">
+    <div class="hero-txt">
+      <div class="hero-tags">
+        <span class="tag gold">Superior Taste Award 2026</span>
+        <span class="tag">Meta · YouTube · TikTok · Display</span>
+        <span class="tag">Nicaragua · 5 nov – 31 dic</span>
+      </div>
+      <h1><span>Fuente Pura · Campaña Calidad</span>Tu sed merece lo mejor</h1>
+      <p class="lead" id="lead">—</p>
+      <div class="phase">
+        <div><small>Avance de la campaña</small><b id="phase-day">—</b></div>
+        <div class="phase-bar" role="img" id="phase-bar-l"><i id="phase-bar"></i></div>
+        <div style="text-align:right"><small>Datos al</small><b id="phase-date">—</b></div>
+      </div>
+    </div>
+    <div class="hero-img" role="img" aria-label="Pieza Tu sed merece lo mejor con el sello Superior Taste Award 2026"></div>
+  </header>
+
+  <section class="tiles" aria-label="Indicadores principales" id="tiles"></section>
+
+  <div class="sec" id="concepto"><i>1</i><h2>De comunicar un premio a construir valor de marca</h2></div>
+  <p style="color:rgba(255,255,255,.88); margin:-6px 0 14px; font-size:13.5px; line-height:1.5">El reconocimiento es el <i>proof point</i>; lo que buscamos con la planificación de medios es convertirlo en una asociación de marca.</p>
+  <div class="pillars">
+    <div class="pillar"><small>Activo de comunicación</small><b>PREMIO</b><p>Superior Taste Award 2026 como respaldo visible de la calidad de Fuente Pura.</p><span class="arrow" aria-hidden="true">›</span></div>
+    <div class="pillar"><small>Reto</small><b>ASOCIACIÓN</b><p>No basta con que el consumidor vea el sello. Necesitamos que entienda qué representa para la marca.</p><span class="arrow" aria-hidden="true">›</span></div>
+    <div class="pillar"><small>Ambición</small><b>PREFERENCIA</b><p>Instalar nacionalmente una relación simple y memorable: Fuente Pura = calidad reconocida.</p></div>
+  </div>
+
+  <div class="sec" id="kpi"><i>2</i><h2>KPI · Media Flow</h2><p>Cumplimiento de la planificación para el período completo Nov–Dic</p></div>
+  <div class="flow" id="flow"></div>
+  <p class="flow-note">La marca negra en cada barra es lo esperado a la fecha según los días transcurridos hasta el 31 de diciembre. LinkedIn (presupuesto de prueba de $750) no se activó, por eso no aparece.</p>
+
+  <div class="sec" id="mix"><i>3</i><h2>Mix e inversión</h2><p>Cómo se reparte lo invertido y cuánto cuesta cada resultado</p></div>
+  <div class="grid">
+    <section class="card s4"><h3>Mix de impresiones</h3><p class="sub">Impresiones entregadas por canal. TikTok se mide en views.</p><div class="donut-wrap"><div class="chart" id="d-imp"></div><div class="legend" id="l-imp"></div></div></section>
+    <section class="card s4"><h3>Mix de inversión</h3><p class="sub">Inversión a la fecha contra el presupuesto de cada canal.</p><div class="donut-wrap"><div class="chart" id="d-inv"></div><div class="legend" id="l-inv"></div></div></section>
+    <section class="card s4"><h3>Eficiencia real contra el plan</h3><p class="sub">Verde: igual o mejor que lo planificado.</p><table class="eff" id="eff"></table></section>
+  </div>
+
+  <div class="sec" id="entrega"><i>4</i><h2>Entrega diaria</h2><p>Meta, YouTube y Display reportan por día; TikTok, por quincena</p></div>
+  <div class="grid">
+    <section class="card s12">
+      <h3>Entrega diaria por canal</h3>
+      <div class="ctl" style="margin-top:10px">Ver <span class="seg" id="seg-met"><button type="button" data-v="impresiones" aria-pressed="true">Impresiones</button><button type="button" data-v="costo" aria-pressed="false">Inversión</button><button type="button" data-v="reproducciones" aria-pressed="false">Views / reproducciones</button></span></div>
+      <div class="keys"><span style="--c:var(--c-meta)">Meta</span><span style="--c:var(--c-yt)">YouTube</span><span style="--c:var(--c-gdn)">Display</span></div>
+      <div class="chart" id="c-diario"></div>
+      <p class="sub" id="diario-nota" style="margin:8px 0 0"></p>
+    </section>
+    <section class="card s12"><h3>Hallazgos clave</h3><p class="sub">Se calculan con los datos de la hoja; el día en curso no cuenta para el ritmo.</p><div class="finds" id="finds"></div></section>
+  </div>
+
+  <div class="sec" id="audiencia"><i>5</i><h2>Audiencia</h2><p>Meta: sobre alcance · YouTube y Display: sobre impresiones · TikTok: % de alcance</p></div>
+  <div class="grid">
+    <section class="card s5" id="genero-card"><h3>Género</h3><p class="sub">Distribución por canal.</p><div class="gens-c"><div class="gens" id="gens"></div></div></section>
+    <section class="card s7"><h3>Edad por canal</h3><div class="ctl" style="margin-top:10px">Canal <span class="seg" id="seg-edad"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div><div class="keys" id="edad-keys"></div><div class="chart" id="c-edad"></div></section>
+    <section class="card s12"><h3>TikTok · edad y región de quienes vieron cada video</h3><p class="sub">Porcentaje del alcance. TikTok Ads reporta por quincena (W1-W2 y W3-W4 de noviembre); la región corresponde a W3-W4.</p><div class="tt-aud" id="tt-aud"></div></section>
+  </div>
+
+  <div class="sec" id="region"><i>6</i><h2>Región</h2><p>Peso de cada departamento dentro de cada canal</p></div>
+  <div class="grid">
+    <section class="card s12"><h3>Región por canal</h3><p class="sub">Participación dentro de cada canal. Más intenso, mayor peso. Ordenado por el promedio de los tres canales.</p><div class="tbl-wrap"><table class="heat" id="heat"></table></div></section>
+  </div>
+
+  <div class="sec" id="creativos"><i>7</i><h2>Creativos</h2><p>Ordenados por impresiones o views</p></div>
+  <div class="grid">
+    <section class="card s12"><h3>Creativos de Meta</h3><p class="sub">PPV: spot en video · PPL: pieza estática. Tasa = interacciones ÷ impresiones.</p><div class="cards" id="cre-meta"></div></section>
+    <section class="card s12"><h3>Videos de YouTube y TikTok</h3><p class="sub">YouTube: VTR = views ÷ impresiones; las barras muestran cuántos de los que vieron el video llegaron al 25%, 50%, 75% y 100%. TikTok: acumulado de W1-W2 y W3-W4; CPV = costo ÷ visualizaciones.</p><div class="cards" id="cre-yt"></div></section>
+    <section class="card s12"><h3>Display · formatos de la campaña</h3><p class="sub" id="gdn-sub">—</p><div class="ctl">Serie <span class="seg" id="seg-gdn"></span></div><div class="gdn-line" id="gdn-line"></div><div class="gdn-stats" id="gdn-stats"></div></section>
+  </div>
+
+  <div class="sec" id="detalle"><i>8</i><h2>Detalle diario</h2></div>
+  <section class="card">
+    <div class="ctl">Canal <span class="seg" id="seg-det"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div>
+    <div class="tbl-wrap"><table class="tbl" id="tbl"></table></div>
+  </section>
+
+  <details class="notes">
+    <summary>Notas sobre las cifras</summary>
+    <ul>
+      <li>Fuente: hoja <b>Data FP - Calidad 2026</b> (exportaciones de Meta Ads, Google Ads YouTube, Google Ads Display y TikTok Ads).</li>
+      <li>Plan del Media Flow para el período completo (5 nov – 31 dic): Meta $5,250 (CPM $0.30–0.35, 15.0–17.5 M impresiones; KPI alcance y frecuencia); YouTube $4,500 (CPM $0.60, CPV $0.002, 7.5 M impresiones y 2.25 M views; KPI views y VTR); TikTok $2,250 (CPV $0.0015, 1.5 M views); Display $2,250 (CPM $0.50, 4.5 M impresiones). LinkedIn ($750, prueba) no se activó.</li>
+      <li>Meta, YouTube y Display se compran por olas (W1-W2 y W3-W4). El alcance y la frecuencia son los acumulados que reporta cada plataforma por ola; las personas de una ola pueden repetirse en la otra, por eso el alcance total de un canal es una suma por ola y no el alcance único.</li>
+      <li>El avance esperado se calcula con los días completos transcurridos contra los 57 días de la campaña. El día en curso aparece en cursiva y no cuenta para el ritmo.</li>
+      <li>TikTok reporta por quincena: visualizaciones, costo, me gusta, visitas al perfil y nuevos seguidores. Su audiencia viene en porcentajes por video.</li>
+      <li>Display no trae viewability en la exportación; se muestran impresiones, clics y CTR. Los totales por banner pueden diferir levemente de los diarios por el corte de la exportación.</li>
+      <li>Montos en USD.</li>
+    </ul>
+  </details>
+  <footer><span><b>Fuente Pura · Calidad</b> · Paid Media</span><span>Confidencial · Propiedad de CCCP UM Nicaragua</span></footer>
+</main>
+
+<script src="datos.js"></script>
+<script>
+(() => {
+  const D = window.FP_DATA;
+  const CH = ['Meta', 'YouTube', 'TikTok', 'Display'];
+  const VNOM = { G4YsEIWVi2Y: 'Agua Gasificada', aiHWi4r6b4w: 'Agua Mineral', zcWM8awGdFc: 'Agua Gasificada', dyWARNUkFYs: 'Agua Mineral' };
+  const VIMG = { 'Agua Mineral': 'PPV_SPOT_CALIDAD_MINERAL_48s', 'Agua Gasificada': 'PPV_SPOT_CALIDAD_GASIFICADA_50s' };
+  const COL = { Meta: 'var(--c-meta)', YouTube: 'var(--c-yt)', TikTok: 'var(--c-tt)', Display: 'var(--c-gdn)' };
+  const PLAN = {
+    Meta: { budget: 5250, cpm: [0.30, 0.35], imp: 15000000, impMax: 17500000, kpi: 'Alcance / frecuencia' },
+    YouTube: { budget: 4500, cpm: 0.60, cpv: 0.002, imp: 7500000, views: 2250000, kpi: 'Views / VTR' },
+    TikTok: { budget: 2250, cpv: 0.0015, views: 1500000, kpi: 'Views / alcance' },
+    Display: { budget: 2250, cpm: 0.50, imp: 4500000, kpi: 'Impresiones / viewability' }
+  };
+  const INICIO = '2026-11-05', FIN = '2026-12-31';
+  const MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+  const nf = (d) => new Intl.NumberFormat('en-US', { maximumFractionDigits: d, minimumFractionDigits: d });
+  const F = {
+    int: (v) => nf(0).format(v), d1: (v) => nf(1).format(v), d2: (v) => nf(2).format(v),
+    usd: (v) => '$' + nf(2).format(v), usd0: (v) => '$' + nf(0).format(v), usd3: (v) => '$' + nf(3).format(v), usd4: (v) => '$' + nf(4).format(v),
+    pct: (v) => nf(0).format(v * 100) + '%', pct1: (v) => nf(1).format(v * 100) + '%', pct2: (v) => nf(2).format(v * 100) + '%',
+    M: (v) => v >= 1e6 ? nf(2).format(v / 1e6) + ' M' : v >= 1e3 ? nf(1).format(v / 1e3) + ' mil' : nf(0).format(v),
+    fecha: (s) => { const [y, m, d] = s.split('-').map(Number); return d + ' ' + MES[m - 1]; }
+  };
+  const days = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 864e5);
+  const sum = (arr, k) => arr.reduce((s, r) => s + (Number(r[k]) || 0), 0);
+  const el = (tag, cls, html) => { const e = document.createElement(tag); if (cls) e.className = cls; if (html !== undefined) e.innerHTML = html; return e; };
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+  // ---------- Fechas y ritmo ----------
+  const ultima = D.diario.reduce((m, r) => r.fecha > m ? r.fecha : m, INICIO);
+  const hoy = new Date(Date.now() - 6 * 3600e3).toISOString().slice(0, 10);
+  const enCurso = ultima >= hoy;
+  const ultCompleta = enCurso ? new Date(Date.parse(ultima) - 864e5).toISOString().slice(0, 10) : ultima;
+  const totalDias = days(INICIO, FIN) + 1, diaN = days(INICIO, ultima) + 1;
+  const esperado = Math.min(1, (days(INICIO, ultCompleta) + 1) / totalDias);
+
+  // ---------- Totales por canal ----------
+  const byCh = (c) => D.diario.filter((r) => r.canal === c);
+  const olas = (c) => D.olas.filter((o) => o.canal === c);
+  const T = {};
+  ['Meta', 'YouTube', 'Display'].forEach((c) => {
+    const rows = byCh(c);
+    T[c] = { imp: sum(rows, 'impresiones'), costo: sum(rows, 'costo'), views: sum(rows, 'reproducciones'), clics: sum(rows, 'clics'), inter: sum(rows, 'interacciones'), thru: sum(rows, 'thruplays'),
+      alcance: olas(c).reduce((s, o) => s + o.alcance, 0), q100: sum(rows, 'q100') };
+  });
+  T.TikTok = { views: sum(D.tiktok, 'views'), costo: sum(D.tiktok, 'costo'), likes: sum(D.tiktok, 'likes'), perfil: sum(D.tiktok, 'perfil'), seg: sum(D.tiktok, 'seguidores'), imp: 0 };
+  const inv = CH.reduce((s, c) => s + T[c].costo, 0), budget = CH.reduce((s, c) => s + PLAN[c].budget, 0);
+  const impTot = T.Meta.imp + T.YouTube.imp + T.Display.imp;
+  const cpm = (c) => T[c].imp ? T[c].costo / T[c].imp * 1000 : 0;
+  const metaFrec = (() => { const o = olas('Meta'); const a = o.reduce((s, x) => s + x.alcance, 0); return a ? o.reduce((s, x) => s + x.alcance * x.frecuencia, 0) / a : 0; })();
+
+  // ---------- Hero ----------
+  document.getElementById('lead').innerHTML = `Con <b>${diaN}</b> de ${totalDias} días de campaña, Fuente Pura suma <b>${F.int(impTot)}</b> impresiones y <b>${F.int(T.YouTube.views + T.TikTok.views)}</b> views en video con una inversión de <b>${F.usd(inv)}</b> (${F.pct(inv / budget)} del presupuesto de ${F.usd0(budget)}). El objetivo: que el sello Superior Taste Award se asocie con la calidad de la marca.`;
+  document.getElementById('phase-day').textContent = 'Día ' + diaN + ' de ' + totalDias;
+  document.getElementById('phase-bar').style.width = (diaN / totalDias * 100) + '%';
+  document.getElementById('phase-bar-l').setAttribute('aria-label', 'Día ' + diaN + ' de ' + totalDias);
+  document.getElementById('phase-date').textContent = F.fecha(ultima) + (enCurso ? ' (en curso)' : '');
+
+  const tiles = [
+    ['Inversión total', F.usd(inv), F.pct(inv / budget) + ' de ' + F.usd0(budget), 'var(--blue)'],
+    ['Impresiones', F.int(impTot), 'Meta, YouTube y Display', 'var(--sky)'],
+    ['Alcance Meta', F.int(T.Meta.alcance), 'suma de olas · frecuencia ' + F.d2(metaFrec), COL.Meta],
+    ['Views YouTube', F.int(T.YouTube.views), 'VTR ' + F.pct1(T.YouTube.views / T.YouTube.imp), COL.YouTube],
+    ['Views TikTok', F.int(T.TikTok.views), F.int(T.TikTok.seg) + ' nuevos seguidores', COL.TikTok],
+    ['Impresiones Display', F.int(T.Display.imp), 'CTR ' + F.pct2(T.Display.clics / T.Display.imp), COL.Display]
+  ];
+  document.getElementById('tiles').replaceChildren(...tiles.map(([a, b, c, col]) => { const t = el('div', 'tile', `<small>${a}</small><b class="num">${b}</b><span>${c}</span>`); t.style.setProperty('--c', col); return t; }));
+
+  // ---------- Media flow ----------
+  const estado = (av) => av >= 1 ? ['ok', 'Cumplida'] : av >= esperado * 0.95 ? ['ok', 'A ritmo'] : av >= esperado * 0.75 ? ['warn', 'Atención'] : ['bad', 'Rezagada'];
+  const meter = (label, valor, meta, fmt, opts = {}) => {
+    const av = meta ? valor / meta : 0, [cl, txt] = opts.gasto ? (av > esperado * 1.15 ? ['warn', 'Adelantada'] : av < esperado * 0.85 ? ['warn', 'Por debajo'] : ['ok', 'En línea']) : estado(av);
+    return `<div class="meter"><div class="meter-top"><span>${label}</span><b class="num">${F.pct(av)}</b></div>
+      <div class="bar" role="img" aria-label="${label}: ${F.pct(av)} de la meta; esperado ${F.pct(esperado)}"><i style="width:${Math.min(100, av * 100)}%"></i><em style="left:calc(${esperado * 100}% - 1px)"></em></div>
+      <div class="meter-foot"><span class="num">${fmt(valor)} de ${fmt(meta)}</span><span class="pill ${cl}">${txt}</span></div></div>`;
+  };
+  const flowCards = {
+    Meta: () => `${meter('Inversión', T.Meta.costo, PLAN.Meta.budget, F.usd0, { gasto: 1 })}${meter('Impresiones (meta 15 M)', T.Meta.imp, PLAN.Meta.imp, F.M)}
+      <div class="kv"><span>Alcance W1-W2</span><b class="num">${F.int(olas('Meta')[0].alcance)} · f ${F.d2(olas('Meta')[0].frecuencia)}</b><span>Alcance W3-W4</span><b class="num">${F.int(olas('Meta')[1].alcance)} · f ${F.d2(olas('Meta')[1].frecuencia)}</b><span>Interacciones</span><b class="num">${F.int(T.Meta.inter)}</b><span>ThruPlays</span><b class="num">${F.int(T.Meta.thru)}</b></div>`,
+    YouTube: () => `${meter('Inversión', T.YouTube.costo, PLAN.YouTube.budget, F.usd0, { gasto: 1 })}${meter('Impresiones', T.YouTube.imp, PLAN.YouTube.imp, F.M)}${meter('Views', T.YouTube.views, PLAN.YouTube.views, F.M)}
+      <div class="kv"><span>VTR</span><b class="num">${F.pct1(T.YouTube.views / T.YouTube.imp)}</b><span>Usuarios únicos (suma de olas)</span><b class="num">${F.int(T.YouTube.alcance)}</b><span>Vistas completas (100%)</span><b class="num">${F.int(T.YouTube.q100)}</b></div>`,
+    TikTok: () => `${meter('Inversión', T.TikTok.costo, PLAN.TikTok.budget, F.usd0, { gasto: 1 })}${meter('Views', T.TikTok.views, PLAN.TikTok.views, F.M)}
+      <div class="kv"><span>Me gusta</span><b class="num">${F.int(T.TikTok.likes)}</b><span>Visitas al perfil</span><b class="num">${F.int(T.TikTok.perfil)}</b><span>Nuevos seguidores</span><b class="num">${F.int(T.TikTok.seg)}</b><span>CPV real</span><b class="num">${F.usd4(T.TikTok.costo / T.TikTok.views)}</b></div>`,
+    Display: () => `${meter('Inversión', T.Display.costo, PLAN.Display.budget, F.usd0, { gasto: 1 })}${meter('Impresiones', T.Display.imp, PLAN.Display.imp, F.M)}
+      <div class="kv"><span>Clics</span><b class="num">${F.int(T.Display.clics)}</b><span>CTR</span><b class="num">${F.pct2(T.Display.clics / T.Display.imp)}</b><span>Usuarios · frecuencia</span><b class="num">${F.int(T.Display.alcance)} · ${F.d1(olas('Display')[0].frecuencia)}</b><span>Viewability</span><b>No reportada</b></div>`
+  };
+  const planTxt = { Meta: ['CPM $0.30–0.35', '15.0–17.5 M impresiones'], YouTube: ['CPM $0.60 · CPV $0.002', '7.5 M imp. · 2.25 M views'], TikTok: ['CPV $0.0015', '1.5 M views'], Display: ['CPM $0.50', '4.5 M impresiones'] };
+  document.getElementById('flow').replaceChildren(...CH.map((c) => {
+    const n = el('section', 'ch'); n.style.setProperty('--c', COL[c]);
+    n.innerHTML = `<div class="ch-head"><h3>${c === 'Meta' ? 'Meta FB/IG' : c}</h3><span>KPI: ${PLAN[c].kpi}</span></div>
+      <div class="plan"><div><small>Budget</small><b class="num">${F.usd0(PLAN[c].budget)}</b></div><div><small>Planning</small><b>${planTxt[c][0]}</b></div><div style="grid-column:span 2"><small>Proyección</small><b>${planTxt[c][1]}</b></div></div>${flowCards[c]()}`;
+    return n;
+  }));
+
+  // ---------- Tooltip ----------
+  const tipFor = (box) => { let t = box.querySelector(':scope > .tip'); if (!t) { t = el('div', 'tip'); box.append(t); } return {
+    show(ev, lines) { t.innerHTML = '<b>' + esc(lines[0]) + '</b>' + lines.slice(1).map((l) => '<div>' + esc(l) + '</div>').join(''); const r = box.getBoundingClientRect(); let x = ev.clientX - r.left + 12, y = ev.clientY - r.top + 12; t.style.opacity = 1; const w = t.offsetWidth; if (x + w > r.width) x = Math.max(0, ev.clientX - r.left - w - 12); t.style.left = x + 'px'; t.style.top = y + 'px'; },
+    hide() { t.style.opacity = 0; } }; };
+
+  // ---------- Donas ----------
+  const donut = (id, parts, centro, sub) => {
+    const box = document.getElementById(id), S = 150, R = 70, r = 46, tot = parts.reduce((s, p) => s + p.v, 0);
+    let a0 = -Math.PI / 2, paths = '';
+    parts.forEach((p, i) => { const a1 = a0 + p.v / tot * Math.PI * 2, large = a1 - a0 > Math.PI ? 1 : 0, P = (a, rr) => [S / 2 + rr * Math.cos(a), S / 2 + rr * Math.sin(a)];
+      const [x0, y0] = P(a0, R), [x1, y1] = P(a1, R), [x2, y2] = P(a1, r), [x3, y3] = P(a0, r);
+      paths += `<path data-i="${i}" d="M${x0},${y0} A${R},${R} 0 ${large} 1 ${x1},${y1} L${x2},${y2} A${r},${r} 0 ${large} 0 ${x3},${y3} Z" style="fill:${p.c};stroke:var(--panel);stroke-width:2"></path>`; a0 = a1; });
+    box.innerHTML = `<svg viewBox="0 0 ${S} ${S}" role="img" aria-label="${esc(parts.map((p) => p.k + ' ' + F.pct1(p.v / tot)).join(', '))}">${paths}<text x="75" y="73" text-anchor="middle" style="fill:var(--fg);font-weight:800;font-size:15px">${centro}</text><text x="75" y="90" text-anchor="middle">${sub}</text></svg>`;
+    const tp = tipFor(box);
+    box.querySelectorAll('path').forEach((p) => { const d = parts[+p.dataset.i]; p.addEventListener('pointermove', (ev) => tp.show(ev, [d.k, d.lab, F.pct1(d.v / tot)])); p.addEventListener('pointerleave', () => tp.hide()); });
+  };
+  const legend = (id, parts, extra) => { const tot = parts.reduce((s, p) => s + p.v, 0); document.getElementById(id).replaceChildren(...parts.map((p) => { const d = el('div', '', `<i></i><span>${p.k}<small>${p.lab}</small></span><b class="num">${extra ? extra(p) : F.pct1(p.v / tot)}</b>`); d.style.setProperty('--c', p.c); return d; })); };
+  const pImp = ['Meta', 'YouTube', 'Display'].map((c) => ({ k: c, v: T[c].imp, c: COL[c], lab: F.M(T[c].imp) + ' impresiones' })).concat([{ k: 'TikTok', v: T.TikTok.views, c: COL.TikTok, lab: F.M(T.TikTok.views) + ' views' }]);
+  donut('d-imp', pImp, F.M(impTot + T.TikTok.views), 'total'); legend('l-imp', pImp);
+  const pInv = CH.map((c) => ({ k: c, v: T[c].costo, c: COL[c], lab: F.usd(T[c].costo) + ' de ' + F.usd0(PLAN[c].budget) }));
+  donut('d-inv', pInv, F.usd0(inv), 'invertido'); legend('l-inv', pInv);
+
+  const effRows = [
+    ['Meta', 'CPM', cpm('Meta'), '$0.30–0.35', cpm('Meta') <= 0.35, F.usd],
+    ['YouTube', 'CPM', cpm('YouTube'), '$0.60', cpm('YouTube') <= 0.60, F.usd],
+    ['YouTube', 'CPV', T.YouTube.costo / T.YouTube.views, '$0.002', T.YouTube.costo / T.YouTube.views <= 0.002, F.usd4],
+    ['TikTok', 'CPV', T.TikTok.costo / T.TikTok.views, '$0.0015', T.TikTok.costo / T.TikTok.views <= 0.0015, F.usd4],
+    ['Display', 'CPM', cpm('Display'), '$0.50', cpm('Display') <= 0.50, F.usd]
+  ];
+  document.getElementById('eff').innerHTML = '<thead><tr><th>Canal</th><th>Indicador</th><th>Real</th><th>Plan</th></tr></thead><tbody>' + effRows.map(([c, k, v, p, ok, f]) => `<tr><td><span class="dot" style="--c:${COL[c]}"></span>${c}</td><td>${k}</td><td class="num" style="color:var(--${ok ? 'ok' : 'bad'});font-weight:700">${f(v)}</td><td class="num">${p}</td></tr>`).join('') + '</tbody>';
+
+  // ---------- Entrega diaria ----------
+  const fechas = [...new Set(D.diario.map((r) => r.fecha))].sort();
+  let metDiario = 'impresiones';
+  const drawDiario = () => {
+    const box = document.getElementById('c-diario'), W = Math.max(box.clientWidth, 320), H = 280, m = { t: 22, r: 8, b: 26, l: 56 };
+    const keys = ['Meta', 'YouTube', 'Display'], rows = fechas.map((f) => { const o = { fecha: f }; keys.forEach((k) => { const r = D.diario.find((x) => x.fecha === f && x.canal === k); o[k] = r ? Number(r[metDiario]) || 0 : 0; }); o.tot = keys.reduce((s, k) => s + o[k], 0); return o; });
+    const max = Math.max(...rows.map((r) => r.tot)) * 1.1 || 1, bw = (W - m.l - m.r) / rows.length, y = (v) => H - m.b - v / max * (H - m.t - m.b);
+    const fmt = metDiario === 'costo' ? F.usd0 : F.M;
+    let g = '';
+    for (let i = 0; i <= 4; i++) { const v = max / 1.1 * i / 4; g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"></line><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${fmt(v)}</text>`; }
+    rows.forEach((r, i) => { let acc = 0; const x = m.l + i * bw + bw * 0.16, w = bw * 0.68;
+      keys.forEach((k) => { if (!r[k]) return; g += `<rect x="${x}" y="${y(acc + r[k])}" width="${w}" height="${y(acc) - y(acc + r[k])}" style="fill:${COL[k]};opacity:${r.fecha === ultima && enCurso ? .45 : 1}"></rect>`; acc += r[k]; });
+      g += `<text x="${x + w / 2}" y="${H - 8}" text-anchor="middle">${F.fecha(r.fecha).replace(' nov', '')}</text>`;
+      if (bw > 34) g += `<text x="${x + w / 2}" y="${y(r.tot) - 6}" text-anchor="middle" style="fill:var(--fg);font-weight:700;font-size:10.5px">${fmt(r.tot)}</text>`;
+      g += `<rect data-i="${i}" x="${m.l + i * bw}" y="${m.t}" width="${bw}" height="${H - m.t - m.b}" style="fill:transparent"></rect>`; });
+    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${metDiario} por día y canal">${g}</svg>`;
+    const tp = tipFor(box);
+    box.querySelectorAll('rect[data-i]').forEach((rc) => { const r = rows[+rc.dataset.i]; rc.addEventListener('pointermove', (ev) => tp.show(ev, [F.fecha(r.fecha) + (r.fecha === ultima && enCurso ? ' (en curso)' : ''), ...keys.map((k) => k + ': ' + (metDiario === 'costo' ? F.usd(r[k]) : F.int(r[k]))), 'Total: ' + (metDiario === 'costo' ? F.usd(r.tot) : F.int(r.tot))])); rc.addEventListener('pointerleave', () => tp.hide()); });
+    document.getElementById('diario-nota').textContent = 'Eje en ' + (metDiario === 'costo' ? 'USD' : 'unidades') + '. Display inició el 16 nov. Meta y YouTube cambiaron de ola el 16 nov (W1-W2 → W3-W4).' + (enCurso ? ' El ' + F.fecha(ultima) + ' está en curso (barra más clara).' : '') + (metDiario === 'reproducciones' ? ' En Meta son reproducciones de video; en YouTube, views.' : '');
+  };
+  const segs = (id, fn) => { const s = document.getElementById(id); s.addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (!b) return; s.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); fn(b.dataset.v); }); };
+  segs('seg-met', (v) => { metDiario = v; drawDiario(); });
+
+  // ---------- Hallazgos ----------
+  const cmpRitmo = (c, k, meta) => { const av = T[c][k] / meta; return av / esperado; };
+  const vids = Object.values(D.videos.reduce((a, r) => { const o = a[r.video] ||= { video: r.video, impresiones: 0, views: 0, q25: 0, q50: 0, q75: 0, q100: 0 }; ['impresiones', 'views', 'q25', 'q50', 'q75', 'q100'].forEach((k) => o[k] += r[k]); return a; }, {})).map((v) => ({ ...v, vtr: v.views / v.impresiones })).sort((a, b) => b.views - a.views);
+  const cres = Object.values(D.creativos.reduce((a, r) => { const o = a[r.creativo] ||= { creativo: r.creativo, impresiones: 0, interacciones: 0, alcance: 0, dias: 0 }; o.impresiones += r.impresiones; o.interacciones += r.interacciones; o.dias++; return a; }, {})).map((c) => ({ ...c, tasa: c.interacciones / c.impresiones })).sort((a, b) => b.impresiones - a.impresiones);
+  const ppv = cres.filter((c) => /^PPV/.test(c.creativo)), ppl = cres.filter((c) => /^PPL/.test(c.creativo));
+  const tasa = (arr) => sum(arr, 'interacciones') / sum(arr, 'impresiones');
+  const audMeta = D.audiencia.filter((a) => a.canal === 'Meta' && a.dimension === 'Región'), mgaMeta = (audMeta.find((a) => a.segmento === 'Managua') || {}).valor / sum(audMeta, 'valor');
+  const w12 = byCh('Meta').filter((r) => r.ola === 'W1-W2'), w34 = byCh('Meta').filter((r) => r.ola === 'W3-W4' && r.fecha <= ultCompleta);
+  const ritmoMeta = T.Meta.imp / PLAN.Meta.imp / esperado, ritmoYTv = T.YouTube.views / PLAN.YouTube.views / esperado;
+  const finds = [
+    ['Avance', COL.TikTok, `<b>TikTok</b> ya lleva el <b>${F.pct(T.TikTok.views / PLAN.TikTok.views)}</b> de sus views planificadas con el ${F.pct(T.TikTok.costo / PLAN.TikTok.budget)} del presupuesto: un CPV de <b>${F.usd4(T.TikTok.costo / T.TikTok.views)}</b> contra $0.0015 del plan.`],
+    ['Ritmo', COL.Meta, `Con el <b>${F.pct(esperado)}</b> del tiempo transcurrido, <b>Meta</b> ya entregó el <b>${F.pct(T.Meta.imp / PLAN.Meta.imp)}</b> de sus 15 M de impresiones. <b>YouTube</b> va en <b>${F.pct(T.YouTube.views / PLAN.YouTube.views)}</b> de sus 2.25 M de views: ${ritmoYTv >= .95 ? 'a ritmo' : 'es el KPI a vigilar'}.`],
+    ['Formato', COL.Meta, `En Meta, los <b>spots en video (PPV)</b> generan <b>${F.pct2(tasa(ppv))}</b> de interacción y las <b>piezas estáticas (PPL)</b> <b>${F.pct2(tasa(ppl))}</b>. Desde el 16 nov las PPL concentran el ${F.pct(sum(D.creativos.filter((r) => /^PPL/.test(r.creativo)), 'impresiones') / sum(D.creativos.filter((r) => r.fecha >= '2026-11-16'), 'impresiones'))} de las impresiones.`],
+    ['YouTube', COL.YouTube, `Dos videos concentran el <b>${F.pct((vids[0].views + vids[1].views) / T.YouTube.views)}</b> de las views: <b>${VNOM[vids[0].video]}</b> (${F.int(vids[0].views)}, VTR ${F.pct1(vids[0].vtr)}) y <b>${VNOM[vids[1].video]}</b> (${F.int(vids[1].views)}, VTR ${F.pct1(vids[1].vtr)}). Las otras dos versiones tienen VTR de ${F.pct1(vids[2].vtr)} y ${F.pct1(vids[3].vtr)}.`],
+    ['Display', COL.Display, `Display entregó <b>${F.M(T.Display.imp)}</b> impresiones en ${byCh('Display').length} días con un CPM de <b>${F.usd(cpm('Display'))}</b> (plan $0.50) y un CTR de <b>${F.pct2(T.Display.clics / T.Display.imp)}</b>.`],
+    ['Región', COL.Meta, `<b>Managua</b> concentra el <b>${F.pct(mgaMeta)}</b> del alcance de Meta; la campaña llega a los 17 departamentos en Meta, YouTube y Display.`]
+  ];
+  document.getElementById('finds').replaceChildren(...finds.map(([k, c, t]) => { const d = el('div', 'find', `<small>${k}</small>${t}`); d.style.setProperty('--c', c); return d; }));
+
+  // ---------- Audiencia ----------
+  const aud = (c, d) => D.audiencia.filter((a) => a.canal === c && a.dimension === d);
+  const miniDonut = (parts) => { const S = 110, R = 50, r = 33, tot = parts.reduce((s, p) => s + p.v, 0) || 1; let a0 = -Math.PI / 2, out = '';
+    parts.forEach((p) => { const a1 = a0 + p.v / tot * Math.PI * 2, L = a1 - a0 > Math.PI ? 1 : 0, P = (a, rr) => (S / 2 + rr * Math.cos(a)) + ',' + (S / 2 + rr * Math.sin(a));
+      out += `<path d="M${P(a0, R)} A${R},${R} 0 ${L} 1 ${P(a1, R)} L${P(a1, r)} A${r},${r} 0 ${L} 0 ${P(a0, r)} Z" style="fill:${p.c};stroke:var(--panel);stroke-width:2"></path>`; a0 = a1; });
+    return `<svg viewBox="0 0 ${S} ${S}" style="max-width:120px;margin:0 auto" role="img" aria-label="${esc(parts.map((p) => p.k + ' ' + F.pct(p.v / tot)).join(', '))}">${out}</svg>`; };
+  const GC = { Mujer: 'var(--sky)', Hombre: 'var(--navy)', Desconocido: '#b9c4d6' };
+  document.getElementById('gens').replaceChildren(...['Meta', 'YouTube', 'Display'].map((c) => {
+    const rows = aud(c, 'Género'), tot = sum(rows, 'valor'), parts = ['Mujer', 'Hombre', 'Desconocido'].map((k) => ({ k, v: (rows.find((r) => r.segmento === k) || {}).valor || 0, c: GC[k] }));
+    const d = el('div', '', miniDonut(parts) + `<h4>${c}</h4><p>${parts.map((p) => `${p.k === 'Desconocido' ? 'Sin dato' : p.k} <b>${F.pct(p.v / tot)}</b>`).join('<br>')}</p>`); d.style.setProperty('--c', COL[c]); return d; }));
+  const gk = el('div', 'keys', '<span style="--c:var(--sky)">Mujer</span><span style="--c:var(--navy)">Hombre</span><span style="--c:#b9c4d6">Sin dato</span>'); gk.style.marginTop = '12px'; document.getElementById('gens').after(gk);
+
+  const EDADES = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
+  let edadCanal = 'todos';
+  const drawEdad = () => {
+    const box = document.getElementById('c-edad'), W = Math.max(box.clientWidth, 300), H = 250, m = { t: 20, r: 6, b: 26, l: 36 };
+    const chs = edadCanal === 'todos' ? ['Meta', 'YouTube', 'Display'] : [edadCanal];
+    document.getElementById('edad-keys').innerHTML = chs.map((c) => `<span style="--c:${COL[c]}">${c}</span>`).join('');
+    const share = {}; chs.forEach((c) => { const rows = aud(c, 'Edad').filter((r) => r.segmento !== 'Desconocido'), t = sum(rows, 'valor'); share[c] = Object.fromEntries(EDADES.map((e) => [e, ((rows.find((r) => r.segmento === e) || {}).valor || 0) / t])); });
+    const max = Math.max(...chs.flatMap((c) => EDADES.map((e) => share[c][e]))) * 1.15, gw = (W - m.l - m.r) / EDADES.length, bw = Math.min(28, gw * 0.8 / chs.length), y = (v) => H - m.b - v / max * (H - m.t - m.b);
+    let g = ''; for (let i = 0; i <= 4; i++) { const v = max / 1.15 * i / 4; g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"></line><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${F.pct(v)}</text>`; }
+    EDADES.forEach((e, i) => { const x0 = m.l + i * gw + (gw - bw * chs.length) / 2;
+      chs.forEach((c, j) => { const v = share[c][e], x = x0 + j * bw; g += `<rect x="${x + 1}" y="${y(v)}" width="${bw - 2}" height="${y(0) - y(v)}" rx="3" style="fill:${COL[c]}"><title>${c} ${e}: ${F.pct1(v)}</title></rect>`; if (bw >= 18) g += `<text x="${x + bw / 2}" y="${y(v) - 4}" text-anchor="middle" style="font-size:9.5px;fill:var(--fg)">${F.pct(v)}</text>`; });
+      g += `<text x="${m.l + i * gw + gw / 2}" y="${H - 8}" text-anchor="middle">${e}</text>`; });
+    box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Distribución por edad">${g}</svg>`;
+  };
+  segs('seg-edad', (v) => { edadCanal = v; drawEdad(); });
+  const hbars = (obj, col) => Object.entries(obj).map(([k, v]) => `<div class="hb" style="--c:${col}"><span>${k}</span><div><i style="width:${v}%"></i></div><b>${v}%</b></div>`).join('');
+  const ttLab = (t) => `<small style="color:var(--muted);font-weight:700;font-size:10.5px;letter-spacing:.06em">${t}</small>`;
+  document.getElementById('tt-aud').innerHTML = ['Agua Mineral', 'Agua Gasificada'].map((v) => `<div class="tt-box"><h4>${v} · edad W1-W2</h4>${hbars(D.tiktok_aud.edad[v]['W1-W2'], COL.TikTok)}</div><div class="tt-box"><h4>${v} · edad W3-W4</h4>${hbars(D.tiktok_aud.edad[v]['W3-W4'], COL.TikTok)}</div>`).join('')
+    + ['Agua Mineral', 'Agua Gasificada'].map((v) => `<div class="tt-box"><h4>${v} · región W3-W4</h4>${hbars(D.tiktok_aud.region[v]['W3-W4'], COL.TikTok)}</div>`).join('')
+    + ['Agua Mineral', 'Agua Gasificada'].map((v) => `<div class="tt-box"><h4>${v} · región W1-W2</h4>${hbars(D.tiktok_aud.region[v]['W1-W2'], COL.TikTok)}</div>`).join('');
+
+  // ---------- Región ----------
+  const RC = ['Meta', 'YouTube', 'Display'], regShare = {};
+  RC.forEach((c) => { const rows = aud(c, 'Región').filter((r) => r.segmento !== 'Desconocido'), t = sum(rows, 'valor'); rows.forEach((r) => { (regShare[r.segmento] ||= {})[c] = r.valor / t; }); });
+  const regs = Object.entries(regShare).map(([k, o]) => ({ k, ...o, avg: RC.reduce((s, c) => s + (o[c] || 0), 0) / RC.length })).sort((a, b) => b.avg - a.avg);
+  const maxReg = Math.max(...regs.flatMap((r) => RC.map((c) => r[c] || 0)));
+  document.getElementById('heat').innerHTML = `<thead><tr><th>Departamento</th>${RC.map((c) => `<th style="color:${COL[c]}">${c}</th>`).join('')}</tr></thead><tbody>` + regs.map((r) => `<tr><td>${r.k}</td>${RC.map((c) => { const v = r[c] || 0, a = Math.max(.08, Math.sqrt(v / maxReg)); return `<td class="v num" style="background:color-mix(in srgb, ${COL[c]} ${Math.round(a * 85)}%, var(--panel-2));${a > .55 ? 'color:#fff' : ''}">${F.pct1(v)}</td>`; }).join('')}</tr>`).join('') + '</tbody>';
+
+  // ---------- Tarjetas iguales sin huecos ----------
+  const fila = (box, minW) => { const items = [...box.children], n = items.length; if (!n) return;
+    Object.assign(box.style, { gridTemplateColumns: '', gridAutoFlow: '', gridAutoColumns: '', overflowX: '', scrollSnapType: '', paddingBottom: '' });
+    const gap = 12, w = box.clientWidth || 1000, max = Math.max(1, Math.min(8, Math.floor((w + gap) / (minW + gap))));
+    if (n <= max) { box.style.gridTemplateColumns = `repeat(${n}, minmax(0, 1fr))`; return; }
+    let c = max; while (c > 1 && n % c) c--;
+    if (c >= Math.min(2, max) && c > 1 || max === 1) { box.style.gridTemplateColumns = `repeat(${Math.max(c, 1)}, minmax(0, 1fr))`; return; }
+    const vis = max + 0.35, cw = (w - gap * Math.floor(vis)) / vis;
+    Object.assign(box.style, { gridTemplateColumns: 'none', gridAutoFlow: 'column', gridAutoColumns: cw + 'px', overflowX: 'auto', scrollSnapType: 'x mandatory', paddingBottom: '6px' }); };
+
+  // ---------- Creativos ----------
+  const statRows = (rows) => '<div class="stats">' + rows.map(([k, v]) => `<div><span>${k}</span><b class="num">${v}</b></div>`).join('') + '</div>';
+  const FMT = (n) => /^PPV/.test(n) ? ['PPV · video', 'var(--c-meta)'] : ['PPL · estático', 'var(--sky)'];
+  const nombre = (n) => n.replace(/_/g, ' ');
+  document.getElementById('cre-meta').replaceChildren(...cres.map((c, i) => { const [f, col] = FMT(c.creativo), a = el('article', 'cre');
+    a.innerHTML = `<div class="thumb" role="img" aria-label="Pieza ${c.creativo}"><div class="ph">Fuente Pura · ${nombre(c.creativo)}</div><div style="position:absolute;inset:0;background:url('img/${c.creativo}.jpg') center / cover no-repeat"></div><span class="rank">#${i + 1}</span>${/^PPV/.test(c.creativo) ? '<span class="play" aria-hidden="true"></span>' : ''}</div>
+      <div class="cre-body"><span class="fmt" style="--c:${col}">${f}</span><div class="cre-name">${nombre(c.creativo)}</div>${statRows([['Impresiones', F.M(c.impresiones)], ['Interacciones', F.int(c.interacciones)], ['Tasa', F.pct2(c.tasa)], ['Días al aire', c.dias]])}</div>`; return a; }));
+  document.getElementById('cre-yt').replaceChildren(...vids.map((v, i) => { const a = el('a', 'cre'); a.href = 'https://www.youtube.com/watch?v=' + v.video; a.target = '_blank'; a.rel = 'noopener';
+    const qs = [v.q25, v.q50, v.q75, v.q100].map((q) => q / v.views);
+    a.innerHTML = `<div class="thumb wide" style="background-image:url('https://i.ytimg.com/vi/${v.video}/hqdefault.jpg'), url('img/${VIMG[VNOM[v.video]]}.jpg')" role="img" aria-label="Miniatura del video ${VNOM[v.video]}"><span class="rank">YouTube #${i + 1}</span><span class="play" aria-hidden="true"></span></div>
+      <div class="cre-body" style="--c:var(--c-yt)"><span class="fmt">YouTube</span><div class="cre-name">${VNOM[v.video]}<small style="display:block;font-weight:600;color:var(--muted);font-size:10.5px">${v.video}</small></div>${statRows([['Impresiones', F.M(v.impresiones)], ['Views', F.int(v.views)], ['VTR', F.pct1(v.vtr)]])}
+      <div class="qbar" role="img" aria-label="Retención: ${qs.map((q, j) => ['25', '50', '75', '100'][j] + '% ' + F.pct(q)).join(', ')}">${qs.map((q) => `<i style="height:${Math.max(3, q * 100)}%"></i>`).join('')}</div><div class="qlab"><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>`; return a; }));
+  const ttv = Object.values(D.tiktok.reduce((a, r) => { const o = a[r.video] ||= { video: r.video, views: 0, costo: 0, likes: 0, perfil: 0, seguidores: 0, url: r.url }; ['views', 'costo', 'likes', 'perfil', 'seguidores'].forEach((k) => o[k] += r[k] || 0); return a; }, {})).sort((a, b) => b.views - a.views);
+  const ttImg = { 'Agua Mineral': 'PPV_SPOT_CALIDAD_MINERAL_48s', 'Agua Gasificada': 'PPV_SPOT_CALIDAD_GASIFICADA_50s' };
+  document.getElementById('cre-yt').append(...ttv.map((v, i) => { const a = el('a', 'cre'); a.href = v.url; a.target = '_blank'; a.rel = 'noopener';
+    a.innerHTML = `<div class="thumb wide" style="background-image:url('img/${ttImg[v.video]}.jpg')" role="img" aria-label="Video ${v.video}"><span class="rank">TikTok #${i + 1}</span><span class="play" aria-hidden="true"></span></div>
+      <div class="cre-body" style="--c:var(--c-tt)"><span class="fmt">TikTok</span><div class="cre-name">${v.video}<small style="display:block;font-weight:600;color:var(--muted);font-size:10.5px">Fuente Pura en TikTok</small></div>${statRows([['Views', F.M(v.views)], ['Me gusta', F.int(v.likes)], ['CPV', F.usd4(v.costo / v.views)]])}
+      ${(() => { const q = ['W1-W2', 'W3-W4'].map((o) => (D.tiktok.find((r) => r.video === v.video && r.ola === o) || {}).views || 0), mx = Math.max(...q) || 1;
+        return `<div class="qbar" style="grid-template-columns:repeat(2,1fr)" role="img" aria-label="Views W1-W2 ${F.int(q[0])}, W3-W4 ${F.int(q[1])}">${q.map((x) => `<i style="height:${Math.max(3, x / mx * 100)}%"></i>`).join('')}</div><div class="qlab" style="grid-template-columns:repeat(2,1fr)"><span>W1-W2 · ${F.M(q[0])}</span><span>W3-W4 · ${F.M(q[1])}</span></div>`; })()}</div>`; return a; }));
+  const SERIES = [
+    { id: '1', nombre: 'Lata · Agua Gasificada', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
+    { id: '2', nombre: 'Botella · Agua Mineral', formatos: ['300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
+    { id: '4', nombre: 'Horizontales', columna: true, formatos: ['970x250', '930x180', '980x120', '970x90', '728x90', '468x60'] },
+    { id: '5', nombre: 'Móvil', formatos: ['320x100', '320x100_1', '320x50', '300x50'] },
+    { id: '3', nombre: 'Verticales', formatos: ['300x1050_2', '300x1050_1', '300x1050', '300x600', '300x600_1', '160x600_4', '160x600_2', '160x600', '120x600_4', '120x600_2', '120x600'] }
+  ];
+  let serie = SERIES[0];
+  document.getElementById('seg-gdn').innerHTML = SERIES.map((x, i) => `<button type="button" data-v="${x.id}" aria-pressed="${i === 0}">${x.nombre}</button>`).join('');
+  const nForm = new Set(SERIES.flatMap((x) => x.formatos.map((f) => f.split('_')[0]))).size, nPiezas = SERIES.reduce((s, x) => s + x.formatos.length, 0);
+  const top4 = D.display.slice(0, 4);
+  document.getElementById('gdn-sub').textContent = `${SERIES.length} series y ${nPiezas} banners en ${nForm} formatos, a escala real entre ellos. Google Ads reporta ${D.display.length} piezas activas; las 4 con más impresiones suman el ${F.pct(sum(top4, 'impresiones') / sum(D.display, 'impresiones'))} del total. La exportación no indica el formato de cada pieza, por eso los resultados se muestran en conjunto.`;
+  const drawGdn = () => { const FORMATOS = serie.formatos, box = document.getElementById('gdn-line'), sizes = FORMATOS.map((f) => f.split('_')[0].split('x').map(Number));
+    box.classList.toggle('col', !!serie.columna);
+    const avail = Math.max(280, box.clientWidth - (serie.columna ? 8 : 14 * (FORMATOS.length - 1) + 8)), total = serie.columna ? Math.max(...sizes.map(([w]) => w)) : sizes.reduce((s, [w]) => s + w, 0), maxH = Math.max(...sizes.map(([, h]) => h)), k = Math.min(1, serie.columna ? 1 : 420 / maxH, Math.max(avail / total, !serie.columna && innerWidth < 761 ? 0.42 : 0));
+    box.replaceChildren(...FORMATOS.map((f, i) => { const [w, h] = sizes[i], fig = el('figure', 'gdn-ad');
+      fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}</figcaption>`; return fig; })); };
+  segs('seg-gdn', (v) => { serie = SERIES.find((x) => x.id === v); drawGdn(); });
+  const gst = [['Impresiones', F.int(T.Display.imp)], ['Clics', F.int(T.Display.clics)], ['CTR', F.pct2(T.Display.clics / T.Display.imp)], ['CPM', F.usd(cpm('Display'))], ['Inversión', F.usd(T.Display.costo)], ['Usuarios únicos', F.int(T.Display.alcance)]];
+  document.getElementById('gdn-stats').innerHTML = gst.map(([a, b]) => `<div><small>${a}</small><b class="num">${b}</b></div>`).join('');
+
+  // ---------- Detalle ----------
+  let detCanal = 'todos';
+  const drawTabla = () => {
+    const rows = D.diario.filter((r) => detCanal === 'todos' || r.canal === detCanal).sort((a, b) => a.fecha.localeCompare(b.fecha) || CH.indexOf(a.canal) - CH.indexOf(b.canal));
+    const dash = (v, f) => v === undefined || v === null ? '—' : f(v);
+    document.getElementById('tbl').innerHTML = '<thead><tr><th>Fecha</th><th>Canal</th><th>Ola</th><th>Alcance / usuarios</th><th>Impresiones</th><th>Interacciones</th><th>Views / reprod.</th><th>Clics</th><th>Inversión</th><th>CPM</th></tr></thead><tbody>' +
+      rows.map((r) => `<tr class="${r.fecha === ultima && enCurso ? 'partial' : ''}"><td>${F.fecha(r.fecha)}</td><td><span class="dot" style="--c:${COL[r.canal]}"></span>${r.canal}</td><td>${r.ola}</td><td class="num">${F.int(r.alcance)}</td><td class="num">${F.int(r.impresiones)}</td><td class="num">${dash(r.interacciones, F.int)}</td><td class="num">${dash(r.reproducciones, F.int)}</td><td class="num">${dash(r.clics, F.int)}</td><td class="num">${F.usd(r.costo)}</td><td class="num">${F.usd(r.costo / r.impresiones * 1000)}</td></tr>`).join('') + '</tbody>';
+  };
+  segs('seg-det', (v) => { detCanal = v; drawTabla(); });
+
+  // ---------- Navegación activa ----------
+  const links = [...document.querySelectorAll('.nav a')];
+  const spy = () => { let cur = links[0].dataset.t; links.forEach((a) => { const t = document.getElementById(a.dataset.t); if (t && t.getBoundingClientRect().top <= 120) cur = a.dataset.t; }); links.forEach((a) => a.classList.toggle('on', a.dataset.t === cur)); };
+  addEventListener('scroll', () => requestAnimationFrame(spy), { passive: true });
+
+  const layout = () => { drawDiario(); drawEdad(); fila(document.getElementById('cre-meta'), innerWidth < 761 ? 140 : 180); fila(document.getElementById('cre-yt'), innerWidth < 761 ? 140 : 200); drawGdn(); spy(); };
+  drawTabla(); layout();
+  let w = innerWidth, t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (innerWidth !== w) { w = innerWidth; layout(); } }, 150); });
+})();
+</script>
+</body>
+</html>
