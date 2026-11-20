@@ -195,7 +195,23 @@ h1, h2, h3 { margin: 0; }
 .hb div i { display: block; height: 100%; background: var(--c); border-radius: inherit; }
 .hb b { text-align: right; font-weight: 700; }
 
-/* Región */
+.reg-grid { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 12px; }
+.reg-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+.reg-head h4 { margin: 0; }
+.mga { margin-bottom: 14px; }
+.mga-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; }
+.mga-top b { font-size: 20px; font-weight: 800; }
+.mga-bar { height: 14px; border-radius: 999px; background: color-mix(in srgb, var(--muted) 18%, transparent); overflow: hidden; margin: 5px 0 3px; }
+.mga-bar i { display: block; height: 100%; border-radius: inherit; }
+.mga-foot { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); }
+.rk { display: grid; grid-template-columns: 110px 1fr 48px; gap: 8px; align-items: center; font-size: 12.5px; padding: 3px 0; cursor: default; }
+.rk span { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.rk-bar { height: 16px; border-radius: 5px; background: color-mix(in srgb, var(--muted) 10%, transparent); }
+.rk-bar i { display: block; height: 100%; border-radius: 5px; transition: width .35s ease; }
+.rk b { text-align: right; }
+@media (max-width: 760px) { .reg-grid { grid-template-columns: 1fr; } .rk { grid-template-columns: 96px 1fr 44px; } }
+@media (prefers-reduced-motion: reduce) { .rk-bar i { transition: none; } }
+.heat { width: 100%;
 .heat { width: 100%; border-collapse: collapse; font-size: 12.5px; table-layout: fixed; }
 .heat col.dep { width: 170px; }
 .heat th { font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; text-align: center; padding: 0 0 6px; }
@@ -404,7 +420,11 @@ footer b { color: #fff; }
 
   <div class="sec" id="region"><i>7</i><h2>Región</h2><p>Peso de cada departamento dentro de cada canal</p></div>
   <div class="grid">
-    <section class="card s12"><h3>Región por canal</h3><p class="sub">Participación dentro de cada canal. Más intenso, mayor peso. Ordenado por el promedio de los tres canales.</p><div class="tbl-wrap"><table class="heat" id="heat"></table></div></section>
+    <section class="card s12"><h3>Región por canal</h3><p class="sub">Participación de cada departamento dentro de cada canal.</p>
+      <div class="reg-grid">
+        <div class="tt-box"><h4>Peso de Managua</h4><div id="reg-mga"></div></div>
+        <div class="tt-box"><div class="reg-head"><h4>Resto de departamentos</h4><span class="seg" id="seg-reg"><button type="button" data-v="Meta" aria-pressed="true">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div><div class="chart" id="reg-rank"></div></div>
+      </div></section>
   </div>
 
   <div class="sec" id="creativos"><i>8</i><h2>Creativos</h2><p>Ordenados por impresiones o views</p></div>
@@ -704,8 +724,18 @@ footer b { color: #fff; }
   const RC = ['Meta', 'YouTube', 'Display'], regShare = {};
   RC.forEach((c) => { const rows = aud(c, 'Región').filter((r) => r.segmento !== 'Desconocido'), t = sum(rows, 'valor'); rows.forEach((r) => { (regShare[r.segmento] ||= {})[c] = r.valor / t; }); });
   const regs = Object.entries(regShare).map(([k, o]) => ({ k, ...o, avg: RC.reduce((s, c) => s + (o[c] || 0), 0) / RC.length })).sort((a, b) => b.avg - a.avg);
-  const maxReg = Math.max(...regs.flatMap((r) => RC.map((c) => r[c] || 0)));
-  document.getElementById('heat').innerHTML = `<colgroup><col class="dep">${RC.map(() => '<col>').join('')}</colgroup><thead><tr><th>Departamento</th>${RC.map((c) => `<th style="color:${COL[c]}">${c}</th>`).join('')}</tr></thead><tbody>` + regs.map((r) => `<tr><td>${r.k}</td>${RC.map((c) => { const v = r[c] || 0, a = Math.max(.08, Math.sqrt(v / maxReg)); return `<td class="v num" style="background:color-mix(in srgb, ${COL[c]} ${Math.round(a * 85)}%, var(--panel-2));${a > .55 ? 'color:#fff' : ''}">${F.pct1(v)}</td>`; }).join('')}</tr>`).join('') + '</tbody>';
+  let regCanal = 'Meta';
+  document.getElementById('reg-mga').innerHTML = RC.map((c) => { const m = (regShare.Managua || {})[c] || 0;
+    return `<div class="mga"><div class="mga-top"><span style="color:${COL[c]};font-weight:800">${c}</span><b class="num">${F.pct1(m)}</b></div><div class="mga-bar" role="img" aria-label="${c}: Managua ${F.pct1(m)}, resto del país ${F.pct1(1 - m)}"><i style="width:${m * 100}%;background:${COL[c]}"></i></div><div class="mga-foot"><span>Managua</span><span>Resto del país ${F.pct(1 - m)}</span></div></div>`; }).join('')
+    + `<p class="sub" style="margin:8px 0 0">YouTube y Display concentran más de la mitad de su entrega en Managua; Meta reparte más hacia los departamentos.</p>`;
+  const drawReg = () => { const box = document.getElementById('reg-rank'), N = 8;
+    const rest = regs.filter((r) => r.k !== 'Managua').sort((a, b) => (b[regCanal] || 0) - (a[regCanal] || 0)), top = rest.slice(0, N), otros = rest.slice(N);
+    const rows = [...top, { k: `Otros ${otros.length} deptos.`, ...Object.fromEntries(RC.map((c) => [c, otros.reduce((s, r) => s + (r[c] || 0), 0)])), otros: otros.map((r) => r.k).join(', ') }];
+    const mx = Math.max(...top.map((r) => r[regCanal] || 0));
+    box.innerHTML = rows.map((r, i) => `<div class="rk" data-i="${i}"><span>${r.k}</span><div class="rk-bar"><i style="width:${Math.min(100, Math.max(1.5, (r[regCanal] || 0) / mx * 100))}%;background:${COL[regCanal]};opacity:${r.otros ? .45 : 1}"></i></div><b class="num">${F.pct1(r[regCanal] || 0)}</b></div>`).join('');
+    const tp = tipFor(box);
+    box.querySelectorAll('.rk').forEach((el2) => { const r = rows[+el2.dataset.i]; el2.addEventListener('pointermove', (ev) => tp.show(ev, [r.k, ...RC.map((c) => c + ': ' + F.pct1(r[c] || 0)), ...(r.otros ? [r.otros] : [])])); el2.addEventListener('pointerleave', () => tp.hide()); }); };
+  segs('seg-reg', (v) => { regCanal = v; drawReg(); }); drawReg();
 
   // ---------- Tarjetas iguales sin huecos ----------
   const fila = (box, minW) => { const items = [...box.children], n = items.length; if (!n) return;
