@@ -255,8 +255,11 @@ h1, h2, h3 { margin: 0; }
 .stats div { display: flex; justify-content: space-between; gap: 8px; }
 .stats span { color: var(--muted); font-size: 10.5px; text-transform: uppercase; letter-spacing: .05em; font-weight: 600; }
 .stats b { font-weight: 700; }
-.qbar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; align-items: end; height: 44px; margin-top: 2px; }
-.qbar i { display: block; background: var(--c); border-radius: 4px 4px 0 0; opacity: .85; }
+.qbar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; align-items: end; height: 62px; margin-top: 2px; cursor: default; }
+.qbar > i { display: block; background: var(--c); border-radius: 4px 4px 0 0; opacity: .85; }
+.qcol { height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; gap: 2px; }
+.qcol b { font-size: 10.5px; font-weight: 800; text-align: center; color: var(--fg); }
+.qcol i { display: block; background: var(--c); border-radius: 4px 4px 0 0; opacity: .85; max-height: calc(100% - 16px); }
 .qlab { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; font-size: 10px; color: var(--muted); text-align: center; }
 a.cre { color: inherit; text-decoration: none; }
 a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underline; }
@@ -844,7 +847,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     const qs = [v.q25, v.q50, v.q75, v.q100].map((q) => q / v.views);
     a.innerHTML = `<div class="thumb wide" style="background-image:url('https://i.ytimg.com/vi/${v.video}/hqdefault.jpg'), url('img/${VIMG[VNOM[v.video]]}.jpg')" role="img" aria-label="Miniatura del video ${VNOM[v.video]}"><span class="rank">YouTube #${i + 1}</span><span class="play" aria-hidden="true"></span></div>
       <div class="cre-body" style="--c:var(--c-yt)"><span class="fmt">YouTube</span><div class="cre-name">${VNOM[v.video]}<small style="display:block;font-weight:600;color:var(--muted);font-size:10.5px">${v.video}</small></div>${statRows([['Impresiones', F.M(v.impresiones)], ['Views', F.int(v.views)], ['VTR', F.pct1(v.vtr)]])}
-      <div class="qbar" role="img" aria-label="Retención: ${qs.map((q, j) => ['25', '50', '75', '100'][j] + '% ' + F.pct(q)).join(', ')}">${qs.map((q) => `<i style="height:${Math.max(3, q * 100)}%"></i>`).join('')}</div><div class="qlab"><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>`; return a; }));
+      <div class="qbar" role="img" aria-label="Retención: ${qs.map((q, j) => ['25', '50', '75', '100'][j] + '% ' + F.pct(q)).join(', ')}" onclick="event.preventDefault();event.stopPropagation()">${qs.map((q, j) => `<div class="qcol" title="${F.int([v.q25, v.q50, v.q75, v.q100][j])} personas vieron el ${['25', '50', '75', '100'][j]}% del video (${F.pct1(q)} de las views)"><b class="num">${F.pct(q)}</b><i style="height:${Math.max(3, q * 100)}%"></i></div>`).join('')}</div><div class="qlab"><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>`; return a; }));
   const ttv = Object.values(D.tiktok.reduce((a, r) => { const o = a[r.video] ||= { video: r.video, views: 0, costo: 0, likes: 0, perfil: 0, seguidores: 0, url: r.url }; ['views', 'costo', 'likes', 'perfil', 'seguidores'].forEach((k) => o[k] += r[k] || 0); return a; }, {})).sort((a, b) => b.views - a.views);
   const ttImg = { 'Agua Mineral': 'PPV_SPOT_CALIDAD_MINERAL_48s', 'Agua Gasificada': 'PPV_SPOT_CALIDAD_GASIFICADA_50s' };
   document.getElementById('cre-yt').append(...ttv.map((v, i) => { const a = el('a', 'cre'); a.href = v.url; a.target = '_blank'; a.rel = 'noopener';
