@@ -145,7 +145,7 @@ h1, h2, h3 { margin: 0; }
 .logo svg { width: 22px; height: 22px; display: block; }
 .ch-head h3 { color: var(--c); font-size: 17px; }
 .ch-head span { font-size: 12px; color: var(--muted); }
-.plan { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 10px; font-size: 12px; background: var(--panel-2); border-radius: 10px; padding: 10px 12px; }
+.plan { display: grid; grid-template-columns: .8fr 1.5fr; gap: 6px 10px; font-size: 12px; background: var(--panel-2); border-radius: 10px; padding: 10px 12px; }
 .plan small { display: block; color: var(--muted); font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
 .plan b { font-size: 13px; }
 .meter { display: grid; gap: 5px; }
@@ -160,7 +160,7 @@ h1, h2, h3 { margin: 0; }
 .pill.ok { background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); }
 .pill.warn { background: color-mix(in srgb, var(--warn) 18%, transparent); color: var(--warn); }
 .pill.bad { background: color-mix(in srgb, var(--bad) 15%, transparent); color: var(--bad); }
-.kv { margin-top: auto; display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; font-size: 12.5px; border-top: 1px dashed var(--line); padding-top: 10px; }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 10px; font-size: 12.5px; border-top: 1px dashed var(--line); padding-top: 10px; }
 .kv span { color: var(--muted); }
 .kv b { text-align: right; }
 .flow-note { margin-top: 10px; color: rgba(255,255,255,.85); font-size: 12px; }
@@ -500,7 +500,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       <li>Meta, YouTube y Display se compran por olas (W1-W2 y W3-W4). El alcance y la frecuencia son los acumulados que reporta cada plataforma por ola; las personas de una ola pueden repetirse en la otra, por eso el alcance total de un canal es una suma por ola y no el alcance único.</li>
       <li>El avance esperado se calcula con los días completos transcurridos contra los 57 días de la campaña. El día en curso aparece en cursiva y no cuenta para el ritmo.</li>
       <li>TikTok reporta por quincena: visualizaciones, costo, me gusta, visitas al perfil y nuevos seguidores. Su audiencia viene en porcentajes por video.</li>
-      <li>Display no trae viewability en la exportación; se muestran impresiones, clics y CTR. Los totales por banner pueden diferir levemente de los diarios por el corte de la exportación.</li>
+      <li>Display: se muestran impresiones, clics y CTR. Los totales por banner pueden diferir levemente de los diarios por el corte de la exportación.</li>
       <li>Montos en USD.</li>
     </ul>
   </details>
@@ -523,7 +523,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     Meta: { budget: 5250, cpm: [0.30, 0.35], imp: 15000000, impMax: 17500000, kpi: 'Alcance / frecuencia' },
     YouTube: { budget: 4500, cpm: 0.60, cpv: 0.002, imp: 7500000, views: 2250000, kpi: 'Views / VTR' },
     TikTok: { budget: 2250, cpv: 0.0015, views: 1500000, kpi: 'Views / alcance' },
-    Display: { budget: 2250, cpm: 0.50, imp: 4500000, kpi: 'Impresiones / viewability' }
+    Display: { budget: 2250, cpm: 0.50, imp: 4500000, kpi: 'Impresiones / CTR' }
   };
   const INICIO = '2026-11-05', FIN = '2026-12-31';
   const MES = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
@@ -573,7 +573,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const tiles = [
     ['Inversión total', F.usd(inv), F.pct(inv / budget) + ' de ' + F.usd0(budget), 'var(--blue)'],
     ['Impresiones', F.int(impTot), 'Meta, YouTube y Display', 'var(--sky)'],
-    ['Alcance Meta', F.int(T.Meta.alcance), 'suma de olas · frecuencia ' + F.d2(metaFrec), COL.Meta],
+    ['Alcance Meta', F.int(T.Meta.alcance), 'frecuencia ' + F.d2(metaFrec), COL.Meta],
     ['Views YouTube', F.int(T.YouTube.views), 'VTR ' + F.pct1(T.YouTube.views / T.YouTube.imp), COL.YouTube],
     ['Views TikTok', F.int(T.TikTok.views), F.int(T.TikTok.seg) + ' nuevos seguidores', COL.TikTok],
     ['Impresiones Display', F.int(T.Display.imp), 'CTR ' + F.pct2(T.Display.clics / T.Display.imp), COL.Display]
@@ -618,15 +618,19 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       <div class="bar" role="img" aria-label="${label}: ${F.pct(av)} de la meta; esperado ${F.pct(esperado)}"><i style="width:${Math.min(100, av * 100)}%"></i><em style="left:calc(${esperado * 100}% - 1px)"></em></div>
       <div class="meter-foot"><span class="num">${fmt(valor)} de ${fmt(meta)}</span><span class="pill ${cl}">${txt}</span></div></div>`;
   };
+  const costMeter = (label, real, plan, fmt) => { const r = real / plan, ok = r <= 1;
+    return `<div class="meter"><div class="meter-top"><span>${label}</span><b class="num">${fmt(real)}</b></div>
+      <div class="bar" role="img" aria-label="${label}: ${fmt(real)} contra ${fmt(plan)} del plan"><i style="width:${Math.min(100, r * 100)}%"></i></div>
+      <div class="meter-foot"><span class="num">Plan ${fmt(plan)} · ${F.pct(Math.abs(1 - r))} ${ok ? 'menos' : 'más'}</span><span class="pill ${ok ? 'ok' : 'bad'}">${ok ? 'Mejor que el plan' : 'Sobre el plan'}</span></div></div>`; };
   const flowCards = {
-    Meta: () => `${meter('Inversión', T.Meta.costo, PLAN.Meta.budget, F.usd0, { gasto: 1 })}${meter('Impresiones (meta 15 M)', T.Meta.imp, PLAN.Meta.imp, F.M)}
+    Meta: () => `${meter('Inversión', T.Meta.costo, PLAN.Meta.budget, F.usd0, { gasto: 1 })}${meter('Impresiones (meta 15 M)', T.Meta.imp, PLAN.Meta.imp, F.M)}${costMeter('CPM real', cpm('Meta'), 0.35, F.usd)}
       <div class="kv"><span>Alcance W1-W2</span><b class="num">${F.int(olas('Meta')[0].alcance)} · f ${F.d2(olas('Meta')[0].frecuencia)}</b><span>Alcance W3-W4</span><b class="num">${F.int(olas('Meta')[1].alcance)} · f ${F.d2(olas('Meta')[1].frecuencia)}</b><span>Interacciones</span><b class="num">${F.int(T.Meta.inter)}</b><span>ThruPlays</span><b class="num">${F.int(T.Meta.thru)}</b></div>`,
     YouTube: () => `${meter('Inversión', T.YouTube.costo, PLAN.YouTube.budget, F.usd0, { gasto: 1 })}${meter('Impresiones', T.YouTube.imp, PLAN.YouTube.imp, F.M)}${meter('Views', T.YouTube.views, PLAN.YouTube.views, F.M)}
-      <div class="kv"><span>VTR</span><b class="num">${F.pct1(T.YouTube.views / T.YouTube.imp)}</b><span>Usuarios únicos (suma de olas)</span><b class="num">${F.int(T.YouTube.alcance)}</b><span>Vistas completas (100%)</span><b class="num">${F.int(T.YouTube.q100)}</b></div>`,
-    TikTok: () => `${meter('Inversión', T.TikTok.costo, PLAN.TikTok.budget, F.usd0, { gasto: 1 })}${meter('Views', T.TikTok.views, PLAN.TikTok.views, F.M)}
-      <div class="kv"><span>Me gusta</span><b class="num">${F.int(T.TikTok.likes)}</b><span>Visitas al perfil</span><b class="num">${F.int(T.TikTok.perfil)}</b><span>Nuevos seguidores</span><b class="num">${F.int(T.TikTok.seg)}</b><span>CPV real</span><b class="num">${F.usd4(T.TikTok.costo / T.TikTok.views)}</b></div>`,
-    Display: () => `${meter('Inversión', T.Display.costo, PLAN.Display.budget, F.usd0, { gasto: 1 })}${meter('Impresiones', T.Display.imp, PLAN.Display.imp, F.M)}
-      <div class="kv"><span>Clics</span><b class="num">${F.int(T.Display.clics)}</b><span>CTR</span><b class="num">${F.pct2(T.Display.clics / T.Display.imp)}</b><span>Usuarios · frecuencia</span><b class="num">${F.int(T.Display.alcance)} · ${F.d1(olas('Display')[0].frecuencia)}</b><span>Viewability</span><b>No reportada</b></div>`
+      <div class="kv"><span>VTR</span><b class="num">${F.pct1(T.YouTube.views / T.YouTube.imp)}</b><span>Usuarios únicos</span><b class="num">${F.int(T.YouTube.alcance)}</b><span>Clics</span><b class="num">${F.int(T.YouTube.clics)}</b><span>Vistas completas (100%)</span><b class="num">${F.int(T.YouTube.q100)}</b></div>`,
+    TikTok: () => `${meter('Inversión', T.TikTok.costo, PLAN.TikTok.budget, F.usd0, { gasto: 1 })}${meter('Views', T.TikTok.views, PLAN.TikTok.views, F.M)}${costMeter('CPV real', T.TikTok.costo / T.TikTok.views, PLAN.TikTok.cpv, F.usd4)}
+      <div class="kv"><span>Me gusta</span><b class="num">${F.int(T.TikTok.likes)}</b><span>Visitas al perfil</span><b class="num">${F.int(T.TikTok.perfil)}</b><span>Nuevos seguidores</span><b class="num">${F.int(T.TikTok.seg)}</b><span>Costo por seguidor</span><b class="num">${F.usd3(T.TikTok.costo / T.TikTok.seg)}</b></div>`,
+    Display: () => `${meter('Inversión', T.Display.costo, PLAN.Display.budget, F.usd0, { gasto: 1 })}${meter('Impresiones', T.Display.imp, PLAN.Display.imp, F.M)}${costMeter('CPM real', cpm('Display'), PLAN.Display.cpm, F.usd)}
+      <div class="kv"><span>Clics</span><b class="num">${F.int(T.Display.clics)}</b><span>CTR</span><b class="num">${F.pct2(T.Display.clics / T.Display.imp)}</b><span>Usuarios · frecuencia</span><b class="num">${F.int(T.Display.alcance)} · ${F.d1(olas('Display')[0].frecuencia)}</b><span>Costo por clic</span><b class="num">${F.usd3(T.Display.costo / T.Display.clics)}</b></div>`
   };
   const planTxt = { Meta: ['CPM $0.30–0.35', '15.0–17.5 M impresiones'], YouTube: ['CPM $0.60 · CPV $0.002', '7.5 M imp. · 2.25 M views'], TikTok: ['CPV $0.0015', '1.5 M views'], Display: ['CPM $0.50', '4.5 M impresiones'] };
   document.getElementById('flow').replaceChildren(...CH.map((c) => {
