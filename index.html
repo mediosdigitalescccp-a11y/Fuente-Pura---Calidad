@@ -167,6 +167,13 @@ h1, h2, h3 { margin: 0; }
 .flow-note { margin-top: 10px; color: rgba(255,255,255,.85); font-size: 12px; }
 
 /* Gráficos */
+#mix + .grid > .card { display: flex; flex-direction: column; }
+#mix + .grid .donut-wrap { flex: 1; }
+.mix-foot { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 14px; }
+.mix-foot div { background: var(--panel-2); border-radius: 10px; padding: 9px 11px; }
+.mix-foot small { display: block; font-size: 10.5px; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .05em; }
+.mix-foot b { font-size: 15px; }
+.mix-foot span { display: block; font-size: 11px; color: var(--muted); }
 .donut-wrap { display: grid; grid-template-columns: 150px 1fr; gap: 16px; align-items: center; }
 .legend { display: grid; gap: 8px; font-size: 12.5px; }
 .legend div { display: grid; grid-template-columns: 10px 1fr auto; gap: 8px; align-items: center; }
@@ -450,8 +457,8 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
 
   <div class="sec" id="mix"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9h-9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Mix e inversión</h2><span class="sec-line"></span><p>Cómo se reparte lo invertido y cuánto cuesta cada resultado</p></div>
   <div class="grid">
-    <section class="card s4"><h3>Mix de impresiones</h3><p class="sub">Impresiones entregadas por canal. TikTok se mide en views.</p><div class="donut-wrap"><div class="chart" id="d-imp"></div><div class="legend" id="l-imp"></div></div></section>
-    <section class="card s4"><h3>Mix de inversión</h3><p class="sub">Inversión a la fecha contra el presupuesto de cada canal.</p><div class="donut-wrap"><div class="chart" id="d-inv"></div><div class="legend" id="l-inv"></div></div></section>
+    <section class="card s4"><h3>Mix de impresiones</h3><p class="sub">Impresiones entregadas por canal. TikTok se mide en views.</p><div class="donut-wrap"><div class="chart" id="d-imp"></div><div class="legend" id="l-imp"></div></div><div class="mix-foot" id="f-imp"></div></section>
+    <section class="card s4"><h3>Mix de inversión</h3><p class="sub">Inversión a la fecha contra el presupuesto de cada canal.</p><div class="donut-wrap"><div class="chart" id="d-inv"></div><div class="legend" id="l-inv"></div></div><div class="mix-foot" id="f-inv"></div></section>
     <section class="card s4"><h3>Ritmo de inversión</h3><p class="sub">Inversión acumulada día a día contra el ritmo del plan: 60% en noviembre y 40% en diciembre.</p><div class="chart" id="pace"></div><div id="pace-txt"></div></section>
   </div>
 
@@ -665,6 +672,9 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   donut('d-imp', pImp, F.M(impTot + T.TikTok.views), 'total'); legend('l-imp', pImp);
   const pInv = CH.map((c) => ({ k: c, v: T[c].costo, c: COL[c], lab: F.usd(T[c].costo) + ' de ' + F.usd0(PLAN[c].budget) }));
   donut('d-inv', pInv, F.usd0(inv), 'invertido'); legend('l-inv', pInv);
+  const mf = (id, items) => { document.getElementById(id).innerHTML = items.map(([a, b, c]) => `<div><small>${a}</small><b class="num">${b}</b><span>${c}</span></div>`).join(''); };
+  mf('f-imp', [['CPM promedio', F.usd(inv / impTot * 1000 - T.TikTok.costo / impTot * 1000), 'Meta, YouTube y Display'], ['Impresiones por día', F.M(impTot / diaN), 'promedio de ' + diaN + ' días']]);
+  mf('f-inv', [['Presupuesto usado', F.pct(inv / budget), F.usd0(inv) + ' de ' + F.usd0(budget)], ['Disponible', F.usd0(budget - inv), 'para ' + (totalDias - diaN) + ' días']]);
 
   const drawPace = () => {
     const box = document.getElementById('pace'), W = Math.max(box.clientWidth, 260), H = 190, m = { t: 14, r: 10, b: 24, l: 46 };
@@ -682,7 +692,14 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     g += `<path d="${acc.map((p, i) => (i ? 'L' : 'M') + x(i) + ',' + y(p.v)).join('')}" style="fill:none;stroke:var(--blue);stroke-width:2.5"></path>`;
     g += `<circle cx="${x(n - 1)}" cy="${y(acc[n - 1].v)}" r="4" style="fill:var(--blue)"></circle>`;
     [0, n - 1].forEach((i) => { g += `<text x="${x(i)}" y="${H - 6}" text-anchor="${i ? 'end' : 'start'}">${F.fecha(acc[i].f)}</text>`; });
+    g += `<line id="pace-guide" x1="0" x2="0" y1="${m.t}" y2="${H - m.b}" style="stroke:var(--fg);stroke-width:1;opacity:0"></line><circle id="pace-dot" r="4.5" style="fill:#fff;stroke:var(--blue);stroke-width:2.5;opacity:0"></circle>`;
+    acc.forEach((p, i) => { const x0 = i ? (x(i - 1) + x(i)) / 2 : m.l, x1 = i < n - 1 ? (x(i) + x(i + 1)) / 2 : W - m.r; g += `<rect data-i="${i}" x="${x0}" y="${m.t}" width="${x1 - x0}" height="${H - m.t - m.b}" style="fill:transparent"></rect>`; });
     box.innerHTML = `<div class="keys"><span style="--c:var(--blue)">Invertido</span><span style="--c:var(--muted)">Ritmo del plan</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Inversión acumulada ${F.usd0(acc[n - 1].v)} contra ${F.usd0(plan(ultima))} esperado por el plan">${g}</svg>`;
+    const tp = tipFor(box), gl = box.querySelector('#pace-guide'), dt = box.querySelector('#pace-dot');
+    box.querySelectorAll('rect[data-i]').forEach((rc) => { const i = +rc.dataset.i, p = acc[i], pl = plan(p.f), d = p.v / pl - 1;
+      const on = (ev) => { gl.setAttribute('x1', x(i)); gl.setAttribute('x2', x(i)); gl.style.opacity = .35; dt.setAttribute('cx', x(i)); dt.setAttribute('cy', y(p.v)); dt.style.opacity = 1;
+        tp.show(ev, [F.fecha(p.f) + (p.f === ultima && enCurso ? ' (en curso)' : ''), 'Invertido: ' + F.usd(p.v), 'Plan: ' + F.usd(pl), (d >= 0 ? '+' : '−') + F.pct1(Math.abs(d)) + ' contra el plan']); };
+      rc.addEventListener('pointermove', on); rc.addEventListener('pointerdown', on); rc.addEventListener('pointerleave', () => { tp.hide(); gl.style.opacity = 0; dt.style.opacity = 0; }); });
     const dif = inv / plan(ultima) - 1;
     document.getElementById('pace-txt').innerHTML = `<p class="sub" style="margin:8px 0 0">Al ${F.fecha(ultima)} se llevan <b>${F.usd0(inv)}</b>; el plan esperaba <b>${F.usd0(plan(ultima))}</b>, es decir ${F.pct(Math.abs(dif))} ${dif >= 0 ? 'por encima' : 'por debajo'} del ritmo. Quedan <b>${F.usd0(budget - inv)}</b> para ${totalDias - diaN} días.</p>`;
   };
