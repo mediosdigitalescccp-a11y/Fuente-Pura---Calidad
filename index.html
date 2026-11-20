@@ -50,8 +50,8 @@ h1, h2, h3 { margin: 0; }
 .hero { margin-top: 16px; border-radius: 20px; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) auto clamp(260px, 26vw, 360px);
   background: radial-gradient(120% 140% at 85% 20%, #3db6f5 0%, #1a6fe0 38%, #0b3a8f 100%); color: #fff; box-shadow: 0 18px 40px rgba(3, 18, 52, .35); }
 .hero-txt { padding: 30px 32px 26px; display: flex; flex-direction: column; gap: 12px; }
-.hero-prod { display: flex; align-items: flex-end; gap: 10px; padding: 24px 90px 22px 0; }
-.hero-prod img { display: block; height: 250px; width: auto; filter: drop-shadow(0 14px 18px rgba(3, 18, 52, .35)); }
+.hero-prod { display: flex; align-items: flex-end; align-self: end; gap: 10px; padding: 24px 90px 0 0; }
+.hero-prod img { display: block; height: 250px; width: auto; filter: drop-shadow(0 8px 10px rgba(3, 18, 52, .3)); margin-bottom: -2px; }
 .hero-prod img:first-child { height: 212px; }
 @media (max-width: 1180px) { .hero-prod { padding-right: 30px; } .hero-prod img { height: 190px; } .hero-prod img:first-child { height: 160px; } }
 @media (max-width: 900px) { .hero-prod { display: none; } }
@@ -80,9 +80,11 @@ h1, h2, h3 { margin: 0; }
 
 /* Secciones */
 .sec { display: flex; align-items: center; gap: 12px; margin: 34px 0 14px; color: #fff; scroll-margin-top: 64px; }
-.sec i { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: rgba(255,255,255,.16); font-style: normal; font-weight: 800; font-size: 14px; }
-.sec h2 { font-size: 20px; font-weight: 800; }
-.sec p { margin: 0 0 0 auto; font-size: 12.5px; opacity: .8; text-align: right; }
+.sec i { flex: none; width: 46px; height: 46px; border-radius: 14px; display: grid; place-items: center; background: linear-gradient(145deg, #4f8ff0, #2563d6); box-shadow: 0 6px 14px rgba(3, 18, 52, .25); font-style: normal; }
+.sec i svg { width: 22px; height: 22px; color: #fff; }
+.sec-line { flex: 1; height: 1.5px; min-width: 24px; background: linear-gradient(90deg, rgba(255,255,255,.55), rgba(255,255,255,.15)); border-radius: 2px; }
+.sec h2 { font-size: 22px; font-weight: 800; flex: none; max-width: 70%; }
+.sec p { margin: 0; font-size: 12.5px; opacity: .8; text-align: right; flex: none; max-width: 34%; }
 .sec::after { content: none; }
 .grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--gap); }
 .card { background: var(--panel); border-radius: var(--radius); padding: 18px; box-shadow: 0 6px 18px rgba(3, 18, 52, .16); min-width: 0; }
@@ -357,6 +359,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   .s3, .s4, .s6 { grid-column: span 12; }
   .donut-wrap { grid-template-columns: 120px 1fr; }
   .sec p { display: none; }
+  .sec { gap: 10px; } .sec i { width: 38px; height: 38px; border-radius: 12px; } .sec i svg { width: 19px; height: 19px; } .sec h2 { font-size: 17px; max-width: 75%; flex: 0 1 auto; } .sec-line { min-width: 28px; }
   .tt-aud { grid-template-columns: 1fr; } .bf-ctl { order: -2; } .tt-mid { order: -1; } .tt-prod img { max-height: 260px; } .tt-lab { max-width: 240px; } .tt-side { grid-template-columns: 1fr; }
   .stats div { flex-direction: column; gap: 0; }
   .stats div + div { margin-top: 4px; }
@@ -411,7 +414,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
 
   <section class="tiles" aria-label="Indicadores principales" id="tiles"></section>
 
-  <div class="sec" id="concepto"><i>1</i><h2>De comunicar un premio a construir valor de marca</h2></div>
+  <div class="sec" id="concepto"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 13.5 8 21l4-2 4 2-1-7.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>De comunicar un premio a construir valor de marca</h2><span class="sec-line"></span></div>
   <p class="intro">El reconocimiento es el <i>proof point</i>; lo que buscamos con la planificación de medios es convertirlo en una asociación de marca.</p>
   <div class="pillars">
     <div class="pillar"><small>Activo de comunicación</small><b>PREMIO</b><p>Superior Taste Award 2026 como respaldo visible de la calidad de Fuente Pura.</p><span class="arrow" aria-hidden="true">›</span></div>
@@ -419,22 +422,22 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     <div class="pillar"><small>Ambición</small><b>PREFERENCIA</b><p>Instalar nacionalmente una relación simple y memorable: Fuente Pura = calidad reconocida.</p></div>
   </div>
 
-  <div class="sec" id="estructura"><i>2</i><h2>Estructura de la campaña</h2><p>Dos meses, cada uno en dos bloques de dos semanas</p></div>
+  <div class="sec" id="estructura"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Estructura de la campaña</h2><span class="sec-line"></span><p>Dos meses, cada uno en dos bloques de dos semanas</p></div>
   <p class="intro">La campaña se divide en dos bloques por mes: <b>Noviembre</b> (Week 1–Week 2 y Week 3–Week 4) y <b>Diciembre</b> (Week 1–Week 2 y Week 3–Week 4). Por eso las olas se nombran <b>W1–W2</b> y <b>W3–W4</b>: son las semanas del mes en que corre cada bloque.</p>
   <div class="months" id="months"></div>
 
-  <div class="sec" id="kpi"><i>3</i><h2>KPI · Media Flow</h2><p>Cumplimiento de la planificación para el período completo Nov–Dic</p></div>
+  <div class="sec" id="kpi"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="1" fill="currentColor"/></svg></i><h2>KPI · Media Flow</h2><span class="sec-line"></span><p>Cumplimiento de la planificación para el período completo Nov–Dic</p></div>
   <div class="flow" id="flow"></div>
   <p class="flow-note">La línea vertical en cada barra marca lo esperado a la fecha según los días transcurridos hasta el 31 de diciembre. Los $750 de LinkedIn se reasignaron a TikTok, que queda con $3,000 para los dos meses.</p>
 
-  <div class="sec" id="mix"><i>4</i><h2>Mix e inversión</h2><p>Cómo se reparte lo invertido y cuánto cuesta cada resultado</p></div>
+  <div class="sec" id="mix"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9h-9z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 3.5A9 9 0 0 1 20.5 9H15z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Mix e inversión</h2><span class="sec-line"></span><p>Cómo se reparte lo invertido y cuánto cuesta cada resultado</p></div>
   <div class="grid">
     <section class="card s4"><h3>Mix de impresiones</h3><p class="sub">Impresiones entregadas por canal. TikTok se mide en views.</p><div class="donut-wrap"><div class="chart" id="d-imp"></div><div class="legend" id="l-imp"></div></div></section>
     <section class="card s4"><h3>Mix de inversión</h3><p class="sub">Inversión a la fecha contra el presupuesto de cada canal.</p><div class="donut-wrap"><div class="chart" id="d-inv"></div><div class="legend" id="l-inv"></div></div></section>
     <section class="card s4"><h3>Eficiencia real contra el plan</h3><p class="sub">Verde: igual o mejor que lo planificado.</p><table class="eff" id="eff"></table></section>
   </div>
 
-  <div class="sec" id="entrega"><i>5</i><h2>Entrega diaria</h2><p>Meta, YouTube y Display reportan por día; TikTok, por quincena</p></div>
+  <div class="sec" id="entrega"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Entrega diaria</h2><span class="sec-line"></span><p>Meta, YouTube y Display reportan por día; TikTok, por quincena</p></div>
   <div class="grid">
     <section class="card s12">
       <h3>Entrega diaria por canal</h3>
@@ -446,14 +449,14 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     <section class="card s12"><h3>Hallazgos clave</h3><p class="sub">Se calculan con los datos de la hoja; el día en curso no cuenta para el ritmo.</p><div class="finds" id="finds"></div></section>
   </div>
 
-  <div class="sec" id="audiencia"><i>6</i><h2>Audiencia</h2><p>Meta: sobre alcance · YouTube y Display: sobre impresiones · TikTok: % de alcance</p></div>
+  <div class="sec" id="audiencia"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 20a6.5 6.5 0 0 0-2.5-5.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Audiencia</h2><span class="sec-line"></span><p>Meta: sobre alcance · YouTube y Display: sobre impresiones · TikTok: % de alcance</p></div>
   <div class="grid">
     <section class="card s5" id="genero-card"><h3>Género</h3><p class="sub">Distribución por canal.</p><div class="gens-c"><div class="gens" id="gens"></div></div></section>
     <section class="card s7"><h3>Edad por canal</h3><div class="ctl" style="margin-top:10px">Canal <span class="seg" id="seg-edad"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div><div class="keys" id="edad-keys"></div><div class="chart" id="c-edad"></div></section>
     <section class="card s12 tt-card"><div class="tt-logo" id="tt-logo"></div><h3>TikTok · datos generales, edad y región</h3><p class="sub">Datos generales de toda la campaña en TikTok y su detalle por bloque (W1–W2 y W3–W4 de noviembre). Edad y región: porcentaje del alcance de cada video.</p><div class="gdn-stats tt-stats" id="tt-stats"></div><div class="tt-charts"><div class="tt-box"><h4>Views por bloque</h4><div class="chart" id="tt-c-views"></div></div><div class="tt-box"><h4>Reparto de views</h4><div class="chart" id="tt-c-mix"></div></div><div class="tt-box"><h4>¿Qué hicieron después de ver el video?</h4><div id="tt-c-fun"></div></div></div><div class="tt-aud" id="tt-aud"></div></section>
   </div>
 
-  <div class="sec" id="region"><i>7</i><h2>Región</h2><p>Peso de cada departamento dentro de cada canal</p></div>
+  <div class="sec" id="region"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="9.5" r="2.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Región</h2><span class="sec-line"></span><p>Peso de cada departamento dentro de cada canal</p></div>
   <div class="grid">
     <section class="card s12"><h3>Región por canal</h3><p class="sub">Participación de cada departamento dentro de cada canal.</p>
       <div class="reg-grid">
@@ -462,14 +465,14 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       </div></section>
   </div>
 
-  <div class="sec" id="creativos"><i>8</i><h2>Creativos</h2><p>Ordenados por impresiones o views</p></div>
+  <div class="sec" id="creativos"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="10" r="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="m21 16-5-5L5 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Creativos</h2><span class="sec-line"></span><p>Ordenados por impresiones o views</p></div>
   <div class="grid">
     <section class="card s12"><h3>Creativos de Meta</h3><p class="sub">PPV: spot en video · PPL: pieza estática. Tasa = interacciones ÷ impresiones.</p><div class="cards" id="cre-meta"></div></section>
     <section class="card s12"><h3>Videos de YouTube y TikTok</h3><p class="sub">YouTube: VTR = views ÷ impresiones; las barras muestran cuántos de los que vieron el video llegaron al 25%, 50%, 75% y 100%. TikTok: acumulado de W1-W2 y W3-W4; CPV = costo ÷ visualizaciones.</p><div class="cards" id="cre-yt"></div></section>
     <section class="card s12"><h3>Display · formatos de la campaña</h3><p class="sub" id="gdn-sub">—</p><div class="ctl"><label for="sel-gdn">Tipo</label> <span class="seg" id="seg-gdn"></span><select id="sel-gdn" class="sel"></select></div><div class="gdn-line" id="gdn-line"></div><div class="gdn-stats" id="gdn-stats"></div></section>
   </div>
 
-  <div class="sec" id="detalle"><i>9</i><h2>Detalle diario</h2></div>
+  <div class="sec" id="detalle"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 9.5h18M3 15h18M9 4v16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Detalle diario</h2><span class="sec-line"></span></div>
   <section class="card">
     <div class="ctl">Canal <span class="seg" id="seg-det"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div>
     <div class="tbl-wrap"><table class="tbl" id="tbl"></table></div>
