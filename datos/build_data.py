@@ -31,7 +31,7 @@ olas=[dict(canal='Meta',ola=W12,alcance=2233025,frecuencia=3.59,cpm=0.24),dict(c
 tiktok=[dict(ola=W12,video='Agua Mineral',views=537835,perfil=2502,seguidores=5627,costo=407,likes=13310,url='https://www.tiktok.com/@fuentepura/video/7704808335958297876'),
  dict(ola=W12,video='Agua Gasificada',views=344852,perfil=1249,seguidores=3735,costo=405,likes=6252,url='https://www.tiktok.com/@fuentepura/video/7705054811720371462'),
  dict(ola=W34,video='Agua Mineral',views=37635,perfil=114,seguidores=21,costo=16.14,likes=2139,url='https://www.tiktok.com/@fuentepura/video/7704808335958297876'),
- dict(ola=W34,video='Agua Gasificada',views=447,perfil=100,seguidores=12,costo=0.12,likes=None,url='https://www.tiktok.com/@fuentepura/video/7705054811720371462')]
+ dict(ola=W34,video='Agua Gasificada',views=447,perfil=100,seguidores=12,costo=0.12,likes=2139,url='https://www.tiktok.com/@fuentepura/video/7705054811720371462')]
 cre_rows="""19|PPV_SPOT_CALIDAD_MINERAL_48s 2216 2548 181;PPV_SPOT_CALIDAD_GASIFICADA_50s 693 739 47;PPL_CALIDAD_V1 10023 11676 6;PPL_CALIDAD_V2 18930 22776 6
 18|PPV_SPOT_CALIDAD_MINERAL_48s 21719 26348 1821;PPV_SPOT_CALIDAD_GASIFICADA_50s 13179 14293 873;PPL_CALIDAD_V1 60012 70493 50;PPL_CALIDAD_V2 174808 246747 182
 17|PPV_SPOT_CALIDAD_MINERAL_48s 19446 22603 1425;PPV_SPOT_CALIDAD_GASIFICADA_50s 25172 28211 1741;PPL_CALIDAD_V1 57737 66794 42;PPL_CALIDAD_V2 181749 265901 176
