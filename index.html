@@ -449,14 +449,14 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   <div class="grid">
     <section class="card s4"><h3>Mix de impresiones</h3><p class="sub">Impresiones entregadas por canal. TikTok se mide en views.</p><div class="donut-wrap"><div class="chart" id="d-imp"></div><div class="legend" id="l-imp"></div></div></section>
     <section class="card s4"><h3>Mix de inversión</h3><p class="sub">Inversión a la fecha contra el presupuesto de cada canal.</p><div class="donut-wrap"><div class="chart" id="d-inv"></div><div class="legend" id="l-inv"></div></div></section>
-    <section class="card s4"><h3>Eficiencia real contra el plan</h3><p class="sub">Verde: igual o mejor que lo planificado.</p><table class="eff" id="eff"></table></section>
+    <section class="card s4"><h3>Ritmo de inversión</h3><p class="sub">Inversión acumulada día a día contra el ritmo del plan: 60% en noviembre y 40% en diciembre.</p><div class="chart" id="pace"></div><div id="pace-txt"></div></section>
   </div>
 
   <div class="sec" id="entrega"><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Entrega diaria</h2><span class="sec-line"></span><p>Meta, YouTube y Display reportan por día; TikTok, por quincena</p></div>
   <div class="grid">
     <section class="card s12">
       <h3>Entrega diaria por canal</h3>
-      <div class="ctl" style="margin-top:10px">Ver <span class="seg" id="seg-met"><button type="button" data-v="impresiones" aria-pressed="true">Impresiones</button><button type="button" data-v="costo" aria-pressed="false">Inversión</button><button type="button" data-v="reproducciones" aria-pressed="false">Views / reproducciones</button></span></div>
+      <div class="ctl" style="margin-top:10px">Ver <span class="seg" id="seg-met"><button type="button" data-v="impresiones" aria-pressed="true">Impresiones</button><button type="button" data-v="costo" aria-pressed="false">Inversión</button><button type="button" data-v="reproducciones" aria-pressed="false">Views / reproducciones</button><button type="button" data-v="alcance" aria-pressed="false">Alcance / usuarios únicos</button></span></div>
       <div class="keys"><span style="--c:var(--c-meta)">Meta</span><span style="--c:var(--c-yt)">YouTube</span><span style="--c:var(--c-gdn)">Display</span></div>
       <div class="chart" id="c-diario"></div>
       <p class="sub" id="diario-nota" style="margin:8px 0 0"></p>
@@ -663,14 +663,26 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const pInv = CH.map((c) => ({ k: c, v: T[c].costo, c: COL[c], lab: F.usd(T[c].costo) + ' de ' + F.usd0(PLAN[c].budget) }));
   donut('d-inv', pInv, F.usd0(inv), 'invertido'); legend('l-inv', pInv);
 
-  const effRows = [
-    ['Meta', 'CPM', cpm('Meta'), '$0.30–0.35', cpm('Meta') <= 0.35, F.usd],
-    ['YouTube', 'CPM', cpm('YouTube'), '$0.60', cpm('YouTube') <= 0.60, F.usd],
-    ['YouTube', 'CPV', T.YouTube.costo / T.YouTube.views, '$0.002', T.YouTube.costo / T.YouTube.views <= 0.002, F.usd4],
-    ['TikTok', 'CPV', T.TikTok.costo / T.TikTok.views, '$0.0015', T.TikTok.costo / T.TikTok.views <= 0.0015, F.usd4],
-    ['Display', 'CPM', cpm('Display'), '$0.50', cpm('Display') <= 0.50, F.usd]
-  ];
-  document.getElementById('eff').innerHTML = '<thead><tr><th>Canal</th><th>Indicador</th><th>Real</th><th>Plan</th></tr></thead><tbody>' + effRows.map(([c, k, v, p, ok, f]) => `<tr><td><span class="dot" style="--c:${COL[c]}"></span>${c}</td><td>${k}</td><td class="num" style="color:var(--${ok ? 'ok' : 'bad'});font-weight:700">${f(v)}</td><td class="num">${p}</td></tr>`).join('') + '</tbody>';
+  const drawPace = () => {
+    const box = document.getElementById('pace'), W = Math.max(box.clientWidth, 260), H = 190, m = { t: 14, r: 10, b: 24, l: 46 };
+    const dias = fechas.filter((f) => f <= ultima), acc = []; let a = 0;
+    dias.forEach((f) => { a += sum(D.diario.filter((r) => r.fecha === f), 'costo'); acc.push({ f, v: a }); });
+    const ttShare = T.TikTok.costo / dias.length;
+    acc.forEach((p, i) => { p.v += ttShare * (i + 1); });
+    const nov = budget * 0.6, dic = budget * 0.4, dNov = days(INICIO, '2026-11-30') + 1;
+    const plan = (f) => f <= '2026-11-30' ? nov * (days(INICIO, f) + 1) / dNov : nov + dic * (days('2026-12-01', f) + 1) / 31;
+    const n = acc.length, max = Math.max(acc[n - 1].v, plan(ultima)) * 1.12;
+    const x = (i) => m.l + i / Math.max(1, n - 1) * (W - m.l - m.r), y = (v) => H - m.b - v / max * (H - m.t - m.b);
+    let g = ''; for (let k = 0; k <= 3; k++) { const v = max / 1.12 * k / 3; g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"></line><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${F.usd0(v)}</text>`; }
+    g += `<path d="${acc.map((p, i) => (i ? 'L' : 'M') + x(i) + ',' + y(plan(p.f))).join('')}" style="fill:none;stroke:var(--muted);stroke-width:2;stroke-dasharray:5 4"></path>`;
+    g += `<path d="${acc.map((p, i) => (i ? 'L' : 'M') + x(i) + ',' + y(p.v)).join('')} L${x(n - 1)},${y(0)} L${x(0)},${y(0)}Z" style="fill:var(--blue);opacity:.12"></path>`;
+    g += `<path d="${acc.map((p, i) => (i ? 'L' : 'M') + x(i) + ',' + y(p.v)).join('')}" style="fill:none;stroke:var(--blue);stroke-width:2.5"></path>`;
+    g += `<circle cx="${x(n - 1)}" cy="${y(acc[n - 1].v)}" r="4" style="fill:var(--blue)"></circle>`;
+    [0, n - 1].forEach((i) => { g += `<text x="${x(i)}" y="${H - 6}" text-anchor="${i ? 'end' : 'start'}">${F.fecha(acc[i].f)}</text>`; });
+    box.innerHTML = `<div class="keys"><span style="--c:var(--blue)">Invertido</span><span style="--c:var(--muted)">Ritmo del plan</span></div><svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Inversión acumulada ${F.usd0(acc[n - 1].v)} contra ${F.usd0(plan(ultima))} esperado por el plan">${g}</svg>`;
+    const dif = inv / plan(ultima) - 1;
+    document.getElementById('pace-txt').innerHTML = `<p class="sub" style="margin:8px 0 0">Al ${F.fecha(ultima)} se llevan <b>${F.usd0(inv)}</b>; el plan esperaba <b>${F.usd0(plan(ultima))}</b>, es decir ${F.pct(Math.abs(dif))} ${dif >= 0 ? 'por encima' : 'por debajo'} del ritmo. Quedan <b>${F.usd0(budget - inv)}</b> para ${totalDias - diaN} días.</p>`;
+  };
 
   // ---------- Entrega diaria ----------
   const fechas = [...new Set(D.diario.map((r) => r.fecha))].sort();
@@ -678,19 +690,20 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const drawDiario = () => {
     const box = document.getElementById('c-diario'), W = Math.max(box.clientWidth, 320), H = 280, m = { t: 22, r: 8, b: 26, l: 56 };
     const keys = ['Meta', 'YouTube', 'Display'], rows = fechas.map((f) => { const o = { fecha: f }; keys.forEach((k) => { const r = D.diario.find((x) => x.fecha === f && x.canal === k); o[k] = r ? Number(r[metDiario]) || 0 : 0; }); o.tot = keys.reduce((s, k) => s + o[k], 0); return o; });
-    const max = Math.max(...rows.map((r) => r.tot)) * 1.1 || 1, bw = (W - m.l - m.r) / rows.length, y = (v) => H - m.b - v / max * (H - m.t - m.b);
+    const grp = metDiario === 'alcance', max = (grp ? Math.max(...rows.flatMap((r) => keys.map((k) => r[k]))) : Math.max(...rows.map((r) => r.tot))) * 1.1 || 1, bw = (W - m.l - m.r) / rows.length, y = (v) => H - m.b - v / max * (H - m.t - m.b);
     const fmt = metDiario === 'costo' ? F.usd0 : F.M;
     let g = '';
     for (let i = 0; i <= 4; i++) { const v = max / 1.1 * i / 4; g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"></line><text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end">${fmt(v)}</text>`; }
-    rows.forEach((r, i) => { let acc = 0; const x = m.l + i * bw + bw * 0.16, w = bw * 0.68;
-      keys.forEach((k) => { if (!r[k]) return; g += `<rect x="${x}" y="${y(acc + r[k])}" width="${w}" height="${y(acc) - y(acc + r[k])}" style="fill:${COL[k]};opacity:${r.fecha === ultima && enCurso ? .45 : 1}"></rect>`; acc += r[k]; });
+    rows.forEach((r, i) => { let acc = 0; const x = m.l + i * bw + bw * 0.16, w = bw * 0.68, op = r.fecha === ultima && enCurso ? .45 : 1;
+      if (grp) { const sw = w / keys.length; keys.forEach((k, j) => { if (!r[k]) return; g += `<rect x="${x + j * sw + 0.5}" y="${y(r[k])}" width="${sw - 1}" height="${y(0) - y(r[k])}" rx="2" style="fill:${COL[k]};opacity:${op}"></rect>`; }); }
+      else keys.forEach((k) => { if (!r[k]) return; g += `<rect x="${x}" y="${y(acc + r[k])}" width="${w}" height="${y(acc) - y(acc + r[k])}" style="fill:${COL[k]};opacity:${op}"></rect>`; acc += r[k]; });
       g += `<text x="${x + w / 2}" y="${H - 8}" text-anchor="middle">${F.fecha(r.fecha).replace(' nov', '')}</text>`;
-      if (bw > 34) g += `<text x="${x + w / 2}" y="${y(r.tot) - 6}" text-anchor="middle" style="fill:var(--fg);font-weight:700;font-size:10.5px">${fmt(r.tot)}</text>`;
+      if (bw > 34 && !grp) g += `<text x="${x + w / 2}" y="${y(r.tot) - 6}" text-anchor="middle" style="fill:var(--fg);font-weight:700;font-size:10.5px">${fmt(r.tot)}</text>`;
       g += `<rect data-i="${i}" x="${m.l + i * bw}" y="${m.t}" width="${bw}" height="${H - m.t - m.b}" style="fill:transparent"></rect>`; });
     box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${metDiario} por día y canal">${g}</svg>`;
     const tp = tipFor(box);
-    box.querySelectorAll('rect[data-i]').forEach((rc) => { const r = rows[+rc.dataset.i]; rc.addEventListener('pointermove', (ev) => tp.show(ev, [F.fecha(r.fecha) + (r.fecha === ultima && enCurso ? ' (en curso)' : ''), ...keys.map((k) => k + ': ' + (metDiario === 'costo' ? F.usd(r[k]) : F.int(r[k]))), 'Total: ' + (metDiario === 'costo' ? F.usd(r.tot) : F.int(r.tot))])); rc.addEventListener('pointerleave', () => tp.hide()); });
-    document.getElementById('diario-nota').textContent = 'Eje en ' + (metDiario === 'costo' ? 'USD' : 'unidades') + '. Display inició el 16 nov. Meta y YouTube cambiaron de ola el 16 nov (W1-W2 → W3-W4).' + (enCurso ? ' El ' + F.fecha(ultima) + ' está en curso (barra más clara).' : '') + (metDiario === 'reproducciones' ? ' En Meta son reproducciones de video; en YouTube, views.' : '');
+    box.querySelectorAll('rect[data-i]').forEach((rc) => { const r = rows[+rc.dataset.i]; rc.addEventListener('pointermove', (ev) => tp.show(ev, [F.fecha(r.fecha) + (r.fecha === ultima && enCurso ? ' (en curso)' : ''), ...keys.map((k) => k + ': ' + (metDiario === 'costo' ? F.usd(r[k]) : F.int(r[k]))), ...(grp ? ['No se suma entre canales'] : ['Total: ' + (metDiario === 'costo' ? F.usd(r.tot) : F.int(r.tot))])])); rc.addEventListener('pointerleave', () => tp.hide()); });
+    document.getElementById('diario-nota').textContent = 'Eje en ' + (metDiario === 'costo' ? 'USD' : 'unidades') + '. Display inició el 16 nov. Meta y YouTube cambiaron de ola el 16 nov (W1-W2 → W3-W4).' + (enCurso ? ' El ' + F.fecha(ultima) + ' está en curso (barra más clara).' : '') + (metDiario === 'reproducciones' ? ' En Meta son reproducciones de video; en YouTube, views.' : '') + (grp ? ' Alcance diario en Meta y usuarios únicos en YouTube y Display. Las personas pueden repetirse entre canales y entre días, por eso no se suman: cada canal va en su propia barra.' : '');
   };
   const segs = (id, fn) => { const s = document.getElementById(id); s.addEventListener('click', (ev) => { const b = ev.target.closest('button'); if (!b) return; s.querySelectorAll('button').forEach((x) => x.setAttribute('aria-pressed', String(x === b))); fn(b.dataset.v); }); };
   segs('seg-met', (v) => { metDiario = v; drawDiario(); });
@@ -878,7 +891,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const spy = () => { let cur = links[0].dataset.t; links.forEach((a) => { const t = document.getElementById(a.dataset.t); if (t && t.getBoundingClientRect().top <= 120) cur = a.dataset.t; }); links.forEach((a) => a.classList.toggle('on', a.dataset.t === cur)); };
   addEventListener('scroll', () => requestAnimationFrame(spy), { passive: true });
 
-  const layout = () => { drawDiario(); drawEdad(); fila(document.getElementById('cre-meta'), innerWidth < 761 ? 140 : 180); fila(document.getElementById('cre-yt'), innerWidth < 761 ? 140 : 200); drawGdn(); drawTT(); spy(); };
+  const layout = () => { drawPace(); drawDiario(); drawEdad(); fila(document.getElementById('cre-meta'), innerWidth < 761 ? 140 : 180); fila(document.getElementById('cre-yt'), innerWidth < 761 ? 140 : 200); drawGdn(); drawTT(); spy(); };
   drawTabla(); layout();
   let w = innerWidth, t; addEventListener('resize', () => { clearTimeout(t); t = setTimeout(() => { if (innerWidth !== w) { w = innerWidth; layout(); } }, 150); });
 })();
