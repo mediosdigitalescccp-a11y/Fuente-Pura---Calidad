@@ -261,7 +261,7 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 .fun-row > span { color: var(--muted); font-weight: 600; }
 .fun-bar { position: relative; height: 22px; border-radius: 7px; background: color-mix(in srgb, var(--c-tt) 10%, transparent); }
 .fun-bar i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 7px; background: var(--c-tt); min-width: 4px; }
-.fun-bar b { position: absolute; left: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--fg); white-space: nowrap; }
+.fun-bar b { position: absolute; left: 8px; font-weight: 800; top: 50%; transform: translateY(-50%); font-size: 12px; color: var(--fg); white-space: nowrap; }
 
 @media (max-width: 1180px) { .tt-charts { grid-template-columns: 1fr 1fr; } .tt-charts .tt-box:first-child { grid-column: 1 / -1; } }
 @media (max-width: 760px) { .tt-charts { grid-template-columns: 1fr; } .tt-charts .tt-box:first-child { grid-column: auto; } }
@@ -399,7 +399,7 @@ footer b { color: #fff; }
   <div class="grid">
     <section class="card s5" id="genero-card"><h3>Género</h3><p class="sub">Distribución por canal.</p><div class="gens-c"><div class="gens" id="gens"></div></div></section>
     <section class="card s7"><h3>Edad por canal</h3><div class="ctl" style="margin-top:10px">Canal <span class="seg" id="seg-edad"><button type="button" data-v="todos" aria-pressed="true">Todos</button><button type="button" data-v="Meta" aria-pressed="false">Meta</button><button type="button" data-v="YouTube" aria-pressed="false">YouTube</button><button type="button" data-v="Display" aria-pressed="false">Display</button></span></div><div class="keys" id="edad-keys"></div><div class="chart" id="c-edad"></div></section>
-    <section class="card s12 tt-card"><div class="tt-logo" id="tt-logo"></div><h3>TikTok · datos generales, edad y región</h3><p class="sub">Datos generales de toda la campaña en TikTok y su detalle por bloque (W1–W2 y W3–W4 de noviembre). Edad y región: porcentaje del alcance de cada video.</p><div class="gdn-stats tt-stats" id="tt-stats"></div><div class="tt-charts"><div class="tt-box"><h4>Views por bloque</h4><div class="chart" id="tt-c-views"></div></div><div class="tt-box"><h4>Reparto de views</h4><div class="chart" id="tt-c-mix"></div></div><div class="tt-box"><h4>Interacción por cada 1,000 views</h4><div id="tt-c-fun"></div></div></div><div class="tt-aud" id="tt-aud"></div></section>
+    <section class="card s12 tt-card"><div class="tt-logo" id="tt-logo"></div><h3>TikTok · datos generales, edad y región</h3><p class="sub">Datos generales de toda la campaña en TikTok y su detalle por bloque (W1–W2 y W3–W4 de noviembre). Edad y región: porcentaje del alcance de cada video.</p><div class="gdn-stats tt-stats" id="tt-stats"></div><div class="tt-charts"><div class="tt-box"><h4>Views por bloque</h4><div class="chart" id="tt-c-views"></div></div><div class="tt-box"><h4>Reparto de views</h4><div class="chart" id="tt-c-mix"></div></div><div class="tt-box"><h4>¿Qué hicieron después de ver el video?</h4><div id="tt-c-fun"></div></div></div><div class="tt-aud" id="tt-aud"></div></section>
   </div>
 
   <div class="sec" id="region"><i>7</i><h2>Región</h2><p>Peso de cada departamento dentro de cada canal</p></div>
@@ -686,13 +686,14 @@ footer b { color: #fff; }
       paths += `<path d="M${P(a0, R1)} A${R1},${R1} 0 ${L} 1 ${P(a1, R1)} L${P(a1, R0)} A${R0},${R0} 0 ${L} 0 ${P(a0, R0)} Z" style="fill:${p.c};stroke:var(--panel-2);stroke-width:2"><title>${p.k}: ${F.int(p.v)} (${F.pct1(p.v / tot)})</title></path>`; a0 = a1; });
     mixBox.innerHTML = `<svg viewBox="0 0 ${S} ${S}" style="max-width:190px;margin:4px auto 0" role="img" aria-label="${parts.map((p) => p.k + ' ' + F.pct(p.v / tot)).join(', ')}">${paths}<text x="85" y="83" text-anchor="middle" style="fill:var(--fg);font-weight:800;font-size:17px">${F.M(tot)}</text><text x="85" y="100" text-anchor="middle">views</text></svg>`
       + `<div class="legend" style="margin-top:10px">${parts.map((p) => `<div style="--c:${p.c}"><i></i><span>${p.k}<small>${F.int(p.v)} views · CPV ${F.usd4(sum(D.tiktok.filter((r) => r.video === p.k), 'costo') / p.v)}</small></span><b class="num">${F.pct(p.v / tot)}</b></div>`).join('')}</div>`;
-    // Interacción por cada 1,000 views, por video
+    // Acciones después de ver el video: cantidades reales por video
     const met = [['Me gusta', 'likes'], ['Visitas al perfil', 'perfil'], ['Nuevos seguidores', 'seguidores']];
-    const rate = (v, k) => { const rows = D.tiktok.filter((r) => r.video === v && (k !== 'likes' || r.likes != null)); return sum(rows, k) / sum(rows, 'views') * 1000; };
-    const mxr = Math.max(...met.flatMap(([, k]) => VIDS.map((v) => rate(v, k))));
+    const tot2 = (v, k) => sum(D.tiktok.filter((r) => r.video === v), k), vws = (v) => tot2(v, 'views');
     document.getElementById('tt-c-fun').innerHTML = `<div class="tt-keys">${VIDS.map((v) => `<span style="--c:${VC[v]}">${v}</span>`).join('')}</div><div class="fun">`
-      + met.map(([lab, k]) => `<div class="fun-row"><span>${lab}</span><div style="display:grid;gap:4px">${VIDS.map((v) => { const r = rate(v, k); return `<div class="fun-bar" role="img" aria-label="${v}, ${lab}: ${F.d1(r)} por cada 1,000 views" title="${v}: ${F.d1(r)} por cada 1,000 views"><i style="width:${Math.max(2, r / mxr * 100)}%;background:${VC[v]}"></i><b class="num">${F.d1(r)}</b></div>`; }).join('')}</div></div>`).join('')
-      + `</div><p class="sub" style="margin:10px 0 0">Total: ${F.d1(T.TikTok.likes / sum(D.tiktok.filter((r) => r.likes != null), 'views') * 1000)} me gusta, ${F.d1(T.TikTok.perfil / T.TikTok.views * 1000)} visitas al perfil y ${F.d1(T.TikTok.seg / T.TikTok.views * 1000)} seguidores por cada 1,000 views. Cada nuevo seguidor costó ${F.usd3(T.TikTok.costo / T.TikTok.seg)}.</p>`;
+      + met.map(([lab, k]) => { const mx = Math.max(...VIDS.map((v) => tot2(v, k)));
+        return `<div class="fun-row"><span>${lab}</span><div style="display:grid;gap:4px">${VIDS.map((v) => { const n = tot2(v, k), r = n / vws(v) * 1000;
+          return `<div style="display:grid;grid-template-columns:1fr 64px;gap:8px;align-items:center"><div class="fun-bar" role="img" aria-label="${v}, ${lab}: ${F.int(n)}, ${Math.round(r)} por cada 1,000 views"><i style="width:${Math.max(2, n / mx * 100)}%;background:${VC[v]}"></i><b class="num">${F.int(n)}</b></div><small style="font-size:10.5px;color:var(--muted);line-height:1.2"><b style="color:var(--fg)">${Math.round(r)}</b> c/1,000 views</small></div>`; }).join('')}</div></div>`; }).join('')
+      + `</div><p class="sub" style="margin:10px 0 0">En total, de cada 1,000 personas que vieron un video, unas <b>${Math.round(T.TikTok.likes / T.TikTok.views * 1000)}</b> dieron me gusta y <b>${Math.round(T.TikTok.seg / T.TikTok.views * 1000)}</b> empezaron a seguir la cuenta. Cada nuevo seguidor costó <b>${F.usd3(T.TikTok.costo / T.TikTok.seg)}</b>.</p>`;
   };
   const ttSide = (v) => `<div class="tt-side"><h4><i></i>${v}</h4>${[['edad', 'Edad'], ['region', 'Región']].map(([k, lab]) => ['W1-W2', 'W3-W4'].map((w) => `<div class="tt-box"><h4>${lab} · ${w}</h4>${hbars(D.tiktok_aud[k][v][w], COL.TikTok)}</div>`).join('')).join('')}</div>`;
   document.getElementById('tt-aud').innerHTML = ttSide('Agua Gasificada')
