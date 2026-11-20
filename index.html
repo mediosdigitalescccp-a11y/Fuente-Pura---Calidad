@@ -308,12 +308,23 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 details.notes { margin-top: 18px; color: rgba(255,255,255,.88); font-size: 12.5px; }
 details.notes summary { cursor: pointer; font-weight: 700; }
 details.notes ul { line-height: 1.6; padding-left: 18px; }
-footer { margin-top: 26px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 16px; color: rgba(255,255,255,.8); font-size: 12px; }
-.foot-prod { display: flex; gap: 10px; }
-.foot-prod span { width: 66px; height: 114px; border-radius: 14px; background: center / cover no-repeat; box-shadow: 0 6px 16px rgba(3, 18, 52, .3); border: 2px solid rgba(255,255,255,.25); }
-.conf { justify-self: end; border: 1.5px solid rgba(255,255,255,.85); border-radius: 4px; padding: 8px 12px; color: #fff; font-weight: 700; letter-spacing: .02em; }
-@media (max-width: 760px) { footer { grid-template-columns: 1fr; justify-items: center; text-align: center; } .conf { justify-self: center; } }
-footer b { color: #fff; }
+
+/* Pie de página */
+.fp-foot { margin-top: 30px; display: grid; grid-template-columns: 150px minmax(0, 1fr) 150px; align-items: center; gap: 20px; }
+.fp-prod { display: flex; justify-content: center; position: relative; }
+.fp-prod::before { content: ""; position: absolute; inset: 14% -6%; border-radius: 50%; background: radial-gradient(closest-side, rgba(120, 210, 255, .55), rgba(120, 210, 255, 0)); }
+.fp-prod img { position: relative; display: block; height: 220px; width: auto; filter: drop-shadow(0 12px 18px rgba(3, 18, 52, .35)); }
+.fp-prod.l img { transform: rotate(-8deg); }
+.fp-prod.r img { transform: rotate(7deg); }
+.fp-conf { background: #fff; border-radius: 18px; padding: 18px 24px; display: flex; align-items: center; gap: 14px; box-shadow: 0 10px 26px rgba(3, 18, 52, .22); }
+.fp-conf svg { flex: none; width: 22px; height: 22px; }
+.fp-conf p { margin: 0; font-size: 14px; color: #55627a; line-height: 1.5; }
+.fp-conf b { color: #0d1b3a; }
+@media (max-width: 760px) {
+  .fp-foot { grid-template-columns: 1fr 1fr; }
+  .fp-conf { grid-column: 1 / -1; grid-row: 2; padding: 14px 16px; }
+  .fp-prod img { height: 160px; }
+}
 
 /* Responsivo */
 @media (max-width: 1180px) {
@@ -467,7 +478,11 @@ footer b { color: #fff; }
       <li>Montos en USD.</li>
     </ul>
   </details>
-  <footer><span><b>Fuente Pura · Calidad</b> · Paid Media</span><span class="conf">Confidencial · Propiedad de CCCP UM Nicaragua</span></footer>
+  <footer class="fp-foot">
+    <div class="fp-prod l"><img src="img/foot_lata.png" alt="Lata Fuente Pura Agua Mineral Gasificada"></div>
+    <div class="fp-conf"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="10" rx="2.2" fill="none" stroke="#e8622c" stroke-width="2"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7" fill="none" stroke="#e8622c" stroke-width="2"/><circle cx="12" cy="15.5" r="1.4" fill="#e8622c"/></svg><p><b>Información confidencial.</b> Propiedad de CCCP UM Nicaragua. Uso interno; no distribuir sin autorización.</p></div>
+    <div class="fp-prod r"><img src="img/foot_botella.png" alt="Botella Fuente Pura Agua Mineral"></div>
+  </footer>
 </main>
 
 <script src="datos.js"></script>
