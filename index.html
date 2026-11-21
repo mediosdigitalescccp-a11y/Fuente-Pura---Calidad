@@ -769,9 +769,11 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     const max = Math.max(...chs.flatMap((c) => EDADES.map((e) => share[c][e]))) * 1.15, gw = (W - m.l - m.r) / EDADES.length, bw = Math.min(28, gw * 0.8 / chs.length), y = (v) => H - m.b - v / max * (H - m.t - m.b);
     let g = ''; for (let i = 0; i <= 4; i++) { const v = max / 1.15 * i / 4; g += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" style="stroke:var(--line)"></line><text x="${m.l - 6}" y="${y(v) + 4}" text-anchor="end">${F.pct(v)}</text>`; }
     EDADES.forEach((e, i) => { const x0 = m.l + i * gw + (gw - bw * chs.length) / 2;
-      chs.forEach((c, j) => { const v = share[c][e], x = x0 + j * bw; g += `<rect x="${x + 1}" y="${y(v)}" width="${bw - 2}" height="${y(0) - y(v)}" rx="3" style="fill:${COL[c]}"><title>${c} ${e}: ${F.pct1(v)}</title></rect>`; if (bw >= 18) g += `<text x="${x + bw / 2}" y="${y(v) - 4}" text-anchor="middle" style="font-size:9.5px;fill:var(--fg)">${F.pct(v)}</text>`; });
+      chs.forEach((c, j) => { const v = share[c][e], x = x0 + j * bw; g += `<rect x="${x + 1}" y="${y(v)}" width="${bw - 2}" height="${y(0) - y(v)}" rx="3" data-c="${c}" data-e="${e}" style="fill:${COL[c]}"></rect>`; if (bw >= 18) g += `<text x="${x + bw / 2}" y="${y(v) - 4}" text-anchor="middle" style="font-size:9.5px;fill:var(--fg)">${F.pct(v)}</text>`; });
       g += `<text x="${m.l + i * gw + gw / 2}" y="${H - 8}" text-anchor="middle">${e}</text>`; });
     box.innerHTML = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Distribución por edad">${g}</svg>`;
+    const tpe = tipFor(box);
+    box.querySelectorAll('rect[data-c]').forEach((r) => { const on = (ev) => tpe.show(ev, [r.dataset.c + ' · ' + r.dataset.e, F.pct1(share[r.dataset.c][r.dataset.e]) + ' del canal']); r.addEventListener('pointermove', on); r.addEventListener('pointerdown', on); r.addEventListener('pointerleave', () => tpe.hide()); });
   };
   segs('seg-edad', (v) => { edadCanal = v; drawEdad(); });
   const hbars = (obj, col) => Object.entries(obj).map(([k, v]) => `<div class="hb" style="--c:${col}"><span>${k}</span><div><i style="width:${v}%"></i></div><b>${v}%</b></div>`).join('');
@@ -797,9 +799,11 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     const mixBox = document.getElementById('tt-c-mix'), parts = VIDS.map((v) => ({ k: v, v: sum(D.tiktok.filter((r) => r.video === v), 'views'), c: VC[v] })), tot = sum(parts, 'v');
     const S = 170, R1 = 78, R0 = 52; let a0 = -Math.PI / 2, paths = '';
     parts.forEach((p) => { const a1 = a0 + p.v / tot * Math.PI * 2, L = a1 - a0 > Math.PI ? 1 : 0, P = (a, rr) => (S / 2 + rr * Math.cos(a)) + ',' + (S / 2 + rr * Math.sin(a));
-      paths += `<path d="M${P(a0, R1)} A${R1},${R1} 0 ${L} 1 ${P(a1, R1)} L${P(a1, R0)} A${R0},${R0} 0 ${L} 0 ${P(a0, R0)} Z" style="fill:${p.c};stroke:var(--panel-2);stroke-width:2"><title>${p.k}: ${F.int(p.v)} (${F.pct1(p.v / tot)})</title></path>`; a0 = a1; });
+      paths += `<path d="M${P(a0, R1)} A${R1},${R1} 0 ${L} 1 ${P(a1, R1)} L${P(a1, R0)} A${R0},${R0} 0 ${L} 0 ${P(a0, R0)} Z" style="fill:${p.c};stroke:var(--panel-2);stroke-width:2" data-k="${p.k}"></path>`; a0 = a1; });
     mixBox.innerHTML = `<svg viewBox="0 0 ${S} ${S}" style="max-width:190px;margin:4px auto 0" role="img" aria-label="${parts.map((p) => p.k + ' ' + F.pct(p.v / tot)).join(', ')}">${paths}<text x="85" y="83" text-anchor="middle" style="fill:var(--fg);font-weight:800;font-size:17px">${F.M(tot)}</text><text x="85" y="100" text-anchor="middle">views</text></svg>`
       + `<div class="legend" style="margin-top:10px">${parts.map((p) => `<div style="--c:${p.c}"><i></i><span>${p.k}<small>${F.int(p.v)} views · CPV ${F.usd4(sum(D.tiktok.filter((r) => r.video === p.k), 'costo') / p.v)}</small></span><b class="num">${F.pct(p.v / tot)}</b></div>`).join('')}</div>`;
+    const tpm = tipFor(mixBox);
+    mixBox.querySelectorAll('path[data-k]').forEach((pa) => { const pp = parts.find((x) => x.k === pa.dataset.k); const on = (ev) => tpm.show(ev, [pp.k, F.int(pp.v) + ' views', F.pct1(pp.v / tot) + ' del total']); pa.addEventListener('pointermove', on); pa.addEventListener('pointerdown', on); pa.addEventListener('pointerleave', () => tpm.hide()); });
     // Acciones después de ver el video: cantidades reales por video
     const met = [['Me gusta', 'likes'], ['Visitas al perfil', 'perfil'], ['Nuevos seguidores', 'seguidores']];
     const tot2 = (v, k) => sum(D.tiktok.filter((r) => r.video === v), k), vws = (v) => tot2(v, 'views');
@@ -864,7 +868,10 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     const qs = [v.q25, v.q50, v.q75, v.q100].map((q) => q / v.views);
     a.innerHTML = `<div class="thumb wide" style="background-image:url('https://i.ytimg.com/vi/${v.video}/hqdefault.jpg'), url('img/${VIMG[VNOM[v.video]]}.jpg')" role="img" aria-label="Miniatura del video ${VNOM[v.video]}"><span class="rank">YouTube #${i + 1}</span><span class="play" aria-hidden="true"></span></div>
       <div class="cre-body" style="--c:var(--c-yt)"><span class="fmt">YouTube</span><div class="cre-name">${VNOM[v.video]}<small style="display:block;font-weight:600;color:var(--muted);font-size:10.5px">${v.video}</small></div>${statRows([['Impresiones', F.M(v.impresiones)], ['Views', F.int(v.views)], ['VTR', F.pct1(v.vtr)]])}
-      <div class="qbar" role="img" aria-label="Retención: ${qs.map((q, j) => ['25', '50', '75', '100'][j] + '% ' + F.pct(q)).join(', ')}" onclick="event.preventDefault();event.stopPropagation()">${qs.map((q, j) => `<div class="qcol" title="${F.int([v.q25, v.q50, v.q75, v.q100][j])} personas vieron el ${['25', '50', '75', '100'][j]}% del video (${F.pct1(q)} de las views)"><b class="num">${F.pct(q)}</b><i style="height:${Math.max(3, q * 100)}%"></i></div>`).join('')}</div><div class="qlab"><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>`; return a; }));
+      <div class="qbar" role="img" aria-label="Retención: ${qs.map((q, j) => ['25', '50', '75', '100'][j] + '% ' + F.pct(q)).join(', ')}" onclick="event.preventDefault();event.stopPropagation()">${qs.map((q, j) => `<div class="qcol" data-n="${[v.q25, v.q50, v.q75, v.q100][j]}" data-q="${q}" data-p="${['25', '50', '75', '100'][j]}"><b class="num">${F.pct(q)}</b><i style="height:${Math.max(3, q * 100)}%"></i></div>`).join('')}</div><div class="qlab"><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>`; return a; }));
+  const ytBox = document.getElementById('cre-yt'); ytBox.style.position = 'relative';
+  const tpq = tipFor(ytBox);
+  ytBox.querySelectorAll('.qcol').forEach((qc) => { const on = (ev) => { ev.preventDefault(); tpq.show(ev, ['Llegaron al ' + qc.dataset.p + '% del video', F.int(+qc.dataset.n) + ' personas', F.pct1(+qc.dataset.q) + ' de las views']); }; qc.addEventListener('pointermove', on); qc.addEventListener('pointerdown', on); qc.addEventListener('pointerleave', () => tpq.hide()); });
   const ttv = Object.values(D.tiktok.reduce((a, r) => { const o = a[r.video] ||= { video: r.video, views: 0, costo: 0, likes: 0, perfil: 0, seguidores: 0, url: r.url }; ['views', 'costo', 'likes', 'perfil', 'seguidores'].forEach((k) => o[k] += r[k] || 0); return a; }, {})).sort((a, b) => b.views - a.views);
   const ttImg = { 'Agua Mineral': 'PPV_SPOT_CALIDAD_MINERAL_48s', 'Agua Gasificada': 'PPV_SPOT_CALIDAD_GASIFICADA_50s' };
   document.getElementById('cre-yt').append(...ttv.map((v, i) => { const a = el('a', 'cre'); a.href = v.url; a.target = '_blank'; a.rel = 'noopener';
