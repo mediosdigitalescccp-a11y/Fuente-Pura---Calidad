@@ -548,6 +548,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const D = window.FP_DATA;
   const CH = ['Meta', 'YouTube', 'TikTok', 'Display'];
   const VNOM = { G4YsEIWVi2Y: 'Agua Gasificada', aiHWi4r6b4w: 'Agua Mineral', zcWM8awGdFc: 'Agua Gasificada', dyWARNUkFYs: 'Agua Mineral' };
+  const VAD = { G4YsEIWVi2Y: 'RSPV_GASIFICADA_CALIDAD_49s', zcWM8awGdFc: 'RSPV_GASIFICADA_CALIDAD_49s', aiHWi4r6b4w: 'RSPV_MINERAL_CALIDAD_48s', dyWARNUkFYs: 'RSPV_MINERAL_CALIDAD_48s' };
   const VIMG = { 'Agua Mineral': 'PPV_SPOT_CALIDAD_MINERAL_48s', 'Agua Gasificada': 'PPV_SPOT_CALIDAD_GASIFICADA_50s' };
   const COL = { Meta: 'var(--c-meta)', YouTube: 'var(--c-yt)', TikTok: 'var(--c-tt)', Display: 'var(--c-gdn)' };
   const PLAN = {
@@ -895,7 +896,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   document.getElementById('cre-yt').replaceChildren(...vids.map((v, i) => { const a = el('a', 'cre'); a.href = 'https://www.youtube.com/watch?v=' + v.video; a.target = '_blank'; a.rel = 'noopener';
     const qs = [v.q25, v.q50, v.q75, v.q100].map((q) => q / v.views);
     a.innerHTML = `<div class="thumb wide" style="background-image:url('https://i.ytimg.com/vi/${v.video}/hqdefault.jpg'), url('img/${VIMG[VNOM[v.video]]}.jpg')" role="img" aria-label="Miniatura del video ${VNOM[v.video]}"><span class="rank">YouTube #${i + 1}</span><span class="play" aria-hidden="true"></span></div>
-      <div class="cre-body" style="--c:var(--c-yt)"><span class="fmt">YouTube</span><div class="cre-name">${VNOM[v.video]}<small style="display:block;font-weight:600;color:var(--muted);font-size:10.5px">${v.video}</small></div>${statRows([['Impresiones', F.M(v.impresiones)], ['Views', F.int(v.views)], ['VTR', F.pct1(v.vtr)]])}
+      <div class="cre-body" style="--c:var(--c-yt)"><span class="fmt">YouTube</span><div class="cre-name">${VAD[v.video].replace(/_/g, " ")}<small style="display:block;font-weight:600;color:var(--muted);font-size:10.5px">${VNOM[v.video]} · ${v.video}</small></div>${statRows([['Impresiones', F.M(v.impresiones)], ['Views', F.int(v.views)], ['VTR', F.pct1(v.vtr)]])}
       <div class="qbar" role="img" aria-label="Retención: ${qs.map((q, j) => ['25', '50', '75', '100'][j] + '% ' + F.pct(q)).join(', ')}" onclick="event.preventDefault();event.stopPropagation()">${qs.map((q, j) => `<div class="qcol" data-n="${[v.q25, v.q50, v.q75, v.q100][j]}" data-q="${q}" data-p="${['25', '50', '75', '100'][j]}"><b class="num">${F.pct(q)}</b><i style="height:${Math.max(3, q * 100)}%"></i></div>`).join('')}</div><div class="qlab"><span>25%</span><span>50%</span><span>75%</span><span>100%</span></div></div>`; return a; }));
   const ytBox = document.getElementById('cre-yt'); ytBox.style.position = 'relative';
   const tpq = tipFor(ytBox);
