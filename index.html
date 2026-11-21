@@ -267,6 +267,7 @@ h1, h2, h3 { margin: 0; }
 .stats b { font-weight: 700; }
 .qbar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; align-items: end; height: 62px; margin-top: 2px; cursor: default; }
 .qbar > i { display: block; background: var(--c); border-radius: 4px 4px 0 0; opacity: .85; }
+.qt { display: block; font-size: 10.5px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; margin-top: 2px; }
 .qcol { height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: stretch; gap: 2px; }
 .qcol b { font-size: 10.5px; font-weight: 800; text-align: center; color: var(--fg); }
 .qcol i { display: block; background: var(--c); border-radius: 4px 4px 0 0; opacity: .85; max-height: calc(100% - 16px); }
@@ -909,7 +910,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     a.innerHTML = `<div class="thumb wide" style="background-image:url('img/${ttImg[v.video]}.jpg')" role="img" aria-label="Video ${v.video}"><span class="rank">TikTok #${i + 1}</span><span class="play" aria-hidden="true"></span></div>
       <div class="cre-body" style="--c:var(--c-tt)"><span class="fmt">TikTok</span><div class="cre-name">${v.video}<small style="display:block;font-weight:600;color:var(--muted);font-size:10.5px">Fuente Pura en TikTok</small></div>${statRows([['Views', F.M(v.views)], ['Me gusta', F.int(v.likes)], ['CPV', F.usd4(v.costo / v.views)]])}
       ${(() => { const q = ['W1-W2', 'W3-W4'].map((o) => (D.tiktok.find((r) => r.video === v.video && r.ola === o) || {}).views || 0), mx = Math.max(...q) || 1;
-        return `<div class="qbar" style="grid-template-columns:repeat(2,1fr)" role="img" aria-label="Views W1-W2 ${F.int(q[0])}, W3-W4 ${F.int(q[1])}">${q.map((x) => `<i style="height:${Math.max(3, x / mx * 100)}%"></i>`).join('')}</div><div class="qlab" style="grid-template-columns:repeat(2,1fr)"><span>W1-W2 · ${F.M(q[0])}</span><span>W3-W4 · ${F.M(q[1])}</span></div>`; })()}</div>`; return a; }));
+        return `<small class="qt">Views por bloque</small><div class="qbar" style="grid-template-columns:repeat(2,1fr)" role="img" aria-label="Views W1-W2 ${F.int(q[0])}, W3-W4 ${F.int(q[1])}">${q.map((x) => `<div class="qcol"><b class="num">${F.M(x)}</b><i style="height:${Math.max(3, x / mx * 100)}%"></i></div>`).join('')}</div><div class="qlab" style="grid-template-columns:repeat(2,1fr)"><span>W1–W2</span><span>W3–W4</span></div>`; })()}</div>`; return a; }));
   const SERIES = [
     { id: '6', nombre: 'Superior Taste Award', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
     { id: '1', nombre: 'Lata · Agua Gasificada', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
