@@ -933,7 +933,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     const wrap = !fits(kk); box.classList.toggle('wrap', wrap); if (wrap) kk = Math.min(k, 0.42); k = kk;
     box.replaceChildren(...FORMATOS.map((f, i) => { const [w, h] = sizes[i], fig = el('figure', 'gdn-ad');
       const rr = gdnRes(f);
-      fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : '<span class="gdn-r">Sin datos aún</span>'}</figcaption>`; return fig; })); };
+      fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : ''}</figcaption>`; return fig; })); };
   document.getElementById('gdn-top').innerHTML = [...D.display].sort((a, b) => b.clics - a.clics).slice(0, 5).map((r, i) => `<div><span class="th" ${r.img ? `style="background-image:url('img/display/${r.img}.jpg')"` : ''} role="img" aria-label="Banner ${r.nombre}"></span><span><b>#${i + 1} · ${r.nombre.replace('x', '×')}</b><small>${F.int(r.clics)} clics · ${F.M(r.impresiones)} imp.</small><small>CTR ${F.pct2(r.clics / r.impresiones)}</small></span></div>`).join('');
   const selG = document.getElementById('sel-gdn');
   selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre}</option>`).join('');
