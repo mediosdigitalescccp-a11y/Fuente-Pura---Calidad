@@ -279,7 +279,9 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 .gdn-ad { flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; }
 .gdn-ad img { display: block; border-radius: 6px; box-shadow: 0 6px 16px rgba(3, 18, 52, .22); background: var(--panel-2); }
 .gdn-ad figcaption { font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; line-height: 1.35; }
-.gdn-r { display: block; font-weight: 600; font-size: 10.5px; color: var(--fg); white-space: nowrap; }
+.gdn-r { display: block; font-weight: 600; font-size: 10px; color: var(--fg); white-space: nowrap; }
+.gdn-ad { min-width: 64px; }
+.gdn-line.wrap { flex-wrap: wrap; overflow: visible; }
 .gdn-top { margin-top: 14px; }
 .gdn-top h4 { margin: 0 0 8px; font-size: 13px; }
 .gdn-top-l { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
@@ -903,10 +905,13 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const gdnRes = (f) => D.display.find((r) => r.img === f || r.nombre === f);
   const drawGdn = () => { const FORMATOS = serie.formatos, box = document.getElementById('gdn-line'), sizes = FORMATOS.map((f) => f.split('_')[0].split('x').map(Number));
     box.classList.toggle('col', !!serie.columna);
-    const avail = Math.max(280, box.clientWidth - (serie.columna ? 8 : 14 * (FORMATOS.length - 1) + 8)), total = serie.columna ? Math.max(...sizes.map(([w]) => w)) : sizes.reduce((s, [w]) => s + w, 0), maxH = Math.max(...sizes.map(([, h]) => h)), k = Math.min(1, serie.columna ? 1 : 420 / maxH, Math.max(avail / total, !serie.columna && innerWidth < 761 ? 0.42 : 0));
+    const avail = Math.max(280, box.clientWidth - (serie.columna ? 8 : 14 * (FORMATOS.length - 1) + 8)), total = serie.columna ? Math.max(...sizes.map(([w]) => w)) : sizes.reduce((s, [w]) => s + w, 0), maxH = Math.max(...sizes.map(([, h]) => h)); let k = Math.min(1, serie.columna ? 1 : 420 / maxH, Math.max(avail / total, !serie.columna && innerWidth < 761 ? 0.42 : 0));
+    const GAP = 14, MINW = 64, fits = (kk) => serie.columna || sizes.reduce((a, [w]) => a + Math.max(w * kk, MINW), 0) + GAP * (sizes.length - 1) <= box.clientWidth - 4;
+    let kk = k; while (!fits(kk) && kk > 0.3) kk *= 0.96;
+    const wrap = !fits(kk); box.classList.toggle('wrap', wrap); if (wrap) kk = Math.min(k, 0.42); k = kk;
     box.replaceChildren(...FORMATOS.map((f, i) => { const [w, h] = sizes[i], fig = el('figure', 'gdn-ad');
       const rr = gdnRes(f);
-      fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp. · CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : '<span class="gdn-r">Sin datos aún</span>'}</figcaption>`; return fig; })); };
+      fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : '<span class="gdn-r">Sin datos aún</span>'}</figcaption>`; return fig; })); };
   document.getElementById('gdn-top').innerHTML = [...D.display].sort((a, b) => b.clics - a.clics).slice(0, 5).map((r, i) => `<div><span class="th" ${r.img ? `style="background-image:url('img/display/${r.img}.jpg')"` : ''} role="img" aria-label="Banner ${r.nombre}"></span><span><b>#${i + 1} · ${r.nombre.replace('x', '×')}</b><small>${F.int(r.clics)} clics · ${F.M(r.impresiones)} imp.</small><small>CTR ${F.pct2(r.clics / r.impresiones)}</small></span></div>`).join('');
   const selG = document.getElementById('sel-gdn');
   selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre}</option>`).join('');
