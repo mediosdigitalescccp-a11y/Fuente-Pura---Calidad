@@ -528,7 +528,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     <ul>
       <li>Fuente: hoja <b>Data FP - Calidad 2026</b> (exportaciones de Meta Ads, Google Ads YouTube, Google Ads Display y TikTok Ads).</li>
       <li>Plan del Media Flow para el período completo (5 nov – 31 dic): Meta $5,250 (CPM $0.30–0.35, 15.0–17.5 M impresiones; KPI alcance y frecuencia); YouTube $4,500 (CPM $0.60, CPV $0.002, 7.5 M impresiones y 2.25 M views; KPI views y VTR); TikTok $2,250 (CPV $0.0015, 1.5 M views); Display $2,250 (CPM $0.50, 4.5 M impresiones). LinkedIn ($750) no se activó; su presupuesto se reasignó a TikTok.</li>
-      <li>Meta, YouTube y Display se compran por olas (W1-W2 y W3-W4). El alcance y la frecuencia son los acumulados que reporta cada plataforma por ola; las personas de una ola pueden repetirse en la otra, por eso el alcance total de un canal es una suma por ola y no el alcance único.</li>
+      <li>Meta, YouTube y Display se compran por olas (W1-W2 y W3-W4). El alcance y la frecuencia son los acumulados que reporta cada plataforma por ola; las personas de una ola pueden repetirse en la otra, por eso el alcance y los usuarios únicos se muestran por ola y no se suman.</li>
       <li>El avance esperado se calcula con los días completos transcurridos contra los 57 días de la campaña. El día en curso aparece en cursiva y no cuenta para el ritmo.</li>
       <li>TikTok reporta por quincena: visualizaciones, costo, me gusta, visitas al perfil y nuevos seguidores. Su audiencia viene en porcentajes por video.</li>
       <li>Display: se muestran impresiones, clics y CTR. Los resultados por banner vienen del nombre del anuncio en Google Ads; su suma (1.38 M impresiones) es mayor que el total diario de la campaña (1.26 M) por el corte de la exportación, por eso los totales usan el dato diario.</li>
@@ -604,7 +604,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const tiles = [
     ['Inversión total', F.usd(inv), F.pct(inv / budget) + ' de ' + F.usd0(budget), 'var(--blue)'],
     ['Impresiones', F.int(impTot), 'Meta, YouTube y Display', 'var(--sky)'],
-    ['Alcance Meta', F.int(T.Meta.alcance), 'frecuencia ' + F.d2(metaFrec), COL.Meta],
+    (() => { const o = olas('Meta'), cur = o[o.length - 1], prev = o.slice(0, -1); return ['Alcance Meta · ' + cur.ola.replace('-', '–'), F.int(cur.alcance), 'frecuencia ' + F.d2(cur.frecuencia) + prev.map((p) => ' · ' + p.ola.replace('-', '–') + ': ' + F.int(p.alcance)).join(''), COL.Meta]; })(),
     ['Views YouTube', F.int(T.YouTube.views), 'VTR ' + F.pct1(T.YouTube.views / T.YouTube.imp), COL.YouTube],
     ['Views TikTok', F.int(T.TikTok.views), F.int(T.TikTok.seg) + ' nuevos seguidores', COL.TikTok],
     ['Impresiones Display', F.int(T.Display.imp), 'CTR ' + F.pct2(T.Display.clics / T.Display.imp), COL.Display]
@@ -657,7 +657,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     Meta: () => `${meter('Inversión', T.Meta.costo, PLAN.Meta.budget, F.usd0, { gasto: 1 })}${meter('Impresiones (meta 15 M)', T.Meta.imp, PLAN.Meta.imp, F.M)}${costMeter('CPM real', cpm('Meta'), 0.35, F.usd)}
       <div class="kv"><span>Alcance W1-W2</span><b class="num">${F.int(olas('Meta')[0].alcance)} · f ${F.d2(olas('Meta')[0].frecuencia)}</b><span>Alcance W3-W4</span><b class="num">${F.int(olas('Meta')[1].alcance)} · f ${F.d2(olas('Meta')[1].frecuencia)}</b><span>Interacciones</span><b class="num">${F.int(T.Meta.inter)}</b><span>ThruPlays</span><b class="num">${F.int(T.Meta.thru)}</b></div>`,
     YouTube: () => `${meter('Inversión', T.YouTube.costo, PLAN.YouTube.budget, F.usd0, { gasto: 1 })}${meter('Impresiones', T.YouTube.imp, PLAN.YouTube.imp, F.M)}${meter('Views', T.YouTube.views, PLAN.YouTube.views, F.M)}
-      <div class="kv"><span>VTR</span><b class="num">${F.pct1(T.YouTube.views / T.YouTube.imp)}</b><span>Usuarios únicos</span><b class="num">${F.int(T.YouTube.alcance)}</b><span>Clics</span><b class="num">${F.int(T.YouTube.clics)}</b><span>Vistas completas (100%)</span><b class="num">${F.int(T.YouTube.q100)}</b></div>`,
+      <div class="kv"><span>VTR</span><b class="num">${F.pct1(T.YouTube.views / T.YouTube.imp)}</b><span>Usuarios W1–W2 · W3–W4</span><b class="num">${olas('YouTube').map((o) => F.M(o.alcance)).join(' · ')}</b><span>Clics</span><b class="num">${F.int(T.YouTube.clics)}</b><span>Vistas completas (100%)</span><b class="num">${F.int(T.YouTube.q100)}</b></div>`,
     TikTok: () => `${meter('Inversión', T.TikTok.costo, PLAN.TikTok.budget, F.usd0, { gasto: 1 })}${meter('Views', T.TikTok.views, PLAN.TikTok.views, F.M)}${costMeter('CPV real', T.TikTok.costo / T.TikTok.views, PLAN.TikTok.cpv, F.usd4)}
       <div class="kv"><span>Me gusta</span><b class="num">${F.int(T.TikTok.likes)}</b><span>Visitas al perfil</span><b class="num">${F.int(T.TikTok.perfil)}</b><span>Nuevos seguidores</span><b class="num">${F.int(T.TikTok.seg)}</b><span>Costo por seguidor</span><b class="num">${F.usd3(T.TikTok.costo / T.TikTok.seg)}</b></div>`,
     Display: () => `${meter('Inversión', T.Display.costo, PLAN.Display.budget, F.usd0, { gasto: 1 })}${meter('Impresiones', T.Display.imp, PLAN.Display.imp, F.M)}${costMeter('CPM real', cpm('Display'), PLAN.Display.cpm, F.usd)}
