@@ -293,12 +293,12 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 .gdn-top-l .th { width: 44px; height: 44px; border-radius: 6px; background: center / contain no-repeat var(--panel); }
 .gdn-top-l b { display: block; font-size: 12px; } .gdn-top-l small { display: block; font-size: 10.5px; color: var(--muted); }
 @media (max-width: 1180px) { .gdn-top-l { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-.gdn-stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.gdn-stats { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
 .gdn-stats div { background: var(--panel-2); border-radius: 10px; padding: 10px 12px; border-top: 3px solid var(--c-gdn); }
 .gdn-stats small { display: block; font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
 .gdn-stats b { font-size: 16px; }
-@media (max-width: 760px) { .gdn-line { justify-content: flex-start; } .gdn-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (min-width: 761px) and (max-width: 1180px) { .gdn-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 760px) { .gdn-line { justify-content: flex-start; } .gdn-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .gdn-stats > div:last-child { grid-column: span 2; } }
+@media (min-width: 761px) and (max-width: 1180px) { .gdn-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } .gdn-stats > div:last-child { grid-column: span 2; } }
 
 /* TikTok espejo edad / región */
 .bf-ctl { grid-column: 1 / -1; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
@@ -939,7 +939,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre}</option>`).join('');
   const setSerie = (v) => { serie = SERIES.find((x) => x.id === v); selG.value = v; document.querySelectorAll('#seg-gdn button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v))); drawGdn(); };
   segs('seg-gdn', setSerie); selG.addEventListener('change', () => setSerie(selG.value));
-  const gst = [['Impresiones', F.int(T.Display.imp)], ['Clics', F.int(T.Display.clics)], ['CTR', F.pct2(T.Display.clics / T.Display.imp)], ['CPM', F.usd(cpm('Display'))], ['Inversión', F.usd(T.Display.costo)], ['Usuarios únicos', F.int(T.Display.alcance)]];
+  const gst = [['Impresiones', F.int(T.Display.imp)], ['Clics', F.int(T.Display.clics)], ['CTR', F.pct2(T.Display.clics / T.Display.imp)], ['CPM', F.usd(cpm('Display'))], ['Inversión', F.usd(T.Display.costo)], ['Usuarios únicos', F.int(T.Display.alcance)], ['Frecuencia', F.d2(olas('Display')[0].frecuencia)]];
   document.getElementById('gdn-stats').innerHTML = gst.map(([a, b]) => `<div><small>${a}</small><b class="num">${b}</b></div>`).join('');
 
   // ---------- Detalle ----------
