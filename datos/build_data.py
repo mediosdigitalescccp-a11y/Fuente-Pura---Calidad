@@ -15,7 +15,7 @@ creativos = []
 for line in H.META_CRE.split('\n'):
     d, rest = line.split('|')
     for it in rest.split(';'):
-        n, a, i, e = it.split(); creativos.append(dict(fecha='2026-11-' + d, creativo=n, alcance=int(a), impresiones=int(i), interacciones=int(e)))
+        n, a, i, e, *v = it.split(); creativos.append(dict(fecha='2026-11-' + d, creativo=n, alcance=int(a), impresiones=int(i), interacciones=int(e), reproducciones=int(v[0]) if v else None))
 videos = []
 for line in H.YT_VID.split('\n'):
     d, rest = line.split('|')
