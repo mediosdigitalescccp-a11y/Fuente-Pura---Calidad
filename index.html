@@ -278,7 +278,15 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 .gdn-line.col { flex-direction: column; align-items: center; justify-content: flex-start; gap: 10px; }
 .gdn-ad { flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; }
 .gdn-ad img { display: block; border-radius: 6px; box-shadow: 0 6px 16px rgba(3, 18, 52, .22); background: var(--panel-2); }
-.gdn-ad figcaption { font-size: 11px; font-weight: 700; color: var(--muted); }
+.gdn-ad figcaption { font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; line-height: 1.35; }
+.gdn-r { display: block; font-weight: 600; font-size: 10.5px; color: var(--fg); white-space: nowrap; }
+.gdn-top { margin-top: 14px; }
+.gdn-top h4 { margin: 0 0 8px; font-size: 13px; }
+.gdn-top-l { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
+.gdn-top-l > div { background: var(--panel-2); border-radius: 10px; padding: 10px; display: grid; grid-template-columns: 44px 1fr; gap: 8px; align-items: center; }
+.gdn-top-l .th { width: 44px; height: 44px; border-radius: 6px; background: center / contain no-repeat var(--panel); }
+.gdn-top-l b { display: block; font-size: 12px; } .gdn-top-l small { display: block; font-size: 10.5px; color: var(--muted); }
+@media (max-width: 1180px) { .gdn-top-l { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .gdn-stats { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
 .gdn-stats div { background: var(--panel-2); border-radius: 10px; padding: 10px 12px; border-top: 3px solid var(--c-gdn); }
 .gdn-stats small { display: block; font-size: 10.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; font-weight: 700; }
@@ -492,9 +500,9 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
 
   <div class="sec" id="creativos"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="10" r="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="m21 16-5-5L5 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Creativos</h2><span class="sec-line"></span><p>Ordenados por impresiones o views</p></div>
   <div class="grid">
-    <section class="card s12"><h3>Creativos de Meta</h3><p class="sub">PPV: spot en video · PPL: pieza estática. Tasa = interacciones ÷ impresiones.</p><div class="cards" id="cre-meta"></div></section>
+    <section class="card s12"><h3>Creativos de Meta</h3><p class="sub">PPV: spot en video · PPL: pieza estática · MP: carrusel. Tasa = interacciones ÷ impresiones.</p><div class="cards" id="cre-meta"></div></section>
     <section class="card s12"><h3>Videos de YouTube y TikTok</h3><p class="sub">YouTube: VTR = views ÷ impresiones; las barras muestran cuántos de los que vieron el video llegaron al 25%, 50%, 75% y 100%. TikTok: acumulado de W1-W2 y W3-W4; CPV = costo ÷ visualizaciones.</p><div class="cards" id="cre-yt"></div></section>
-    <section class="card s12"><h3>Display · formatos de la campaña</h3><p class="sub" id="gdn-sub">—</p><div class="ctl"><label for="sel-gdn">Tipo</label> <span class="seg" id="seg-gdn"></span><select id="sel-gdn" class="sel"></select></div><div class="gdn-line" id="gdn-line"></div><div class="gdn-stats" id="gdn-stats"></div></section>
+    <section class="card s12"><h3>Display · formatos de la campaña</h3><p class="sub" id="gdn-sub">—</p><div class="ctl"><label for="sel-gdn">Tipo</label> <span class="seg" id="seg-gdn"></span><select id="sel-gdn" class="sel"></select></div><div class="gdn-line" id="gdn-line"></div><div class="gdn-stats" id="gdn-stats"></div><div class="gdn-top"><h4>Banners con más clics</h4><div class="gdn-top-l" id="gdn-top"></div></div></section>
   </div>
 
   <div class="sec" id="detalle"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 9.5h18M3 15h18M9 4v16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Detalle diario</h2><span class="sec-line"></span></div>
@@ -511,7 +519,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       <li>Meta, YouTube y Display se compran por olas (W1-W2 y W3-W4). El alcance y la frecuencia son los acumulados que reporta cada plataforma por ola; las personas de una ola pueden repetirse en la otra, por eso el alcance total de un canal es una suma por ola y no el alcance único.</li>
       <li>El avance esperado se calcula con los días completos transcurridos contra los 57 días de la campaña. El día en curso aparece en cursiva y no cuenta para el ritmo.</li>
       <li>TikTok reporta por quincena: visualizaciones, costo, me gusta, visitas al perfil y nuevos seguidores. Su audiencia viene en porcentajes por video.</li>
-      <li>Display: se muestran impresiones, clics y CTR. Los totales por banner pueden diferir levemente de los diarios por el corte de la exportación.</li>
+      <li>Display: se muestran impresiones, clics y CTR. Los resultados por banner vienen del nombre del anuncio en Google Ads; su suma (1.38 M impresiones) es mayor que el total diario de la campaña (1.26 M) por el corte de la exportación, por eso los totales usan el dato diario.</li>
       <li>Montos en USD.</li>
     </ul>
   </details>
@@ -859,7 +867,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
 
   // ---------- Creativos ----------
   const statRows = (rows) => '<div class="stats">' + rows.map(([k, v]) => `<div><span>${k}</span><b class="num">${v}</b></div>`).join('') + '</div>';
-  const FMT = (n) => /^PPV/.test(n) ? ['PPV · video', 'var(--c-meta)'] : ['PPL · estático', 'var(--sky)'];
+  const FMT = (n) => /^PPV/.test(n) ? ['PPV · video', 'var(--c-meta)'] : /^MP/.test(n) ? ['MP · carrusel', 'var(--navy)'] : ['PPL · estático', 'var(--sky)'];
   const nombre = (n) => n.replace(/_/g, ' ');
   document.getElementById('cre-meta').replaceChildren(...cres.map((c, i) => { const [f, col] = FMT(c.creativo), a = el('article', 'cre');
     a.innerHTML = `<div class="thumb" role="img" aria-label="Pieza ${c.creativo}"><div class="ph">Fuente Pura · ${nombre(c.creativo)}</div><div style="position:absolute;inset:0;background:url('img/${c.creativo}.jpg') center / cover no-repeat"></div><span class="rank">#${i + 1}</span>${/^PPV/.test(c.creativo) ? '<span class="play" aria-hidden="true"></span>' : ''}</div>
@@ -880,6 +888,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       ${(() => { const q = ['W1-W2', 'W3-W4'].map((o) => (D.tiktok.find((r) => r.video === v.video && r.ola === o) || {}).views || 0), mx = Math.max(...q) || 1;
         return `<div class="qbar" style="grid-template-columns:repeat(2,1fr)" role="img" aria-label="Views W1-W2 ${F.int(q[0])}, W3-W4 ${F.int(q[1])}">${q.map((x) => `<i style="height:${Math.max(3, x / mx * 100)}%"></i>`).join('')}</div><div class="qlab" style="grid-template-columns:repeat(2,1fr)"><span>W1-W2 · ${F.M(q[0])}</span><span>W3-W4 · ${F.M(q[1])}</span></div>`; })()}</div>`; return a; }));
   const SERIES = [
+    { id: '6', nombre: 'Superior Taste Award', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
     { id: '1', nombre: 'Lata · Agua Gasificada', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
     { id: '2', nombre: 'Botella · Agua Mineral', formatos: ['300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
     { id: '4', nombre: 'Horizontales', columna: true, formatos: ['970x250', '930x180', '980x120', '970x90', '728x90', '468x60'] },
@@ -890,12 +899,15 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   document.getElementById('seg-gdn').innerHTML = SERIES.map((x, i) => `<button type="button" data-v="${x.id}" aria-pressed="${i === 0}">${x.nombre}</button>`).join('');
   const nForm = new Set(SERIES.flatMap((x) => x.formatos.map((f) => f.split('_')[0]))).size, nPiezas = SERIES.reduce((s, x) => s + x.formatos.length, 0);
   const top4 = D.display.slice(0, 4);
-  document.getElementById('gdn-sub').textContent = `Banners de la campaña agrupados por tipo y mostrados a escala real entre ellos. Los resultados de abajo son datos generales de toda la campaña de Display.`;
+  document.getElementById('gdn-sub').textContent = `Banners de la campaña agrupados por tipo y mostrados a escala real entre ellos. Debajo de cada banner, sus impresiones y CTR acumulados según Google Ads; los totales de abajo son de toda la campaña de Display.`;
+  const gdnRes = (f) => D.display.find((r) => r.img === f || r.nombre === f);
   const drawGdn = () => { const FORMATOS = serie.formatos, box = document.getElementById('gdn-line'), sizes = FORMATOS.map((f) => f.split('_')[0].split('x').map(Number));
     box.classList.toggle('col', !!serie.columna);
     const avail = Math.max(280, box.clientWidth - (serie.columna ? 8 : 14 * (FORMATOS.length - 1) + 8)), total = serie.columna ? Math.max(...sizes.map(([w]) => w)) : sizes.reduce((s, [w]) => s + w, 0), maxH = Math.max(...sizes.map(([, h]) => h)), k = Math.min(1, serie.columna ? 1 : 420 / maxH, Math.max(avail / total, !serie.columna && innerWidth < 761 ? 0.42 : 0));
     box.replaceChildren(...FORMATOS.map((f, i) => { const [w, h] = sizes[i], fig = el('figure', 'gdn-ad');
-      fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}</figcaption>`; return fig; })); };
+      const rr = gdnRes(f);
+      fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp. · CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : '<span class="gdn-r">Sin datos aún</span>'}</figcaption>`; return fig; })); };
+  document.getElementById('gdn-top').innerHTML = [...D.display].sort((a, b) => b.clics - a.clics).slice(0, 5).map((r, i) => `<div><span class="th" ${r.img ? `style="background-image:url('img/display/${r.img}.jpg')"` : ''} role="img" aria-label="Banner ${r.nombre}"></span><span><b>#${i + 1} · ${r.nombre.replace('x', '×')}</b><small>${F.int(r.clics)} clics · ${F.M(r.impresiones)} imp.</small><small>CTR ${F.pct2(r.clics / r.impresiones)}</small></span></div>`).join('');
   const selG = document.getElementById('sel-gdn');
   selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre}</option>`).join('');
   const setSerie = (v) => { serie = SERIES.find((x) => x.id === v); selG.value = v; document.querySelectorAll('#seg-gdn button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v))); drawGdn(); };
