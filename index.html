@@ -283,6 +283,10 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 .gdn-ad { flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; }
 .gdn-ad img { display: block; border-radius: 6px; box-shadow: 0 6px 16px rgba(3, 18, 52, .22); background: var(--panel-2); }
 .gdn-ad figcaption { font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; line-height: 1.35; }
+.gdn-tipo { margin: 0 0 10px; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.gdn-k { display: inline-block; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; background: var(--line); color: var(--fg); margin-right: 4px; vertical-align: 1px; }
+.gdn-k.anim { background: #f5a623; color: #1d1300; }
+.gdn-tipo .gdn-k { margin-right: 0; }
 .gdn-r { display: block; font-weight: 600; font-size: 10px; color: var(--fg); white-space: nowrap; }
 .gdn-ad { min-width: 64px; }
 .gdn-line.wrap { flex-wrap: wrap; overflow: visible; }
@@ -515,7 +519,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   <div class="grid">
     <section class="card s12"><h3>Creativos de Meta</h3><p class="sub">PPV: spot en video · PPL: pieza estática · MP: carrusel. % interacción = interacciones ÷ impresiones. En los videos, % reproducción = reproducciones ÷ impresiones.</p><div class="cards" id="cre-meta"></div></section>
     <section class="card s12"><h3>Videos de YouTube y TikTok</h3><p class="sub">YouTube: VTR = views ÷ impresiones; las barras muestran cuántos de los que vieron el video llegaron al 25%, 50%, 75% y 100%. TikTok: acumulado de W1-W2 y W3-W4; CPV = costo ÷ visualizaciones.</p><div class="cards" id="cre-yt"></div></section>
-    <section class="card s12"><h3>Display · formatos de la campaña</h3><p class="sub" id="gdn-sub">—</p><div class="ctl"><label for="sel-gdn">Tipo</label> <span class="seg" id="seg-gdn"></span><select id="sel-gdn" class="sel"></select></div><div class="gdn-line" id="gdn-line"></div><div class="gdn-stats" id="gdn-stats"></div><div class="gdn-top"><h4>Banners con más clics</h4><div class="gdn-top-l" id="gdn-top"></div></div></section>
+    <section class="card s12"><h3>Display · formatos de la campaña</h3><p class="sub" id="gdn-sub">—</p><div class="ctl"><label for="sel-gdn">Tipo</label> <span class="seg" id="seg-gdn"></span><select id="sel-gdn" class="sel"></select></div><p class="gdn-tipo" id="gdn-tipo"></p><div class="gdn-line" id="gdn-line"></div><div class="gdn-stats" id="gdn-stats"></div><div class="gdn-top"><h4>Banners con más clics</h4><div class="gdn-top-l" id="gdn-top"></div></div></section>
   </div>
 
   <div class="sec" id="detalle"><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 9.5h18M3 15h18M9 4v16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Detalle diario</h2><span class="sec-line"></span></div>
@@ -912,14 +916,14 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       ${(() => { const q = ['W1-W2', 'W3-W4'].map((o) => (D.tiktok.find((r) => r.video === v.video && r.ola === o) || {}).views || 0), mx = Math.max(...q) || 1;
         return `<small class="qt">Views por bloque</small><div class="qbar" style="grid-template-columns:repeat(2,1fr)" role="img" aria-label="Views W1-W2 ${F.int(q[0])}, W3-W4 ${F.int(q[1])}">${q.map((x) => `<div class="qcol"><b class="num">${F.M(x)}</b><i style="height:${Math.max(3, x / mx * 100)}%"></i></div>`).join('')}</div><div class="qlab" style="grid-template-columns:repeat(2,1fr)"><span>W1–W2</span><span>W3–W4</span></div>`; })()}</div>`; return a; }));
   const SERIES = [
-    { id: '7', nombre: 'Animados · Lata y botella', formatos: ['580x400', '336x280', '300x250', '250x360', '250x250', '240x400', '200x200'] },
-    { id: '8', nombre: 'Animados · Lata', formatos: ['580x400_anim_lata', '336x280_anim_lata', '300x250_anim_lata', '250x360_anim_lata', '250x250_anim_lata'] },
-    { id: '6', nombre: 'Superior Taste Award', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
-    { id: '1', nombre: 'Lata · Agua Gasificada', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
-    { id: '2', nombre: 'Botella · Agua Mineral', formatos: ['300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
-    { id: '4', nombre: 'Horizontales', columna: true, formatos: ['970x250', '930x180', '980x120', '970x90', '728x90', '468x60'] },
-    { id: '5', nombre: 'Móvil', formatos: ['320x100', '320x100_1', '320x50', '300x50'] },
-    { id: '3', nombre: 'Verticales', formatos: ['300x1050_2', '300x1050_1', '300x1050', '300x600', '300x600_1', '160x600_4', '160x600_2', '160x600', '120x600_4', '120x600_2', '120x600'] }
+    { id: '7', animado: true, nombre: 'Animados · Lata y botella', formatos: ['580x400', '336x280', '300x250', '250x360', '250x250', '240x400', '200x200'] },
+    { id: '8', animado: true, nombre: 'Animados · Lata', formatos: ['580x400_anim_lata', '336x280_anim_lata', '300x250_anim_lata', '250x360_anim_lata', '250x250_anim_lata'] },
+    { id: '6', nombre: 'Superior Taste Award · estáticos', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
+    { id: '1', nombre: 'Lata · estáticos', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
+    { id: '2', nombre: 'Botella · estáticos', formatos: ['300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
+    { id: '4', nombre: 'Horizontales · estáticos', columna: true, formatos: ['970x250', '930x180', '980x120', '970x90', '728x90', '468x60'] },
+    { id: '5', nombre: 'Móvil · estáticos', formatos: ['320x100', '320x100_1', '320x50', '300x50'] },
+    { id: '3', nombre: 'Verticales · estáticos', formatos: ['300x1050_2', '300x1050_1', '300x1050', '300x600', '300x600_1', '160x600_4', '160x600_2', '160x600', '120x600_4', '120x600_2', '120x600'] }
   ];
   let serie = SERIES[0];
   document.getElementById('seg-gdn').innerHTML = SERIES.map((x, i) => `<button type="button" data-v="${x.id}" aria-pressed="${i === 0}">${x.nombre}</button>`).join('');
@@ -930,13 +934,14 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const gdnExt = (f) => ((D.display.find((r) => r.img === f) || {}).ext) || (f.includes('_anim') ? 'webp' : 'jpg');
   const drawGdn = () => { const FORMATOS = serie.formatos, box = document.getElementById('gdn-line'), sizes = FORMATOS.map((f) => f.split('_')[0].split('x').map(Number));
     box.classList.toggle('col', !!serie.columna);
+    const anim = !!serie.animado; document.getElementById('gdn-tipo').innerHTML = anim ? '<span class="gdn-k anim">Animados</span> Banners HTML5 animados; aquí se reproducen en loop.' : '<span class="gdn-k">Estáticos</span> Banners en imagen fija.';
     const avail = Math.max(280, box.clientWidth - (serie.columna ? 8 : 14 * (FORMATOS.length - 1) + 8)), total = serie.columna ? Math.max(...sizes.map(([w]) => w)) : sizes.reduce((s, [w]) => s + w, 0), maxH = Math.max(...sizes.map(([, h]) => h)); let k = Math.min(1, serie.columna ? 1 : 420 / maxH, Math.max(avail / total, !serie.columna && innerWidth < 761 ? 0.42 : 0));
     const GAP = 14, MINW = 64, fits = (kk) => serie.columna || sizes.reduce((a, [w]) => a + Math.max(w * kk, MINW), 0) + GAP * (sizes.length - 1) <= box.clientWidth - 4;
     let kk = k; while (!fits(kk) && kk > 0.3) kk *= 0.96;
     const wrap = !fits(kk); box.classList.toggle('wrap', wrap); if (wrap) kk = Math.min(k, 0.42); k = kk;
     box.replaceChildren(...FORMATOS.map((f, i) => { const [w, h] = sizes[i], fig = el('figure', 'gdn-ad');
       const rr = gdnRes(f);
-      fig.innerHTML = `<img src="img/display/${f}.${gdnExt(f)}" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : ''}</figcaption>`; return fig; })); };
+      fig.innerHTML = `<img src="img/display/${f}.${gdnExt(f)}" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption><span class="gdn-k${anim ? ' anim' : ''}">${anim ? 'Animado' : 'Estático'}</span>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : ''}</figcaption>`; return fig; })); };
   document.getElementById('gdn-top').innerHTML = [...D.display].sort((a, b) => b.clics - a.clics).slice(0, 5).map((r, i) => `<div><span class="th" ${r.img ? `style="background-image:url('img/display/${r.img}.${r.ext || 'jpg'}')"` : ''} role="img" aria-label="Banner ${r.nombre}"></span><span><b>#${i + 1} · ${r.nombre.replace('x', '×')}</b><small>${F.int(r.clics)} clics · ${F.M(r.impresiones)} imp.</small><small>CTR ${F.pct2(r.clics / r.impresiones)}</small></span></div>`).join('');
   const selG = document.getElementById('sel-gdn');
   selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre}</option>`).join('');
