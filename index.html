@@ -289,6 +289,10 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 .gdn-k { display: inline-block; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; background: var(--line); color: var(--fg); margin-right: 4px; vertical-align: 1px; }
 .gdn-k.anim { background: #f5a623; color: #1d1300; }
 .gdn-tipo .gdn-k { margin-right: 0; }
+.gdn-ad figcaption .gdn-k { display: table; margin: 0 auto 2px; font-size: 8.5px; padding: 1px 6px; }
+.seg-lab { align-self: center; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; background: var(--line); color: var(--fg); margin: 0 2px 0 6px; }
+.seg-lab:first-child { margin-left: 2px; }
+.seg-lab.anim { background: #f5a623; color: #1d1300; }
 .gdn-r { display: block; font-weight: 600; font-size: 10px; color: var(--fg); white-space: nowrap; }
 .gdn-ad { min-width: 64px; }
 .gdn-line.wrap { flex-wrap: wrap; overflow: visible; }
@@ -918,18 +922,18 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       ${(() => { const q = ['W1-W2', 'W3-W4'].map((o) => (D.tiktok.find((r) => r.video === v.video && r.ola === o) || {}).views || 0), mx = Math.max(...q) || 1;
         return `<small class="qt">Views por bloque</small><div class="qbar" style="grid-template-columns:repeat(2,1fr)" role="img" aria-label="Views W1-W2 ${F.int(q[0])}, W3-W4 ${F.int(q[1])}">${q.map((x) => `<div class="qcol"><b class="num">${F.M(x)}</b><i style="height:${Math.max(3, x / mx * 100)}%"></i></div>`).join('')}</div><div class="qlab" style="grid-template-columns:repeat(2,1fr)"><span>W1–W2</span><span>W3–W4</span></div>`; })()}</div>`; return a; }));
   const SERIES = [
-    { id: '7', animado: true, nombre: 'Animados · Lata y botella', formatos: ['580x400', '336x280', '300x250', '250x360', '250x250', '240x400', '200x200'] },
-    { id: '8', animado: true, nombre: 'Animados · Lata', formatos: ['580x400_anim_lata', '336x280_anim_lata', '300x250_anim_lata', '250x360_anim_lata', '250x250_anim_lata', '240x400_anim_lata', '200x200_anim_lata'] },
-    { id: '9', animado: true, nombre: 'Animados · Botella', formatos: ['580x400_anim_botella', '336x280_anim_botella', '300x250_anim_botella', '250x360_anim_botella', '250x250_anim_botella', '240x400_anim_botella', '200x200_anim_botella'] },
-    { id: '6', nombre: 'Superior Taste Award · estáticos', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
-    { id: '1', nombre: 'Lata · estáticos', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
-    { id: '2', nombre: 'Botella · estáticos', formatos: ['300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
-    { id: '4', nombre: 'Horizontales · estáticos', columna: true, formatos: ['970x250', '930x180', '980x120', '970x90', '728x90', '468x60'] },
-    { id: '5', nombre: 'Móvil · estáticos', formatos: ['320x100', '320x100_1', '320x50', '300x50'] },
-    { id: '3', nombre: 'Verticales · estáticos', formatos: ['300x1050_2', '300x1050_1', '300x1050', '300x600', '300x600_1', '160x600_4', '160x600_2', '160x600', '120x600_4', '120x600_2', '120x600'] }
+    { id: '7', animado: true, nombre: 'Lata y botella', formatos: ['580x400', '336x280', '300x250', '250x360', '250x250', '240x400', '200x200'] },
+    { id: '8', animado: true, nombre: 'Lata', formatos: ['580x400_anim_lata', '336x280_anim_lata', '300x250_anim_lata', '250x360_anim_lata', '250x250_anim_lata', '240x400_anim_lata', '200x200_anim_lata'] },
+    { id: '9', animado: true, nombre: 'Botella', formatos: ['580x400_anim_botella', '336x280_anim_botella', '300x250_anim_botella', '250x360_anim_botella', '250x250_anim_botella', '240x400_anim_botella', '200x200_anim_botella'] },
+    { id: '6', nombre: 'Superior Taste Award', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
+    { id: '1', nombre: 'Lata', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
+    { id: '2', nombre: 'Botella', formatos: ['300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
+    { id: '4', nombre: 'Horizontales', columna: true, formatos: ['970x250', '930x180', '980x120', '970x90', '728x90', '468x60'] },
+    { id: '5', nombre: 'Móvil', formatos: ['320x100', '320x100_1', '320x50', '300x50'] },
+    { id: '3', nombre: 'Verticales', formatos: ['300x1050_2', '300x1050_1', '300x1050', '300x600', '300x600_1', '160x600_4', '160x600_2', '160x600', '120x600_4', '120x600_2', '120x600'] }
   ];
   let serie = SERIES[0];
-  document.getElementById('seg-gdn').innerHTML = SERIES.map((x, i) => `<button type="button" data-v="${x.id}" aria-pressed="${i === 0}">${x.nombre}</button>`).join('');
+  document.getElementById('seg-gdn').innerHTML = SERIES.map((x, i) => (i === 0 || !!SERIES[i - 1].animado !== !!x.animado ? `<span class="seg-lab${x.animado ? ' anim' : ''}">${x.animado ? 'Animados' : 'Estáticos'}</span>` : '') + `<button type="button" data-v="${x.id}" aria-pressed="${i === 0}">${x.nombre}</button>`).join('');
   const nForm = new Set(SERIES.flatMap((x) => x.formatos.map((f) => f.split('_')[0]))).size, nPiezas = SERIES.reduce((s, x) => s + x.formatos.length, 0);
   const top4 = D.display.slice(0, 4);
   document.getElementById('gdn-sub').textContent = `Banners de la campaña agrupados por tipo y mostrados a escala real entre ellos. Debajo de cada banner, sus impresiones y CTR acumulados según Google Ads; los totales de abajo son de toda la campaña de Display.`;
@@ -947,7 +951,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       fig.innerHTML = `<img src="img/display/${f}.${gdnExt(f)}" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption><span class="gdn-k${anim ? ' anim' : ''}">${anim ? 'Animado' : 'Estático'}</span>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : ''}</figcaption>`; return fig; })); };
   document.getElementById('gdn-top').innerHTML = [...D.display].sort((a, b) => b.clics - a.clics).slice(0, 5).map((r, i) => `<div><span class="th" ${r.img ? `style="background-image:url('img/display/${r.img}.${r.ext || 'jpg'}')"` : ''} role="img" aria-label="Banner ${r.nombre}"></span><span><b>#${i + 1} · ${r.nombre.replace('x', '×')}</b><small>${F.int(r.clics)} clics · ${F.M(r.impresiones)} imp.</small><small>CTR ${F.pct2(r.clics / r.impresiones)}</small></span></div>`).join('');
   const selG = document.getElementById('sel-gdn');
-  selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre}</option>`).join('');
+  selG.innerHTML = ['Animados', 'Estáticos'].map((g) => `<optgroup label="${g}">` + SERIES.filter((x) => !!x.animado === (g === 'Animados')).map((x) => `<option value="${x.id}">${x.nombre}${x.animado ? ' · animados' : ' · estáticos'}</option>`).join('') + '</optgroup>').join('');
   const setSerie = (v) => { serie = SERIES.find((x) => x.id === v); selG.value = v; document.querySelectorAll('#seg-gdn button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v))); drawGdn(); };
   segs('seg-gdn', setSerie); selG.addEventListener('change', () => setSerie(selG.value));
   const gst = [['Impresiones', F.int(T.Display.imp)], ['Clics', F.int(T.Display.clics)], ['CTR', F.pct2(T.Display.clics / T.Display.imp)], ['CPM', F.usd(cpm('Display'))], ['Inversión', F.usd(T.Display.costo)], ['Usuarios únicos', F.int(T.Display.alcance)], ['Frecuencia', F.d2(olas('Display')[0].frecuencia)]];
