@@ -32,7 +32,8 @@ imgdir = os.path.join(D0, '..', 'img', 'display')
 display = []
 for a, (i, c) in tot.items():
     base = a.rsplit('.', 1)[0]; f = IMG.get(base, base)
-    display.append(dict(nombre=base, img=f if os.path.exists(os.path.join(imgdir, f + '.jpg')) else None, impresiones=i, clics=c))
+    ext = next((e for e in ('webp', 'jpg') if os.path.exists(os.path.join(imgdir, f + '.' + e))), None)
+    display.append(dict(nombre=base, img=f if ext else None, ext=ext, impresiones=i, clics=c))
 display.sort(key=lambda r: -r['impresiones'])
 G = {'male': 'Hombre', 'female': 'Mujer', 'unknown': 'Desconocido', 'MALE': 'Hombre', 'FEMALE': 'Mujer', 'UNDETERMINED': 'Desconocido'}
 R = {'Región Autónoma del Atlántico Norte': 'RACCN', 'Región Autónoma del Atlántico Sur': 'RACCS', 'North Caribbean Coast Autonomous Region': 'RACCN', 'South Caribbean Coast Autonomous Region': 'RACCS', 'Leon': 'León', 'Esteli': 'Estelí', 'Rio San Juan': 'Río San Juan', 'Unknown': 'Desconocido'}

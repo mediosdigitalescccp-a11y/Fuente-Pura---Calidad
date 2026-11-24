@@ -543,7 +543,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   </footer>
 </main>
 
-<script src="datos.js?v=202611241710"></script>
+<script src="datos.js?v=202611242028"></script>
 <script>
 (() => {
   const D = window.FP_DATA;
@@ -912,7 +912,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       ${(() => { const q = ['W1-W2', 'W3-W4'].map((o) => (D.tiktok.find((r) => r.video === v.video && r.ola === o) || {}).views || 0), mx = Math.max(...q) || 1;
         return `<small class="qt">Views por bloque</small><div class="qbar" style="grid-template-columns:repeat(2,1fr)" role="img" aria-label="Views W1-W2 ${F.int(q[0])}, W3-W4 ${F.int(q[1])}">${q.map((x) => `<div class="qcol"><b class="num">${F.M(x)}</b><i style="height:${Math.max(3, x / mx * 100)}%"></i></div>`).join('')}</div><div class="qlab" style="grid-template-columns:repeat(2,1fr)"><span>W1–W2</span><span>W3–W4</span></div>`; })()}</div>`; return a; }));
   const SERIES = [
-    { id: '6', nombre: 'Superior Taste Award', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
+    { id: '6', nombre: 'Superior Taste Award', formatos: ['250x250', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400'] },
     { id: '1', nombre: 'Lata · Agua Gasificada', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
     { id: '2', nombre: 'Botella · Agua Mineral', formatos: ['300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
     { id: '4', nombre: 'Horizontales', columna: true, formatos: ['970x250', '930x180', '980x120', '970x90', '728x90', '468x60'] },
@@ -925,6 +925,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const top4 = D.display.slice(0, 4);
   document.getElementById('gdn-sub').textContent = `Banners de la campaña agrupados por tipo y mostrados a escala real entre ellos. Debajo de cada banner, sus impresiones y CTR acumulados según Google Ads; los totales de abajo son de toda la campaña de Display.`;
   const gdnRes = (f) => D.display.find((r) => r.img === f || r.nombre === f);
+  const gdnExt = (f) => ((D.display.find((r) => r.img === f) || {}).ext) || 'jpg';
   const drawGdn = () => { const FORMATOS = serie.formatos, box = document.getElementById('gdn-line'), sizes = FORMATOS.map((f) => f.split('_')[0].split('x').map(Number));
     box.classList.toggle('col', !!serie.columna);
     const avail = Math.max(280, box.clientWidth - (serie.columna ? 8 : 14 * (FORMATOS.length - 1) + 8)), total = serie.columna ? Math.max(...sizes.map(([w]) => w)) : sizes.reduce((s, [w]) => s + w, 0), maxH = Math.max(...sizes.map(([, h]) => h)); let k = Math.min(1, serie.columna ? 1 : 420 / maxH, Math.max(avail / total, !serie.columna && innerWidth < 761 ? 0.42 : 0));
@@ -933,8 +934,8 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     const wrap = !fits(kk); box.classList.toggle('wrap', wrap); if (wrap) kk = Math.min(k, 0.42); k = kk;
     box.replaceChildren(...FORMATOS.map((f, i) => { const [w, h] = sizes[i], fig = el('figure', 'gdn-ad');
       const rr = gdnRes(f);
-      fig.innerHTML = `<img src="img/display/${f}.jpg" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : ''}</figcaption>`; return fig; })); };
-  document.getElementById('gdn-top').innerHTML = [...D.display].sort((a, b) => b.clics - a.clics).slice(0, 5).map((r, i) => `<div><span class="th" ${r.img ? `style="background-image:url('img/display/${r.img}.jpg')"` : ''} role="img" aria-label="Banner ${r.nombre}"></span><span><b>#${i + 1} · ${r.nombre.replace('x', '×')}</b><small>${F.int(r.clics)} clics · ${F.M(r.impresiones)} imp.</small><small>CTR ${F.pct2(r.clics / r.impresiones)}</small></span></div>`).join('');
+      fig.innerHTML = `<img src="img/display/${f}.${gdnExt(f)}" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : ''}</figcaption>`; return fig; })); };
+  document.getElementById('gdn-top').innerHTML = [...D.display].sort((a, b) => b.clics - a.clics).slice(0, 5).map((r, i) => `<div><span class="th" ${r.img ? `style="background-image:url('img/display/${r.img}.${r.ext || 'jpg'}')"` : ''} role="img" aria-label="Banner ${r.nombre}"></span><span><b>#${i + 1} · ${r.nombre.replace('x', '×')}</b><small>${F.int(r.clics)} clics · ${F.M(r.impresiones)} imp.</small><small>CTR ${F.pct2(r.clics / r.impresiones)}</small></span></div>`).join('');
   const selG = document.getElementById('sel-gdn');
   selG.innerHTML = SERIES.map((x) => `<option value="${x.id}">${x.nombre}</option>`).join('');
   const setSerie = (v) => { serie = SERIES.find((x) => x.id === v); selG.value = v; document.querySelectorAll('#seg-gdn button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v))); drawGdn(); };
