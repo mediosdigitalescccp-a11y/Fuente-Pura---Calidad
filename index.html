@@ -186,6 +186,8 @@ h1, h2, h3 { margin: 0; }
 .dot { display: inline-block; width: 9px; height: 9px; border-radius: 3px; background: var(--c); margin-right: 7px; }
 .ctl { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
 .seg { display: inline-flex; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
+#seg-gdn { flex-wrap: wrap; border-radius: 16px; }
+#seg-gdn button { white-space: nowrap; }
 .seg button { font: inherit; font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; border: 0; background: transparent; color: var(--muted); padding: 6px 12px; border-radius: 999px; cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--blue); color: #fff; }
 .seg button:focus-visible { outline: 2px solid var(--sky); outline-offset: 1px; }
@@ -917,7 +919,8 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
         return `<small class="qt">Views por bloque</small><div class="qbar" style="grid-template-columns:repeat(2,1fr)" role="img" aria-label="Views W1-W2 ${F.int(q[0])}, W3-W4 ${F.int(q[1])}">${q.map((x) => `<div class="qcol"><b class="num">${F.M(x)}</b><i style="height:${Math.max(3, x / mx * 100)}%"></i></div>`).join('')}</div><div class="qlab" style="grid-template-columns:repeat(2,1fr)"><span>W1–W2</span><span>W3–W4</span></div>`; })()}</div>`; return a; }));
   const SERIES = [
     { id: '7', animado: true, nombre: 'Animados · Lata y botella', formatos: ['580x400', '336x280', '300x250', '250x360', '250x250', '240x400', '200x200'] },
-    { id: '8', animado: true, nombre: 'Animados · Lata', formatos: ['580x400_anim_lata', '336x280_anim_lata', '300x250_anim_lata', '250x360_anim_lata', '250x250_anim_lata'] },
+    { id: '8', animado: true, nombre: 'Animados · Lata', formatos: ['580x400_anim_lata', '336x280_anim_lata', '300x250_anim_lata', '250x360_anim_lata', '250x250_anim_lata', '240x400_anim_lata', '200x200_anim_lata'] },
+    { id: '9', animado: true, nombre: 'Animados · Botella', formatos: ['250x250_anim_botella', '240x400_anim_botella', '200x200_anim_botella'] },
     { id: '6', nombre: 'Superior Taste Award · estáticos', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
     { id: '1', nombre: 'Lata · estáticos', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
     { id: '2', nombre: 'Botella · estáticos', formatos: ['300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
