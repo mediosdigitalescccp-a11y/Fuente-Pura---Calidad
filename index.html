@@ -882,7 +882,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   segs('seg-reg', (v) => { regCanal = v; drawReg(); }); drawReg();
 
   // ---------- Tarjetas iguales sin huecos ----------
-  const fila = (box, minW) => { const items = [...box.children], n = items.length; if (!n) return;
+  const fila = (box, minW) => { const items = [...box.children].filter((x) => !x.classList.contains('tip')), n = items.length; if (!n) return;
     Object.assign(box.style, { gridTemplateColumns: '', gridAutoFlow: '', gridAutoColumns: '', overflowX: '', scrollSnapType: '', paddingBottom: '' });
     const gap = 12, w = box.clientWidth || 1000, max = Math.max(1, Math.min(8, Math.floor((w + gap) / (minW + gap))));
     if (n <= max) { box.style.gridTemplateColumns = `repeat(${n}, minmax(0, 1fr))`; return; }
