@@ -528,7 +528,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     <summary>Notas sobre las cifras</summary>
     <ul>
       <li>Fuente: hoja <b>Data FP - Calidad 2026</b> (exportaciones de Meta Ads, Google Ads YouTube, Google Ads Display y TikTok Ads).</li>
-      <li>Plan del Media Flow para el período completo (5 nov – 31 dic): Meta $5,250 (CPM $0.30–0.35, 15.0–17.5 M impresiones; KPI alcance y frecuencia); YouTube $4,500 (CPM $0.60, CPV $0.002, 7.5 M impresiones y 2.25 M views; KPI views y VTR); TikTok $2,250 (CPV $0.0015, 1.5 M views); Display $2,250 (CPM $0.50, 4.5 M impresiones). LinkedIn ($750) no se activó; su presupuesto se reasignó a TikTok.</li>
+      <li>Plan del Media Flow para el período completo (5 nov – 31 dic): Meta $5,250 (CPM $0.30–0.35, 15.0–17.5 M impresiones; KPI alcance y frecuencia); YouTube $4,500 (CPM $0.60, CPV $0.002, 7.5 M impresiones y 2.25 M views; KPI views y VTR); TikTok $3,000 ($2,250 del plan + $750 reasignados de LinkedIn, que no se activó; CPV $0.0015, 1.5 M views); Display $2,250 (CPM $0.50, 4.5 M impresiones). Presupuesto total: $15,000.</li>
       <li>Meta, YouTube y Display se compran por olas (W1-W2 y W3-W4). El alcance y la frecuencia son los acumulados que reporta cada plataforma por ola; las personas de una ola pueden repetirse en la otra, por eso el alcance y los usuarios únicos se muestran por ola y no se suman.</li>
       <li>El avance esperado se calcula con los días completos transcurridos contra los 57 días de la campaña. El día en curso aparece en cursiva y no cuenta para el ritmo.</li>
       <li>TikTok reporta por quincena: visualizaciones, costo, me gusta, visitas al perfil y nuevos seguidores. Su audiencia viene en porcentajes por video.</li>
@@ -556,7 +556,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const PLAN = {
     Meta: { budget: 5250, cpm: [0.30, 0.35], imp: 15000000, impMax: 17500000, kpi: 'Alcance / frecuencia' },
     YouTube: { budget: 4500, cpm: 0.60, cpv: 0.002, imp: 7500000, views: 2250000, kpi: 'Views / VTR' },
-    TikTok: { budget: 2250, cpv: 0.0015, views: 1500000, kpi: 'Views / alcance' },
+    TikTok: { budget: 3000, cpv: 0.0015, views: 1500000, kpi: 'Views / alcance' },
     Display: { budget: 2250, cpm: 0.50, imp: 4500000, kpi: 'Impresiones / CTR' }
   };
   const INICIO = '2026-11-05', FIN = '2026-12-31';
