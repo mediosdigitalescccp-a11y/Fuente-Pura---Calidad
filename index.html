@@ -185,7 +185,7 @@ h1, h2, h3 { margin: 0; }
 .eff td:not(:first-child), .eff th:not(:first-child) { text-align: right; }
 .dot { display: inline-block; width: 9px; height: 9px; border-radius: 3px; background: var(--c); margin-right: 7px; }
 .ctl { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-bottom: 10px; font-size: 11px; font-weight: 700; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
-.seg { display: inline-flex; background: var(--panel-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
+.seg { display: inline-flex; flex-wrap: wrap; background: var(--panel-2); border: 1px solid var(--line); border-radius: 18px; padding: 3px; gap: 2px; max-width: 100%; }
 #seg-gdn { flex-wrap: wrap; border-radius: 16px; }
 #seg-gdn button { white-space: nowrap; }
 .seg button { font: inherit; font-size: 12px; font-weight: 600; letter-spacing: 0; text-transform: none; border: 0; background: transparent; color: var(--muted); padding: 6px 12px; border-radius: 999px; cursor: pointer; }
@@ -282,8 +282,8 @@ a.cre:hover .cre-name, a.cre:focus-visible .cre-name { text-decoration: underlin
 @media (max-width: 760px) { #seg-gdn { display: none; } .sel { display: block; } }
 .gdn-line { display: flex; align-items: flex-end; justify-content: center; gap: 14px; padding: 6px 2px 4px; overflow-x: auto; }
 .gdn-line.col { flex-direction: column; align-items: center; justify-content: flex-start; gap: 10px; }
-.gdn-ad { flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; }
-.gdn-ad img { display: block; border-radius: 6px; box-shadow: 0 6px 16px rgba(3, 18, 52, .22); background: var(--panel-2); }
+.gdn-ad { flex: none; max-width: 100%; display: flex; flex-direction: column; align-items: center; gap: 6px; margin: 0; }
+.gdn-ad img { max-width: 100%; height: auto; display: block; border-radius: 6px; box-shadow: 0 6px 16px rgba(3, 18, 52, .22); background: var(--panel-2); }
 .gdn-ad figcaption { font-size: 11px; font-weight: 700; color: var(--muted); text-align: center; line-height: 1.35; }
 .gdn-tipo { margin: 0 0 10px; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
 .gdn-k { display: inline-block; font-size: 9.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 7px; border-radius: 999px; background: var(--line); color: var(--fg); margin-right: 4px; vertical-align: 1px; }
@@ -925,7 +925,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     { id: '7', animado: true, nombre: 'Lata y botella', formatos: ['580x400', '336x280', '300x250', '250x360', '250x250', '240x400', '200x200'] },
     { id: '8', animado: true, nombre: 'Lata', formatos: ['580x400_anim_lata', '336x280_anim_lata', '300x250_anim_lata', '250x360_anim_lata', '250x250_anim_lata', '240x400_anim_lata', '200x200_anim_lata'] },
     { id: '9', animado: true, nombre: 'Botella', formatos: ['580x400_anim_botella', '336x280_anim_botella', '300x250_anim_botella', '250x360_anim_botella', '250x250_anim_botella', '240x400_anim_botella', '200x200_anim_botella'] },
-    { id: 'A', adaptable: true, nombre: 'Adaptable', formatos: ['900x1600_adapt_1', '900x1600_adapt_2', '1600x1600_adapt_1', '1600x1600_adapt_2', '1600x837_adapt'] },
+    { id: 'A', adaptable: true, nombre: 'Adaptable', formatos: ['900x1600_adapt_1', '900x1600_adapt_2', '1600x1600_adapt_1', '1600x1600_adapt_2', '1600x837_adapt', '1600x837_adapt_2'] },
     { id: '6', nombre: 'Superior Taste Award', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
     { id: '1', nombre: 'Lata', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
     { id: '2', nombre: 'Botella', formatos: ['580x400_2', '336x280_2', '300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
