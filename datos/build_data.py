@@ -22,7 +22,7 @@ for line in H.YT_VID.split('\n'):
     for vid, it in zip(H.YT_IDS, rest.split(';')):
         i, vw, a, b, c, e = map(int, it.split()); videos.append(dict(fecha='2026-11-' + d, video=vid, impresiones=i, views=vw, q25=a, q50=b, q75=c, q100=e))
 # Display por banner: nombre en Google Ads -> archivo de imagen en img/display
-IMG = {'120x600_1': '160x600', '120x600_3': '160x600_2', '120x600_5': '160x600_4', '930x90': '970x90'}
+IMG = {'Adaptable': '1600x837_adapt', '120x600_1': '160x600', '120x600_3': '160x600_2', '120x600_5': '160x600_4', '930x90': '970x90'}
 tot = collections.OrderedDict()
 for line in open(os.path.join(D0, 'gdn_ads.txt'), encoding='utf-8'):
     for it in line.strip().split(';'):

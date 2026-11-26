@@ -553,7 +553,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   </footer>
 </main>
 
-<script src="datos.js?v=202611261749"></script>
+<script src="datos.js?v=202611261755"></script>
 <script>
 (() => {
   const D = window.FP_DATA;
@@ -925,6 +925,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
     { id: '7', animado: true, nombre: 'Lata y botella', formatos: ['580x400', '336x280', '300x250', '250x360', '250x250', '240x400', '200x200'] },
     { id: '8', animado: true, nombre: 'Lata', formatos: ['580x400_anim_lata', '336x280_anim_lata', '300x250_anim_lata', '250x360_anim_lata', '250x250_anim_lata', '240x400_anim_lata', '200x200_anim_lata'] },
     { id: '9', animado: true, nombre: 'Botella', formatos: ['580x400_anim_botella', '336x280_anim_botella', '300x250_anim_botella', '250x360_anim_botella', '250x250_anim_botella', '240x400_anim_botella', '200x200_anim_botella'] },
+    { id: 'A', adaptable: true, nombre: 'Adaptable', formatos: ['900x1600_adapt_1', '900x1600_adapt_2', '1600x1600_adapt_1', '1600x1600_adapt_2', '1600x837_adapt'] },
     { id: '6', nombre: 'Superior Taste Award', formatos: ['250x250_FP_BANNER_10', '250x250_FP_BANNER_10_1', '250x360_FP_BANNER_11', '240x400_FP_BANNER_9'] },
     { id: '1', nombre: 'Lata', formatos: ['580x400_1', '336x280_1', '300x250_1', '250x360_1', '250x250_1', '240x400_1', '200x200_1'] },
     { id: '2', nombre: 'Botella', formatos: ['580x400_2', '336x280_2', '300x250_2', '250x360_2', '250x250_2', '240x400_2', '200x200_2'] },
@@ -938,18 +939,18 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const top4 = D.display.slice(0, 4);
   document.getElementById('gdn-sub').textContent = `Banners de la campaña agrupados por tipo y mostrados a escala real entre ellos. Debajo de cada banner, sus impresiones y CTR acumulados según Google Ads; los totales de abajo son de toda la campaña de Display.`;
   const gdnRes = (f) => D.display.find((r) => r.img === f || r.nombre === f);
-  const gdnExt = (f) => ((D.display.find((r) => r.img === f) || {}).ext) || (f.includes('_anim') ? 'webp' : 'jpg');
+  const gdnExt = (f) => ((D.display.find((r) => r.img === f) || {}).ext) || (/_anim|_adapt/.test(f) ? 'webp' : 'jpg');
   const drawGdn = () => { const FORMATOS = serie.formatos, box = document.getElementById('gdn-line'), sizes = FORMATOS.map((f) => f.split('_')[0].split('x').map(Number));
     box.classList.toggle('col', !!serie.columna);
-    const anim = !!serie.animado; document.getElementById('gdn-tipo').innerHTML = anim ? '<span class="gdn-k anim">Animados</span> Banners HTML5 animados; aquí se reproducen en loop.' : '<span class="gdn-k">Estáticos</span> Banners en imagen fija.';
+    const anim = !!serie.animado, ad = serie.adaptable ? D.display.find((r) => r.nombre === 'Adaptable') : null; document.getElementById('gdn-tipo').innerHTML = serie.adaptable ? `<span class="gdn-k">Adaptable</span> Un solo anuncio adaptable: Google arma cada ubicación combinando estas piezas.${ad ? ` En total suma <b>${F.int(ad.impresiones)}</b> impresiones y <b>${F.int(ad.clics)}</b> clics (CTR ${F.pct2(ad.clics / ad.impresiones)}).` : ''}` : anim ? '<span class="gdn-k anim">Animados</span> Banners HTML5 animados; aquí se reproducen en loop.' : '<span class="gdn-k">Estáticos</span> Banners en imagen fija.';
     const avail = Math.max(280, box.clientWidth - (serie.columna ? 8 : 14 * (FORMATOS.length - 1) + 8)), total = serie.columna ? Math.max(...sizes.map(([w]) => w)) : sizes.reduce((s, [w]) => s + w, 0), maxH = Math.max(...sizes.map(([, h]) => h)); let k = Math.min(1, serie.columna ? 1 : 420 / maxH, Math.max(avail / total, !serie.columna && innerWidth < 761 ? 0.42 : 0));
     const GAP = 14, MINW = 64, fits = (kk) => serie.columna || sizes.reduce((a, [w]) => a + Math.max(w * kk, MINW), 0) + GAP * (sizes.length - 1) <= box.clientWidth - 4;
     let kk = k; while (!fits(kk) && kk > 0.3) kk *= 0.96;
     const wrap = !fits(kk); box.classList.toggle('wrap', wrap); if (wrap) kk = Math.min(k, 0.42); k = kk;
     box.replaceChildren(...FORMATOS.map((f, i) => { const [w, h] = sizes[i], fig = el('figure', 'gdn-ad');
-      const rr = gdnRes(f);
-      fig.innerHTML = `<img src="img/display/${f}.${gdnExt(f)}" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption><span class="gdn-k${anim ? ' anim' : ''}">${anim ? 'Animado' : 'Estático'}</span>${w}×${h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : ''}</figcaption>`; return fig; })); };
-  document.getElementById('gdn-top').innerHTML = [...D.display].sort((a, b) => b.clics - a.clics).slice(0, 5).map((r, i) => `<div><span class="th" ${r.img ? `style="background-image:url('img/display/${r.img}.${r.ext || 'jpg'}')"` : ''} role="img" aria-label="Banner ${r.nombre}"></span><span><b>#${i + 1} · ${r.nombre.replace('x', '×')}</b><small>${F.int(r.clics)} clics · ${F.M(r.impresiones)} imp.</small><small>CTR ${F.pct2(r.clics / r.impresiones)}</small></span></div>`).join('');
+      const rr = serie.adaptable ? null : gdnRes(f), RAT = { '900x1600': 'Vertical 9:16', '1600x1600': 'Cuadrado 1:1', '1600x837': 'Horizontal 1.91:1' };
+      fig.innerHTML = `<img src="img/display/${f}.${gdnExt(f)}" width="${Math.round(w * k)}" height="${Math.round(h * k)}" alt="Banner ${w}×${h}"><figcaption><span class="gdn-k${anim ? ' anim' : ''}">${anim ? 'Animado' : serie.adaptable ? 'Adaptable' : 'Estático'}</span>${serie.adaptable ? RAT[f.split('_')[0]] : w + '×' + h}${rr ? `<span class="gdn-r">${F.M(rr.impresiones)} imp.</span><span class="gdn-r">CTR ${F.pct2(rr.clics / rr.impresiones)}</span>` : ''}</figcaption>`; return fig; })); };
+  document.getElementById('gdn-top').innerHTML = [...D.display].sort((a, b) => b.clics - a.clics).slice(0, 5).map((r, i) => `<div><span class="th" ${r.img ? `style="background-image:url('img/display/${r.img}.${r.ext || 'jpg'}')"` : ''} role="img" aria-label="Banner ${r.nombre}"></span><span><b>#${i + 1} · ${r.nombre === 'Adaptable' ? 'Anuncio adaptable' : r.nombre.replace('x', '×')}</b><small>${F.int(r.clics)} clics · ${F.M(r.impresiones)} imp.</small><small>CTR ${F.pct2(r.clics / r.impresiones)}</small></span></div>`).join('');
   const selG = document.getElementById('sel-gdn');
   selG.innerHTML = ['Animados', 'Estáticos'].map((g) => `<optgroup label="${g}">` + SERIES.filter((x) => !!x.animado === (g === 'Animados')).map((x) => `<option value="${x.id}">${x.nombre}${x.animado ? ' · animados' : ' · estáticos'}</option>`).join('') + '</optgroup>').join('');
   const setSerie = (v) => { serie = SERIES.find((x) => x.id === v); selG.value = v; document.querySelectorAll('#seg-gdn button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v))); drawGdn(); };
