@@ -1,5 +1,5 @@
 # Genera datos.js a partir de datos/hoja.py y datos/gdn_ads.txt.  Uso: python3 datos/build_data.py
-import json, collections, os, sys
+import json, collections, os, re, sys
 D0 = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, D0)
 import hoja as H
 W12, W34 = H.W12, H.W34
@@ -32,6 +32,8 @@ imgdir = os.path.join(D0, '..', 'img', 'display')
 display = []
 for a, (i, c) in tot.items():
     base = a.rsplit('.', 1)[0]; f = IMG.get(base, base)
+    m = re.match(r'FP_Calidad_Banner_(\d+)_(\d+x\d+)$', base)  # banners HTML5 animados: 1-7 lata y botella, 8-14 lata, 15-21 botella
+    if m: n, sz = int(m.group(1)), m.group(2); f = sz if n <= 7 else sz + ('_anim_lata' if n <= 14 else '_anim_botella')
     ext = next((e for e in ('webp', 'jpg') if os.path.exists(os.path.join(imgdir, f + '.' + e))), None)
     display.append(dict(nombre=base, img=f if ext else None, ext=ext, impresiones=i, clics=c))
 display.sort(key=lambda r: -r['impresiones'])
