@@ -202,6 +202,8 @@ h1, h2, h3 { margin: 0; }
 /* Hallazgos */
 .finds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
 .find { background: var(--panel-2); border-radius: 12px; padding: 14px; border-left: 4px solid var(--c); font-size: 13px; line-height: 1.5; }
+.find-a { margin: 8px 0 0; padding-top: 8px; border-top: 1px dashed var(--line); color: var(--muted); font-size: 12.5px; }
+.find-a b { color: var(--c); }
 .find small { display: block; font-size: 10.5px; font-weight: 800; letter-spacing: .08em; color: var(--c); margin-bottom: 4px; text-transform: uppercase; }
 
 /* Audiencia */
@@ -502,7 +504,7 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
       <div class="chart" id="c-diario"></div>
       <p class="sub" id="diario-nota" style="margin:8px 0 0"></p>
     </section>
-    <section class="card s12"><h3>Hallazgos clave</h3><div class="finds" id="finds"></div></section>
+    <section class="card s12"><h3>Hallazgos estratégicos</h3><p class="sub">Aprendizajes para creatividad, pauta y momentos de consumo de la marca.</p><div class="finds" id="finds"></div></section>
   </div>
 
   <div class="sec" id="audiencia"><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18.5 20a6.5 6.5 0 0 0-2.5-5.1" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><h2>Audiencia</h2><span class="sec-line"></span><p>Meta: sobre alcance · YouTube y Display: sobre impresiones · TikTok: % de alcance</p></div>
@@ -770,16 +772,31 @@ details.notes ul { line-height: 1.6; padding-left: 18px; }
   const audMeta = D.audiencia.filter((a) => a.canal === 'Meta' && a.dimension === 'Región'), mgaMeta = (audMeta.find((a) => a.segmento === 'Managua') || {}).valor / sum(audMeta, 'valor');
   const w12 = byCh('Meta').filter((r) => r.ola === 'W1-W2'), w34 = byCh('Meta').filter((r) => r.ola === 'W3-W4' && r.fecha <= ultCompleta);
   const ritmoMeta = T.Meta.imp / PLAN.Meta.imp / esperado, ritmoYTv = T.YouTube.views / PLAN.YouTube.views / esperado;
-  const finds = [
-    ['Avance', COL.TikTok, `<b>TikTok</b> ya lleva el <b>${F.pct(T.TikTok.views / PLAN.TikTok.views)}</b> de sus views planificadas con el ${F.pct(T.TikTok.costo / PLAN.TikTok.budget)} del presupuesto: un CPV de <b>${F.usd4(T.TikTok.costo / T.TikTok.views)}</b> contra $0.0015 del plan.`],
-    ['Ritmo', COL.Meta, `Con el <b>${F.pct(esperado)}</b> del tiempo transcurrido, <b>Meta</b> ya entregó el <b>${F.pct(T.Meta.imp / PLAN.Meta.imp)}</b> de sus 15 M de impresiones. <b>YouTube</b> va en <b>${F.pct(T.YouTube.views / PLAN.YouTube.views)}</b> de sus 2.25 M de views: ${ritmoYTv >= .95 ? 'a ritmo' : 'es el KPI a vigilar'}.`],
-    ['Formato', COL.Meta, `En Meta, los <b>spots en video (PPV)</b> generan <b>${F.pct2(tasa(ppv))}</b> de interacción y las <b>piezas estáticas (PPL)</b> <b>${F.pct2(tasa(ppl))}</b>. Desde el 16 nov las PPL concentran el ${F.pct(sum(D.creativos.filter((r) => /^PPL/.test(r.creativo)), 'impresiones') / sum(D.creativos.filter((r) => r.fecha >= '2026-11-16'), 'impresiones'))} de las impresiones.`],
-    ['YouTube', COL.YouTube, (() => { const fx = (f) => vids.filter((v) => VFMT[v.video] === f), pc = fx('Pantalla completa'), sh = fx('Short'), vt = (a) => sum(a, 'views') / sum(a, 'impresiones');
-      return `Las versiones en <b>pantalla completa</b> concentran el <b>${F.pct(sum(pc, 'views') / T.YouTube.views)}</b> de las views con un VTR de <b>${F.pct1(vt(pc))}</b> (Mineral ${F.pct1(pc.find((v) => VNOM[v.video] === 'Agua Mineral').vtr)}, Gasificada ${F.pct1(pc.find((v) => VNOM[v.video] === 'Agua Gasificada').vtr)}). Los <b>Shorts</b> tienen un VTR de <b>${F.pct1(vt(sh))}</b>.`; })()],
-    ['Display', COL.Display, `Display entregó <b>${F.M(T.Display.imp)}</b> impresiones en ${byCh('Display').length} días con un CPM de <b>${F.usd(cpm('Display'))}</b> (plan $0.50) y un CTR de <b>${F.pct2(T.Display.clics / T.Display.imp)}</b>.`],
-    ['Región', COL.Meta, `<b>Managua</b> concentra el <b>${F.pct(mgaMeta)}</b> del alcance de Meta; la campaña llega a los 17 departamentos en Meta, YouTube y Display.`]
-  ];
-  document.getElementById('finds').replaceChildren(...finds.map(([k, c, t]) => { const d = el('div', 'find', `<small>${k}</small>${t}`); d.style.setProperty('--c', c); return d; }));
+  const finds = (() => {
+    const base = D.diario.filter((r) => r.fecha <= ultCompleta), wd = (f) => new Date(f + 'T12:00:00Z').getUTCDay();
+    const rt = (rs, k) => { const i = sum(rs, 'impresiones'); return i ? sum(rs, k) / i : 0; };
+    const meta = base.filter((r) => r.canal === 'Meta'), dsp = base.filter((r) => r.canal === 'Display');
+    const finde = rt(meta.filter((r) => [5, 6, 0].includes(wd(r.fecha))), 'interacciones'), semana = rt(meta.filter((r) => [1, 2, 3, 4].includes(wd(r.fecha))), 'interacciones');
+    const lun = rt(dsp.filter((r) => wd(r.fecha) === 1), 'clics'), resto = rt(dsp.filter((r) => wd(r.fecha) !== 1), 'clics');
+    const prod = (re) => tasa(cres.filter((c) => /^PPV/.test(c.creativo) && re.test(c.creativo)));
+    const tG = prod(/GASIFICADA/), tM = prod(/MINERAL/);
+    const vf = (f, n) => vids.filter((v) => VFMT[v.video] === f && (!n || VNOM[v.video] === n)), vtr = (a) => sum(a, 'views') / sum(a, 'impresiones'), comp = (a) => sum(a, 'q100') / sum(a, 'q25');
+    const pc = vf('Pantalla completa'), sh = vf('Short');
+    const dTam = (re) => D.display.filter((x) => re.test(x.nombre)), ctr = (a) => sum(a, 'clics') / sum(a, 'impresiones');
+    const grandes = dTam(/^(300x600|300x1050|120x600|580x400|320x100|Adaptable)/), chicos = dTam(/^(320x50|300x50|468x60)/);
+    const pesoChicos = sum(chicos, 'impresiones') / sum(D.display, 'impresiones');
+    const ytE = D.audiencia.filter((a) => a.canal === 'YouTube' && a.dimension === 'Edad').filter((a) => a.segmento !== 'Desconocido'), vtrE = (re) => { const r = ytE.filter((a) => re.test(a.segmento)); return sum(r, 'extra') / sum(r, 'valor'); };
+    const x = (a, b) => b ? nf(1).format(a / b) + ' veces' : '—';
+    return [
+      ['Producto', COL.Meta, `El spot de <b>Agua ${tG >= tM ? 'Gasificada' : 'Mineral'}</b> genera más conversación: <b>${F.pct2(Math.max(tG, tM))}</b> de interacción en Meta contra ${F.pct2(Math.min(tG, tM))} del de ${tG >= tM ? 'Mineral' : 'Gasificada'}, y en YouTube retiene al <b>${F.pct(comp(vf('Pantalla completa', 'Agua Gasificada')))}</b> hasta el final.`, `Explorar territorios propios para ${tG >= tM ? 'Gasificada' : 'Mineral'} (comidas, reuniones y momentos de pausa) con piezas dedicadas, sin perder el mensaje de calidad.`],
+      ['Formato en Meta', COL.Meta, `Los <b>spots en video</b> interactúan al <b>${F.pct2(tasa(ppv))}</b> y las piezas estáticas al <b>${F.pct2(tasa(ppl))}</b>: <b>${x(tasa(ppv), tasa(ppl))}</b> más respuesta. El estático aporta cobertura, el video construye marca.`, 'Mantener el video como pieza principal de interacción y usar el estático solo para frecuencia y recordación de empaque.'],
+      ['YouTube', COL.YouTube, `La <b>pantalla completa</b> logra un VTR de <b>${F.pct1(vtr(pc))}</b> y el <b>${F.pct(comp(pc))}</b> de quienes empiezan la ven completa; los <b>Shorts</b>, <b>${F.pct1(vtr(sh))}</b> y ${F.pct(comp(sh))}. La historia de calidad necesita tiempo de pantalla.`, 'Concentrar inversión en pantalla completa y reservar los Shorts para recordación con un mensaje más corto y directo.'],
+      ['Display', COL.Display, `Los formatos grandes (300x600, 300x1050, 120x600, 580x400, 320x100 y adaptable) logran un CTR de <b>${F.pct2(ctr(grandes))}</b>, <b>${x(ctr(grandes), ctr(chicos))}</b> los banners pequeños (${F.pct2(ctr(chicos))}), que aún reciben el <b>${F.pct(pesoChicos)}</b> de las impresiones.`, 'Mover peso de los banners de 320x50, 300x50 y 468x60 hacia formatos grandes y adaptables.'],
+      ['Momento de consumo', '#0f9fb5', `El fin de semana es el momento de mayor conexión en Meta (<b>${F.pct2(finde)}</b> de interacción de viernes a domingo frente a ${F.pct2(semana)} entre semana) y el lunes, el de Display (CTR de <b>${F.pct2(lun)}</b> frente a ${F.pct2(resto)} el resto de la semana).`, 'Mensajes de hidratación para salidas y actividad de fin de semana en Meta, y de regreso a la rutina (oficina, estudio) los lunes en Display.'],
+      ['Audiencia', COL.YouTube, `En YouTube, los mayores de 55 años ven el video al <b>${F.pct1(vtrE(/^(55|65)/))}</b> de sus impresiones, frente a <b>${F.pct1(vtrE(/^(18|25|35)/))}</b> de 18 a 44, una señal de que el mensaje de calidad y pureza conecta con ellos.`, 'Crear una versión con enfoque en salud y bienestar familiar para mayores de 55, y piezas más dinámicas para los jóvenes.']
+    ];
+  })();
+  document.getElementById('finds').replaceChildren(...finds.map(([k, c, t, o]) => { const d = el('div', 'find', `<small>${k}</small>${t}<p class="find-a"><b>Oportunidad:</b> ${o}</p>`); d.style.setProperty('--c', c); return d; }));
 
   // ---------- Audiencia ----------
   const aud = (c, d) => D.audiencia.filter((a) => a.canal === c && a.dimension === d);
